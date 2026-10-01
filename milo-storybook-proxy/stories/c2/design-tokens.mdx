@@ -1,0 +1,20 @@
+import { Heading, Meta } from '@storybook/addon-docs/blocks';
+import { DesignTokenDocBlock } from 'storybook-design-token';
+import { categories, usageMap } from 'virtual:design-tokens';
+
+<Meta title="C2/Design Tokens" />
+
+# C2 design tokens
+
+Every token in Milo's `libs/c2/styles/deps/tokens.*.css`, in the groups those files use. Values are resolved. When Milo declares a token as another token, the description shows that reference.
+
+Semantic colors have a light and a dark set. Responsive tokens have one set per breakpoint: sm applies at every width, and md, lg and xl from the width shown.
+
+Right-click a token to see which C2 blocks read it in their CSS.
+
+{categories.map((name) => (
+  <div key={name}>
+    <Heading>{name}</Heading>
+    <DesignTokenDocBlock categoryName={name} usageMap={usageMap} />
+  </div>
+))}
