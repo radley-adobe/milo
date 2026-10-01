@@ -16,25 +16,30 @@ Storybook runs at http://localhost:6006. `npm run build` writes the static site 
 
 ## Write a story
 
-A story passes a block's authored markup to `renderBlock()`. The markup matches what AEM delivers for a block: a `div` whose first class is the block name, one `div` per row and one `div` per cell. Variants are extra classes after the block name. Milo's test mocks in `test/blocks/<name>/mocks/` show this markup for most blocks.
+A story names a live page and a block on it. `renderPageBlock()` fetches the page's authored markup from `<page>.plain.html`, takes the block at `index` among blocks with that name, resolves its relative image and link URLs against the page, and decorates it.
 
 ```js
-import { renderBlock } from '../../src/milo.js';
+import { LIBRARY, renderPageBlock } from '../../src/milo.js';
 
 export default { title: 'C1/Accordion' };
 
-export const Default = {
-  render: () => renderBlock(`
-    <div class="accordion">
-      <div><div><h3>Question</h3></div></div>
-      <div><div><p>Answer</p></div></div>
-    </div>`),
+export const Seo = {
+  name: 'SEO',
+  render: () => renderPageBlock(`${LIBRARY}/accordion`, 'accordion', { index: 1 }),
 };
 ```
 
-For C2 blocks, pass `{ foundation: 'c2' }` as the second argument. This sets the `foundation` metadata so Milo loads the block and its styles from `libs/c2/`.
+`LIBRARY` is Milo's block library, which has one example page per block. https://milo.adobe.com/docs/library/library.json lists the pages for C1 blocks (`c1-blocks`) and C2 blocks (`c2-blocks`).
 
-When decoration finishes, `renderBlock()` sets `data-milo-status="loaded"` on its `main` element.
+Pages from adobe.com sites work through each site's `aem.live` origin, for example `https://main--cc--adobecom.aem.live` or `https://main--bacom--adobecom.aem.live`. Requests to www.adobe.com itself are rejected in headless browsers.
+
+For C2 blocks, pass `{ foundation: 'c2' }`. This sets the `foundation` metadata so Milo loads the block and its styles from `libs/c2/`.
+
+For a block with no usable live page, `renderBlock(html)` decorates inline authored markup instead: a `div` whose first class is the block name, one `div` per row and one `div` per cell. Milo's test mocks in `test/blocks/<name>/mocks/` show this markup for most blocks.
+
+Placeholders and other site content Milo looks up resolve against https://milo.adobe.com.
+
+When decoration finishes, the story's `main` element gets `data-milo-status="loaded"`. If the page or block can't be fetched, the story shows the error instead.
 
 ## Branches and deployment
 
@@ -51,4 +56,5 @@ git merge upstream/stage
 
 ## Known limits
 
-Some blocks fetch content from the site root, such as `/placeholders.json`, fragments and media. The Storybook build does not include that content. The accordion `expand-all-button` variant, for example, falls back to the placeholder keys "expand all" and "collapse all".
+- Stories render live content, so they change when the source page changes and break if it moves or the block is removed
+- Acrobat pages (`main--dc--adobecom`) send an invalid `Access-Control-Allow-Origin` header, so browsers block them
