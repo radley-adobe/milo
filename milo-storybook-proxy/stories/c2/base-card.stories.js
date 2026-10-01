@@ -1,6 +1,7 @@
 import { HOMEPAGE_FRAGMENTS, LIBRARY, renderPage, renderPageBlock } from '../../src/milo.js';
+import cssprops from 'virtual:cssprops/c2/base-card';
 
-export default { title: 'C2/Base Card' };
+export default { title: 'C2/Base Card', parameters: { cssprops } };
 
 const library = `${LIBRARY}/c2/base-card`;
 

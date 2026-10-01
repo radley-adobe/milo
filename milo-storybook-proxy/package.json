@@ -7,10 +7,12 @@
     "build": "storybook build -o dist"
   },
   "devDependencies": {
+    "@ljcl/storybook-addon-cssprops": "^6.1.0",
     "@storybook/addon-a11y": "^10.6.1",
     "@storybook/addon-docs": "^10.6.1",
     "@storybook/html-vite": "^10.6.1",
     "@whitespace/storybook-addon-html": "^9.0.0",
+    "postcss": "^8.5.28",
     "prettier": "^3.9.9",
     "storybook": "^10.6.1",
     "vite": "^8.3.2"

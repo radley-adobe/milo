@@ -1,6 +1,7 @@
 import { LIBRARY, renderLibraryExample, renderPageBlock } from '../../src/milo.js';
+import cssprops from 'virtual:cssprops/c1/action-item';
 
-export default { title: 'C1/Action Item' };
+export default { title: 'C1/Action Item', parameters: { cssprops } };
 
 const library = `${LIBRARY}/action-item`;
 

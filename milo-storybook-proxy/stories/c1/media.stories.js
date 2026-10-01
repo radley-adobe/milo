@@ -1,6 +1,7 @@
 import { LIBRARY, renderPageBlock } from '../../src/milo.js';
+import cssprops from 'virtual:cssprops/c1/media';
 
-export default { title: 'C1/Media' };
+export default { title: 'C1/Media', parameters: { cssprops } };
 
 const library = `${LIBRARY}/media`;
 

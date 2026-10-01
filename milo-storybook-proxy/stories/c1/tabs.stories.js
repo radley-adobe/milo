@@ -1,6 +1,7 @@
 import { LIBRARY, renderLibraryExample } from '../../src/milo.js';
+import cssprops from 'virtual:cssprops/c1/tabs';
 
-export default { title: 'C1/Tabs' };
+export default { title: 'C1/Tabs', parameters: { cssprops } };
 
 const library = `${LIBRARY}/tabs`;
 

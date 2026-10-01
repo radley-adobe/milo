@@ -1,6 +1,7 @@
 import { LIBRARY, renderPageBlock } from '../../src/milo.js';
+import cssprops from 'virtual:cssprops/c1/columns';
 
-export default { title: 'C1/Columns' };
+export default { title: 'C1/Columns', parameters: { cssprops } };
 
 const library = `${LIBRARY}/columns`;
 

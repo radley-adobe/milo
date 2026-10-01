@@ -1,6 +1,7 @@
 import { LIBRARY, renderPageBlock } from '../../src/milo.js';
+import cssprops from 'virtual:cssprops/c1/timeline';
 
-export default { title: 'C1/Timeline' };
+export default { title: 'C1/Timeline', parameters: { cssprops } };
 
 const library = `${LIBRARY}/timeline`;
 

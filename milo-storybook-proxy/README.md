@@ -43,17 +43,29 @@ For C2 blocks, pass `{ foundation: 'c2' }`. This sets the `foundation` metadata 
 
 For a block with no usable live page, `renderBlock(html)` decorates inline authored markup instead: a `div` whose first class is the block name, one `div` per row and one `div` per cell. Milo's test mocks in `test/blocks/<name>/mocks/` show this markup for most blocks.
 
+To fill the CSS Custom Properties tab, import the block's variables from `virtual:cssprops/<c1|c2>/<block>` and set them as the `cssprops` parameter:
+
+```js
+import cssprops from 'virtual:cssprops/c1/accordion';
+
+export default { title: 'C1/Accordion', parameters: { cssprops } };
+```
+
+Storybook merges a file's parameters into each of its stories, so in a file whose stories render different blocks, set `cssprops` on each story instead.
+
 Placeholders and other site content Milo looks up resolve against https://milo.adobe.com.
 
 On a live site, Milo loads SVG icons authored as `.aem.` or `.hlx.` links from the site's own origin. Stories load them from the host in the link instead, with `.hlx.` hosts changed to `.aem.`, because `.hlx.` hosts no longer serve files.
 
 When decoration finishes, the story's `main` element gets `data-milo-status="loaded"`. If the page or block can't be fetched, the story shows the error instead and `main` gets `data-milo-status="error"`.
 
-## Docs, accessibility and HTML
+## Addons
 
 - Every block has a Docs page that shows all of its stories. Each story renders in its own 600px-high iframe, so Milo's styles don't apply to the Docs page itself. A story can set its own height with `parameters.docs.story.iframeHeight`.
 - The Accessibility tab runs axe-core checks on each story. Milo decorates a story after Storybook renders it, so an `afterEach` hook in `.storybook/preview.js` waits for `data-milo-status` (up to 30 seconds) before the checks run.
 - The HTML tab shows each story's markup after Milo has decorated it, formatted with Prettier. The addon reads the markup before Milo runs, so the same `afterEach` hook sends the decorated markup to the tab once `data-milo-status` is set.
+- The CSS Custom Properties tab lists every variable the story's block sets or reads. `.storybook/cssprops.js` reads the block's CSS and Milo's global `styles.css`, and groups the variables as Block (set in the block's CSS), Global (set in `styles.css`) and Other (set in neither, for example by JavaScript). A row's value is the first value the CSS gives it, at the smallest viewport. Its description lists where the variable is set and its value at each breakpoint.
+- Editing a value in that tab applies it to the story's `body`, so it has no visible effect on a variable the block sets on its own elements. The addon writes every listed value onto the `body` when the tab opens and saves them in localStorage. `.storybook/preview.js` removes the values that haven't been edited, and drops a story's saved values once Milo's CSS changes.
 
 ## Branches and deployment
 

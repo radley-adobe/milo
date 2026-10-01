@@ -1,6 +1,7 @@
 import { LIBRARY, renderLibraryExample, renderPageBlock } from '../../src/milo.js';
+import cssprops from 'virtual:cssprops/c1/brick';
 
-export default { title: 'C1/Bricks' };
+export default { title: 'C1/Bricks', parameters: { cssprops } };
 
 const library = `${LIBRARY}/bricks`;
 
