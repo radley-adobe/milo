@@ -29,7 +29,13 @@ export const Seo = {
 };
 ```
 
-`LIBRARY` is Milo's block library, which has one example page per block. https://milo.adobe.com/docs/library/library.json lists the pages for C1 blocks (`c1-blocks`) and C2 blocks (`c2-blocks`).
+`LIBRARY` is Milo's block library, which has one example page per block. https://milo.adobe.com/docs/library/library.json lists the pages for C1 blocks (`c1-blocks`) and C2 blocks (`c2-blocks`). Library stories have one story per example on the page, named by the heading above it.
+
+Some library examples hold several blocks or span several sections, such as tabs, carousels and layout patterns. `renderLibraryExample(page, index)` renders the example at `index` as Milo's library lists it, using the library's own parser, with each section break as a new section.
+
+`renderPage(url)` renders every section of a page or fragment. Use it when a block depends on the sections around it, such as a C2 carousel whose slides are the sections that follow it.
+
+Most C2 blocks have no library page. Their stories use the redesigned adobe.com homepage: `HOMEPAGE` is the page, and `HOMEPAGE_FRAGMENTS` is the folder of fragments it is built from.
 
 Pages from adobe.com sites work through each site's `aem.live` origin, for example `https://main--cc--adobecom.aem.live` or `https://main--bacom--adobecom.aem.live`. Requests to www.adobe.com itself are rejected in headless browsers.
 
@@ -38,6 +44,8 @@ For C2 blocks, pass `{ foundation: 'c2' }`. This sets the `foundation` metadata 
 For a block with no usable live page, `renderBlock(html)` decorates inline authored markup instead: a `div` whose first class is the block name, one `div` per row and one `div` per cell. Milo's test mocks in `test/blocks/<name>/mocks/` show this markup for most blocks.
 
 Placeholders and other site content Milo looks up resolve against https://milo.adobe.com.
+
+On a live site, Milo loads SVG icons authored as `.aem.` or `.hlx.` links from the site's own origin. Stories load them from the host in the link instead, with `.hlx.` hosts changed to `.aem.`, because `.hlx.` hosts no longer serve files.
 
 When decoration finishes, the story's `main` element gets `data-milo-status="loaded"`. If the page or block can't be fetched, the story shows the error instead.
 
@@ -58,3 +66,6 @@ git merge upstream/stage
 
 - Stories render live content, so they change when the source page changes and break if it moves or the block is removed
 - Acrobat pages (`main--dc--adobecom`) send an invalid `Access-Control-Allow-Origin` header, so browsers block them
+- Merch cards, merch offers and the router marquee's product cards load prices and content from www.adobe.com, so they stay hidden or show a load error in headless browsers
+- Some library pages have no story because the block shows nothing outside its site: Section Metadata and Block Group (layout only), Card Metadata (CaaS data), Graybox Review (graybox environments only), Mobile App Banner (mobile app setup), Form (loads its JSON from the current site) and SUSI Light Login (needs IMS)
+- Marquee anchors load their arrow and external-link icons from `libs/img/ui/`, which is site content and not in this repo, so those icons are missing
