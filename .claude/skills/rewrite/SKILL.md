@@ -64,6 +64,11 @@ story or helper, and rebuild.
 output ending in "All stories match Milo and render." means there is nothing to update. Skip to
 step 4.
 
+If the check can't fetch `library.json` or library pages, or more than a quarter of the stories
+don't render, the cause is the network, not the stories. Don't change any story. Stop and report
+the failing hosts, found with `curl -sI https://milo.adobe.com/docs/library/library.json` and
+`curl -sI <page>.plain.html`.
+
 ## 3. Update the stories
 
 Handle each section of the check output:
