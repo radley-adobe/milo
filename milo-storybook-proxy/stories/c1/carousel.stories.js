@@ -1,6 +1,7 @@
 import { LIBRARY, renderLibraryExample } from '../../src/milo.js';
+import cssprops from 'virtual:cssprops/c1/carousel';
 
-export default { title: 'C1/Carousel' };
+export default { title: 'C1/Carousel', parameters: { cssprops } };
 
 const library = `${LIBRARY}/carousel`;
 

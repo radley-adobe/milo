@@ -1,6 +1,7 @@
 import { LIBRARY, renderPageBlock } from '../../src/milo.js';
+import cssprops from 'virtual:cssprops/c1/accordion';
 
-export default { title: 'C1/Accordion' };
+export default { title: 'C1/Accordion', parameters: { cssprops } };
 
 const library = `${LIBRARY}/accordion`;
 

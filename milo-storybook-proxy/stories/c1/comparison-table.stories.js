@@ -1,6 +1,7 @@
 import { LIBRARY, renderPageBlock } from '../../src/milo.js';
+import cssprops from 'virtual:cssprops/c1/comparison-table';
 
-export default { title: 'C1/Comparison Table' };
+export default { title: 'C1/Comparison Table', parameters: { cssprops } };
 
 const library = `${LIBRARY}/comparison-table`;
 

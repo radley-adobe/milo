@@ -1,6 +1,7 @@
 import { HOMEPAGE_FRAGMENTS, renderPageBlock } from '../../src/milo.js';
+import cssprops from 'virtual:cssprops/c2/elastic-carousel';
 
-export default { title: 'C2/Elastic Carousel' };
+export default { title: 'C2/Elastic Carousel', parameters: { cssprops } };
 
 export const HomepageEverythingYouNeed = {
   name: 'adobe.com: Homepage everything you need',

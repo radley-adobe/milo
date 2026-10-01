@@ -1,6 +1,7 @@
 import { LIBRARY, renderPageBlock } from '../../src/milo.js';
+import cssprops from 'virtual:cssprops/c1/figure';
 
-export default { title: 'C1/Figure' };
+export default { title: 'C1/Figure', parameters: { cssprops } };
 
 const library = `${LIBRARY}/figure`;
 

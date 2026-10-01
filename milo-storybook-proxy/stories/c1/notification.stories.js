@@ -1,6 +1,7 @@
 import { LIBRARY, renderPageBlock } from '../../src/milo.js';
+import cssprops from 'virtual:cssprops/c1/notification';
 
-export default { title: 'C1/Notification' };
+export default { title: 'C1/Notification', parameters: { cssprops } };
 
 const library = `${LIBRARY}/notification`;
 
