@@ -1,0 +1,20 @@
+// Milo decorates a story after Storybook renders it. Waits until the story's main element has a
+// data-milo-status, or 30 seconds pass, so checks that run after the story see the decorated
+// block. Storybook runs afterEach hooks in reverse order, so this one runs before the addons'.
+async function waitForMilo({ canvasElement }) {
+  const main = canvasElement.querySelector('main');
+  const end = Date.now() + 30000;
+  while (main && !main.dataset.miloStatus && Date.now() < end) {
+    await new Promise((resolve) => { setTimeout(resolve, 100); });
+  }
+}
+
+export default {
+  tags: ['autodocs'],
+  parameters: {
+    // Each story on a Docs page gets its own iframe, so Milo's page styles don't apply to the
+    // Docs page itself.
+    docs: { story: { inline: false, iframeHeight: '600px' } },
+  },
+  afterEach: waitForMilo,
+};

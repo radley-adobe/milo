@@ -94,6 +94,7 @@ function render(getSections, foundation) {
       main.dataset.miloStatus = 'loaded';
     } catch (e) {
       main.textContent = e.message;
+      main.dataset.miloStatus = 'error';
     }
   });
   return main;

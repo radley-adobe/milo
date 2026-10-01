@@ -7,6 +7,8 @@
     "build": "storybook build -o dist"
   },
   "devDependencies": {
+    "@storybook/addon-a11y": "^10.6.1",
+    "@storybook/addon-docs": "^10.6.1",
     "@storybook/html-vite": "^10.6.1",
     "storybook": "^10.6.1",
     "vite": "^8.3.2"
