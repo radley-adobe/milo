@@ -1,2 +1,5 @@
 node_modules/
 dist/
+# Written by .storybook/tokens.js and the design token addon
+generated/
+public/

@@ -59,7 +59,7 @@ function declarations(stylesheet) {
 
 // Replaces each var() in a value with the variable's value from scope, or its fallback. A var()
 // that can't be resolved stays as it is.
-function resolve(value, scope, seen = []) {
+export function resolve(value, scope, seen = []) {
   const start = value.indexOf('var(');
   if (start < 0) return value;
   let end = start + 4;
