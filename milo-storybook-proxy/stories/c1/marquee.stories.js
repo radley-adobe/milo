@@ -39,6 +39,15 @@ export const LargeOneThird = {
   render: () => renderPageBlock(library, 'marquee', { index: 6 }),
 };
 
+export const Anchors = {
+  render: () => renderPageBlock(library, 'marquee-anchors'),
+};
+
+export const AnchorsTransparent = {
+  name: 'Anchors (transparent)',
+  render: () => renderPageBlock(library, 'marquee-anchors', { index: 1 }),
+};
+
 export const BackgroundFocalPoint = {
   name: 'Background image focal point',
   render: () => renderPageBlock(library, 'marquee', { index: 7 }),
