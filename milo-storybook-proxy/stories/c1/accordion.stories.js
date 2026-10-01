@@ -1,19 +1,29 @@
-import { renderBlock } from '../../src/milo.js';
+import { LIBRARY, renderPageBlock } from '../../src/milo.js';
 
 export default { title: 'C1/Accordion' };
 
-const items = `
-  <div><div><h3>How do I compress a PDF without losing quality?</h3></div></div>
-  <div><div><p>Drag and drop a PDF into the compression tool and Acrobat reduces its size.</p></div></div>
-  <div><div><h3>What size PDFs can I compress?</h3></div></div>
-  <div><div><p>Files up to 2GB.</p></div></div>
-  <div><div><h3>How do I check my PDF file size?</h3></div></div>
-  <div><div><p>Open the file in Acrobat and choose File &gt; Properties.</p></div></div>`;
+const library = `${LIBRARY}/accordion`;
 
 export const Default = {
-  render: () => renderBlock(`<div class="accordion">${items}</div>`),
+  render: () => renderPageBlock(library, 'accordion'),
 };
 
-export const ExpandAllButton = {
-  render: () => renderBlock(`<div class="accordion expand-all-button">${items}</div>`),
+export const Seo = {
+  name: 'SEO',
+  render: () => renderPageBlock(library, 'accordion', { index: 1 }),
+};
+
+export const ExpandAll = {
+  name: '12 col with expand/collapse all',
+  render: () => renderPageBlock(library, 'accordion', { index: 2 }),
+};
+
+export const RichMedia = {
+  name: 'Rich media',
+  render: () => renderPageBlock(library, 'accordion', { index: 3 }),
+};
+
+export const PhotoshopFaq = {
+  name: 'adobe.com: Photoshop FAQ',
+  render: () => renderPageBlock('https://main--cc--adobecom.aem.live/cc-shared/fragments/products/photoshop/photoshop-faq', 'accordion'),
 };
