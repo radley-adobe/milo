@@ -1,7 +1,8 @@
 // Checks the stories against current Milo and its block library, and prints what needs
 // updating: library blocks with no story, stories for blocks the library no longer lists,
-// library pages whose examples changed, and stories that don't render. Reads the built site in
-// dist/, so run `npm run build` first. Exits with 1 when it finds anything.
+// library pages whose examples changed, and stories that don't render on each Milo branch's
+// build. Reads the built site in dist/, so run `npm run build` first. Exits with 1 when it finds
+// anything.
 //
 // Library examples are compared with stories/library-examples.json, the examples each library
 // page had when its stories were last updated. `npm run check -- --update` rewrites that file.
@@ -15,6 +16,9 @@ const DIST = new URL('dist/', ROOT);
 const EXAMPLES = new URL('stories/library-examples.json', ROOT);
 const LIBRARY_JSON = 'https://milo.adobe.com/docs/library/library.json';
 const WORKERS = 6;
+
+// Each Milo branch's build, by its folder in dist/. scripts/build.js writes both.
+const BUILDS = { stage: '', main: 'main/' };
 
 // Library blocks with no story. README › Known limits says why.
 const NO_STORY = ['Section Metadata', 'Block Group', 'Card Metadata', 'Graybox Review',
@@ -147,8 +151,8 @@ async function fetchThroughNode(route) {
   }
 }
 
-async function renderStory(page, base, id) {
-  await page.goto(`${base}/iframe.html?id=${id}&viewMode=story`, { waitUntil: 'domcontentloaded' });
+async function renderStory(page, build, id) {
+  await page.goto(`${build}iframe.html?id=${id}&viewMode=story`, { waitUntil: 'domcontentloaded' });
   try {
     // Some stories show nothing at the default viewport, such as mobile-only blocks, so this
     // waits for the attribute, not for main to be visible.
@@ -214,12 +218,20 @@ try {
       : exampleChanges(f.title, savedExamples[f.title], pages[i].examples)
   )));
 
-  const rendered = stories.filter((s) => !NO_RENDER.includes(s.title));
-  const errors = await pool(context, rendered, WORKERS, (p, s) => renderStory(p, base, s.id));
-  found += report(
-    `Stories that don't render (${errors.filter(Boolean).length} of ${rendered.length})`,
-    rendered.map((s, i) => errors[i] && `${s.title} › ${s.name} (${s.id}): ${errors[i]}`).filter(Boolean),
-  );
+  const renders = (await Promise.all(Object.entries(BUILDS).map(async ([branch, folder]) => {
+    const { entries } = JSON.parse(await readFile(new URL(`${folder}index.json`, DIST), 'utf8'));
+    return Object.values(entries)
+      .filter((e) => e.type === 'story' && !NO_RENDER.includes(e.title))
+      .map((story) => ({ branch, folder, story }));
+  }))).flat();
+  const errors = await pool(context, renders, WORKERS, (p, r) => renderStory(p, `${base}/${r.folder}`, r.story.id));
+  Object.keys(BUILDS).forEach((branch) => {
+    const total = renders.filter((r) => r.branch === branch).length;
+    const lines = renders
+      .map(({ branch: b, story: s }, i) => b === branch && errors[i] && `${s.title} › ${s.name} (${s.id}): ${errors[i]}`)
+      .filter(Boolean);
+    found += report(`Stories that don't render on ${branch} (${lines.length} of ${total})`, lines);
+  });
 } finally {
   await browser.close();
   server.close();

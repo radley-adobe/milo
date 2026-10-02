@@ -71,16 +71,16 @@ When decoration finishes, the story's `main` element gets `data-milo-status="loa
 
 ## Keep stories current
 
-Milo's code and its library pages change independently of this folder. `npm run check` reads the `stage` build at the root of `dist/`, so run `npm run build` first. It reports:
+Milo's code and its library pages change independently of this folder. `npm run check` reads both builds in `dist/`, so run `npm run build` first. It reports:
 
 - Library blocks in https://milo.adobe.com/docs/library/library.json with no story, apart from the pages listed in Known limits
 - Story files for blocks the library no longer lists
 - Library pages whose examples changed since `stories/library-examples.json` was written. `npm run check -- --update` rewrites that file once the stories match the pages again.
-- Stories whose `main` element doesn't reach `data-milo-status="loaded"` within 30 seconds. Merch Offers stories never finish loading in a headless browser, so the check skips them.
+- Stories whose `main` element doesn't reach `data-milo-status="loaded"` within 30 seconds, for the `stage` and `main` builds separately. Merch Offers stories never finish loading in a headless browser, so the check skips them.
 
 It installs no browser. Run `npx playwright install chromium --only-shell` once. When `HTTPS_PROXY` is set, as in a Claude Code cloud session, the check sends the browser's requests through Node's `fetch`, because Chromium doesn't trust the proxy's certificate.
 
-The `/rewrite` Claude Code skill (`.claude/skills/rewrite/` at the repo root) merges upstream Milo, runs the check and updates the stories it flags. When the check passes, it merges the changes into `dev` through a pull request. When it fails, it pushes a `claude/rewrite-failed-<date>` branch whose last commit is its report. `.github/workflows/milo-storybook-rewrite-failed.yml` fails on that push, so GitHub emails the report to the account that pushed it. A claude.ai routine runs `/rewrite` every weekday at 11:00 UTC.
+The `/rewrite` Claude Code skill (`.claude/skills/rewrite/` at the repo root) merges upstream Milo `stage`, builds both branches, runs the check and updates the stories it flags. A story that fails only on `main` because `stage` changed its block and Milo hasn't released that change yet doesn't fail the run. When the check passes, it merges the changes into `dev` through a pull request. When it fails, it pushes a `claude/rewrite-failed-<date>` branch whose last commit is its report. `.github/workflows/milo-storybook-rewrite-failed.yml` fails on that push, so GitHub emails the report to the account that pushed it. A claude.ai routine runs `/rewrite` every weekday at 11:00 UTC.
 
 ## Branches and deployment
 
@@ -93,7 +93,7 @@ The site has one build for each `adobecom/milo` branch it follows. The branch me
 - `stage`, at the site's root, serves this repo's `libs/`
 - `main`, Milo's production branch, is in `main/`. `scripts/build.js` fetches `main` from adobecom/milo on every build and serves its `libs/`, so the `main` build is as current as the last deploy.
 
-Both builds use the same stories, which follow `stage`. Milo releases `stage` to `main` about once a day, so a block can have a story before it reaches `main`. In the `main` build, that story's CSS Custom Properties tab is empty. `npm run check` checks the `stage` build only.
+Both builds use the same stories, which follow `stage`. Milo releases `stage` to `main` about once a day, so a block can have a story before it reaches `main`. In the `main` build, that story's CSS Custom Properties tab is empty. `npm run check` renders the stories in both builds.
 
 `MILO_LIBS=<path> npm run storybook` runs Storybook with another copy of Milo's `libs/`, such as one from `main`.
 
