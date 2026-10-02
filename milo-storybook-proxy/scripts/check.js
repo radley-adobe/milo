@@ -1,7 +1,7 @@
 // Checks the stories against current Milo and its block library, and prints what needs
 // updating: library blocks with no story, stories for blocks the library no longer lists,
-// library pages whose examples changed, and stories that don't render on each Milo branch's
-// build. Reads the built site in dist/, so run `npm run build` first. Exits with 1 when it finds
+// library pages whose examples changed, and stories that don't render or whose play function
+// fails, on each Milo branch's build. Reads the built site in dist/, so run `npm run build` first. Exits with 1 when it finds
 // anything.
 //
 // Library examples are compared with stories/library-examples.json, the examples each library
@@ -151,18 +151,45 @@ async function fetchThroughNode(route) {
   }
 }
 
+// Storybook reports a failed play function only on its channel, and still marks the story as
+// passed. Records each failure's message from the moment the preview creates the channel.
+function recordPlayErrors() {
+  window.playErrors = [];
+  let channel;
+  Object.defineProperty(window, '__STORYBOOK_ADDONS_CHANNEL__', {
+    configurable: true,
+    get: () => channel,
+    set: (value) => {
+      channel = value;
+      const emit = value.emit.bind(value);
+      value.emit = (type, ...args) => {
+        if (type === 'playFunctionThrewException') window.playErrors.push(args[0]?.message ?? 'no message');
+        return emit(type, ...args);
+      };
+    },
+  });
+}
+
 async function renderStory(page, build, id) {
   await page.goto(`${build}iframe.html?id=${id}&viewMode=story`, { waitUntil: 'domcontentloaded' });
   try {
     // Some stories show nothing at the default viewport, such as mobile-only blocks, so this
     // waits for the attribute, not for main to be visible.
     const main = await page.waitForSelector('main[data-milo-status]', { state: 'attached', timeout: 30000 });
-    if (await main.getAttribute('data-milo-status') === 'loaded') return null;
-    return (await main.textContent()).trim();
+    if (await main.getAttribute('data-milo-status') !== 'loaded') return (await main.textContent()).trim();
   } catch {
     const error = await page.evaluate(() => document.getElementById('error-message')?.textContent.trim());
     return error || 'Milo did not finish decorating within 30 seconds';
   }
+  // The play function and the afterEach hooks run after Milo has decorated the story.
+  const finished = await page.waitForFunction(
+    () => window.__STORYBOOK_PREVIEW__?.currentRender?.phase === 'finished',
+    null,
+    { timeout: 30000 },
+  ).then(() => true, () => false);
+  const [playError] = await page.evaluate(() => window.playErrors);
+  if (playError) return `play function failed: ${playError.split('\n').find(Boolean)}`;
+  return finished ? null : 'the play function or checks did not finish within 30 seconds';
 }
 
 function report(heading, lines) {
@@ -187,6 +214,7 @@ const base = `http://localhost:${server.address().port}`;
 const proxy = process.env.HTTPS_PROXY;
 const browser = await chromium.launch(proxy ? { proxy: { server: proxy, bypass: 'localhost' } } : {});
 const context = await browser.newContext();
+await context.addInitScript(recordPlayErrors);
 if (proxy) await context.route((url) => url.hostname !== 'localhost', fetchThroughNode);
 let found = 0;
 
@@ -230,7 +258,7 @@ try {
     const lines = renders
       .map(({ branch: b, story: s }, i) => b === branch && errors[i] && `${s.title} › ${s.name} (${s.id}): ${errors[i]}`)
       .filter(Boolean);
-    found += report(`Stories that don't render on ${branch} (${lines.length} of ${total})`, lines);
+    found += report(`Stories that fail on ${branch} (${lines.length} of ${total})`, lines);
   });
 } finally {
   await browser.close();
