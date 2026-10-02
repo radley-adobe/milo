@@ -78,13 +78,13 @@ Milo's code and its library pages change independently of this folder. `npm run 
 - Library pages whose examples changed since `stories/library-examples.json` was written. `npm run check -- --update` rewrites that file once the stories match the pages again.
 - Stories whose `main` element doesn't reach `data-milo-status="loaded"` within 30 seconds. Merch Offers stories never finish loading in a headless browser, so the check skips them.
 
-It installs no browser. Run `npx playwright install chromium --only-shell` once.
+It installs no browser. Run `npx playwright install chromium --only-shell` once. When `HTTPS_PROXY` is set, as in a Claude Code cloud session, the check sends the browser's requests through Node's `fetch`, because Chromium doesn't trust the proxy's certificate.
 
-The `/rewrite` Claude Code skill (`.claude/skills/rewrite/` at the repo root) merges upstream Milo, runs the check, updates the stories it flags, and opens a pull request against `dev`.
+The `/rewrite` Claude Code skill (`.claude/skills/rewrite/` at the repo root) merges upstream Milo, runs the check and updates the stories it flags. When the check passes, it merges the changes into `dev` through a pull request. When it fails, it pushes a `claude/rewrite-failed-<date>` branch whose last commit is its report. `.github/workflows/milo-storybook-rewrite-failed.yml` fails on that push, so GitHub emails the report to the account that pushed it. A claude.ai routine runs `/rewrite` every weekday at 11:00 UTC.
 
 ## Branches and deployment
 
-- `dev` is the default branch: Milo's `stage` plus this folder, `.github/workflows/milo-storybook-proxy.yml` and `.claude/skills/rewrite/`
+- `dev` is the default branch: Milo's `stage` plus this folder, `.claude/skills/rewrite/` and two workflows, `.github/workflows/milo-storybook-proxy.yml` and `.github/workflows/milo-storybook-rewrite-failed.yml`
 - The workflow runs on every push to `dev`, builds Storybook and deploys it to GitHub Pages
 - A daily scheduled run first merges `adobecom/milo` `stage` into `dev`, so the site tracks current Milo
 

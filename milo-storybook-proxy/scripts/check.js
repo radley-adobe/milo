@@ -51,11 +51,11 @@ function serve() {
 }
 
 // Runs fn on each item, `size` at a time, each worker with its own browser page.
-async function pool(browser, items, size, fn) {
+async function pool(context, items, size, fn) {
   const results = [];
   let next = 0;
   await Promise.all(Array.from({ length: size }, async () => {
-    const page = await browser.newPage();
+    const page = await context.newPage();
     while (next < items.length) {
       const i = next;
       next += 1;
@@ -119,8 +119,36 @@ function exampleChanges(title, saved = [], current = []) {
   return lines;
 }
 
+// Behind a TLS-intercepting proxy, such as a Claude Code cloud sandbox's, Node trusts the
+// proxy's certificate and Chromium doesn't. Sends the browser's external requests through
+// Node's fetch instead.
+async function fetchThroughNode(route) {
+  const request = route.request();
+  try {
+    const headers = request.headers();
+    ['host', 'connection', 'content-length', 'accept-encoding'].forEach((h) => delete headers[h]);
+    const resp = await fetch(request.url(), {
+      method: request.method(),
+      headers,
+      body: request.postDataBuffer() ?? undefined,
+      signal: AbortSignal.timeout(15000),
+    });
+    // Node's fetch has already decompressed the body.
+    const responseHeaders = Object.fromEntries(resp.headers);
+    delete responseHeaders['content-encoding'];
+    delete responseHeaders['content-length'];
+    await route.fulfill({
+      status: resp.status,
+      headers: responseHeaders,
+      body: Buffer.from(await resp.arrayBuffer()),
+    });
+  } catch {
+    await route.abort('failed');
+  }
+}
+
 async function renderStory(page, base, id) {
-  await page.goto(`${base}/iframe.html?id=${id}&viewMode=story`);
+  await page.goto(`${base}/iframe.html?id=${id}&viewMode=story`, { waitUntil: 'domcontentloaded' });
   try {
     const main = await page.waitForSelector('main[data-milo-status]', { timeout: 30000 });
     if (await main.getAttribute('data-milo-status') === 'loaded') return null;
@@ -150,7 +178,10 @@ const storyTitles = new Set(stories.map((s) => s.title));
 
 const server = await serve();
 const base = `http://localhost:${server.address().port}`;
-const browser = await chromium.launch();
+const proxy = process.env.HTTPS_PROXY;
+const browser = await chromium.launch(proxy ? { proxy: { server: proxy, bypass: 'localhost' } } : {});
+const context = await browser.newContext();
+if (proxy) await context.route((url) => url.hostname !== 'localhost', fetchThroughNode);
 let found = 0;
 
 try {
@@ -164,7 +195,7 @@ try {
   );
 
   const withPage = storyFiles.filter((f) => f.page).sort((a, b) => a.title.localeCompare(b.title));
-  const page = await browser.newPage();
+  const page = await context.newPage();
   await page.goto(`${base}/iframe.html`);
   const pages = await readExamples(page, base, withPage.map((f) => f.page));
   await page.close();
@@ -182,7 +213,7 @@ try {
   )));
 
   const rendered = stories.filter((s) => !NO_RENDER.includes(s.title));
-  const errors = await pool(browser, rendered, WORKERS, (p, s) => renderStory(p, base, s.id));
+  const errors = await pool(context, rendered, WORKERS, (p, s) => renderStory(p, base, s.id));
   found += report(
     `Stories that don't render (${errors.filter(Boolean).length} of ${rendered.length})`,
     rendered.map((s, i) => errors[i] && `${s.title} › ${s.name} (${s.id}): ${errors[i]}`).filter(Boolean),

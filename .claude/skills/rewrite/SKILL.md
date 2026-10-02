@@ -2,8 +2,9 @@
 name: rewrite
 description: >
   Brings milo-storybook-proxy up to date with upstream Milo. Merges adobecom/milo stage, runs
-  the story check, updates the stories that it flags, and opens a pull request against dev.
-  Runs unattended, so it can be scheduled daily.
+  the story check, updates the stories that it flags, and merges them into dev through a pull
+  request when the check passes. A failed run pushes a report branch, and GitHub emails the
+  report. Runs unattended, so it can be scheduled daily.
 disable-model-invocation: true
 ---
 
@@ -13,14 +14,15 @@ Updates the Storybook stories in `milo-storybook-proxy/` after upstream Milo cha
 `milo-storybook-proxy/README.md` first: it defines how stories are written, and its Known limits
 list what is expected to be missing or broken.
 
-The run is unattended. Don't stop to ask questions. Anything that needs a person goes in the
-pull request body, or in the final message when there is no pull request.
+The run is unattended. Don't stop to ask questions. Anything that needs a person makes the run
+fail, and goes in the failure report (step 4).
 
 ## Rules
 
 - Never edit files under `libs/` or anywhere else outside `milo-storybook-proxy/`. Milo's code
   comes only from the upstream merge
-- Never push to `dev` directly. Changes go through a pull request that a person merges
+- Never push to `dev` directly. Story changes reach `dev` through a pull request, which the run
+  merges only when it passed (step 4)
 - Follow the README's story conventions and match the existing story files
 
 ## 1. Get upstream Milo
@@ -34,9 +36,9 @@ git log --oneline HEAD..upstream/stage
 ```
 
 If the log is empty, `dev` already has the latest Milo. The GitHub workflow merges it every day.
-Otherwise, run `git merge --no-edit upstream/stage`. On a merge conflict, run `git merge --abort`, stop
-and report the conflicting files. Upstream never touches this folder, so a conflict needs a
-person.
+Otherwise, run `git merge --no-edit upstream/stage`. On a merge conflict, run `git merge --abort` and
+finish as a failed run (step 4), listing the conflicting files. Upstream never touches this
+folder, so a conflict needs a person.
 
 List the upstream commits from the last two days that touch block code. The report uses them to
 explain story changes:
@@ -65,8 +67,8 @@ output ending in "All stories match Milo and render." means there is nothing to 
 step 4.
 
 If the check can't fetch `library.json` or library pages, or more than a quarter of the stories
-don't render, the cause is the network, not the stories. Don't change any story. Stop and report
-the failing hosts, found with `curl -sI https://milo.adobe.com/docs/library/library.json` and
+don't render, the cause is the network, not the stories. Don't change any story. Finish as a
+failed run (step 4), listing the failing hosts found with `curl -sI https://milo.adobe.com/docs/library/library.json` and
 `curl -sI <page>.plain.html`.
 
 ## 3. Update the stories
@@ -90,7 +92,8 @@ Handle each section of the check output:
 - **Stories that don't render.** Open the story's page with `curl -s <page>.plain.html` to see if
   it moved, lost the block, or has fewer blocks than `index`. Then check the upstream log for a
   change to the block or to a function the helpers call. Fix the story or `src/milo.js`. If the
-  live page is broken and nothing in this folder can fix it, leave the story alone and report it.
+  live page is broken and nothing in this folder can fix it, leave the story alone. The run then
+fails with that finding.
   If a story can never render in a headless browser, add its title to `NO_RENDER` in
   `scripts/check.js` and its reason to README › Known limits.
 
@@ -101,14 +104,20 @@ npm run build
 npm run check -- --update
 ```
 
-Repeat until the only findings left are ones you are reporting for a person. Use `--update` only
+Repeat until nothing is left, or only findings that need a person. Use `--update` only
 once the stories match the library pages, because it records the current examples as handled.
 
-## 4. Report
+## 4. Finish
 
-If `git status` and `git log origin/dev..HEAD -- milo-storybook-proxy` show no changes in this
-folder, there's nothing to open. Run `git switch dev` and `git branch -D claude/rewrite-<date>`. Report
-that the stories are current, with the number of upstream commits checked.
+The run passed if the build succeeds and `npm run check` ends with "All stories match Milo and
+render." Anything else is a failed run: a merge conflict, a network failure, findings left for a
+person, or a pull request that can't be opened or merged.
+
+### Passed
+
+If `git status` shows no changes in this folder, there's nothing to merge. Run `git switch dev`
+and `git branch -D claude/rewrite-<date>`. Report that the stories are current, with the number
+of upstream commits checked.
 
 Otherwise, commit the changes in this folder:
 
@@ -118,22 +127,42 @@ Update stories for Milo <YYYY-MM-DD>
 <one line per change: which stories changed and the upstream commit or library page change that caused it>
 ```
 
-Push the branch and open a pull request against `dev` on `radley-adobe/milo`, never against
-adobecom/milo. In a scheduled cloud run, open it with the GitHub access the session has. In a
-local session, `gh` targets the fork's upstream unless the repo and base are set, and the pull
-request is opened as radley-adobe:
+Push the branch, open a pull request against `dev` on `radley-adobe/milo`, never against
+adobecom/milo, and merge it. The merge triggers the workflow that deploys the site.
 
 ```sh
 git push -u origin HEAD
-gh auth switch --user radley-adobe
-gh pr create --repo radley-adobe/milo --base dev --title "Update stories for Milo <YYYY-MM-DD>" --body-file <file>
-gh auth switch --user radley
+gh pr create --repo radley-adobe/milo --base dev --head claude/rewrite-<date> --title "Update stories for Milo <YYYY-MM-DD>" --body-file <file>
+gh pr merge <url> --repo radley-adobe/milo --merge --delete-branch
 ```
+
+`gh` is already signed in on a scheduled cloud run. In a local session, run
+`gh auth switch --user radley-adobe` before these commands and `gh auth switch --user radley`
+after them.
 
 The pull request body lists:
 
 - The stories added, removed and changed, each with its cause
-- Findings left for a person, with what was tried
 - The upstream commits from step 1 that touch block code
 
-End with the pull request URL.
+End with the pull request URL. If the merge fails, the run failed: report it as below.
+
+### Failed
+
+Don't open a pull request. Commit any story changes made so far, add the report as an empty
+commit, and push the branch under a failure name. A push to a `claude/rewrite-failed-*` branch
+runs `.github/workflows/milo-storybook-rewrite-failed.yml`, which fails on purpose so that GitHub
+emails the report to the account that pushed.
+
+```sh
+git add milo-storybook-proxy && git commit -m "Story changes from a failed /rewrite run"   # only if there are changes
+git commit --allow-empty -F <report file>
+git branch -m claude/rewrite-failed-$(date -u +%F-%H%M)
+git push -u origin HEAD
+```
+
+The report's first line is `/rewrite failed: <cause in a few words>`. The rest lists what
+failed with the output that shows it, what was tried, and the story changes already committed on
+the branch.
+
+End with the branch name and the report.
