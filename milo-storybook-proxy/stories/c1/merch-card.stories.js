@@ -1,7 +1,8 @@
 import { LIBRARY, renderPageBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c1/merch-card';
+import variants from 'virtual:variants/c1/merch-card';
 
-export default { title: 'C1/Merch Card', parameters: { cssprops } };
+export default { title: 'C1/Merch Card', parameters: { cssprops }, argTypes: { variants } };
 
 const library = `${LIBRARY}/merch-card`;
 

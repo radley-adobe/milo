@@ -1,7 +1,8 @@
 import { HOMEPAGE, renderPageBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/router-marquee';
+import variants from 'virtual:variants/c2/router-marquee';
 
-export default { title: 'C2/Router Marquee', parameters: { cssprops } };
+export default { title: 'C2/Router Marquee', parameters: { cssprops }, argTypes: { variants } };
 
 export const Homepage = {
   name: 'adobe.com: Homepage',

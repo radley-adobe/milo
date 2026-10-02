@@ -1,7 +1,8 @@
 import { LIBRARY, renderPageBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c1/hero-marquee';
+import variants from 'virtual:variants/c1/hero-marquee';
 
-export default { title: 'C1/Hero Marquee', parameters: { cssprops } };
+export default { title: 'C1/Hero Marquee', parameters: { cssprops }, argTypes: { variants } };
 
 const library = `${LIBRARY}/hero-marquee`;
 

@@ -2,6 +2,7 @@ import { mergeConfig } from 'vite';
 import cssprops from './cssprops.js';
 import LIBS from './libs.js';
 import designTokens from './tokens.js';
+import variants from './variants.js';
 
 export default {
   framework: '@storybook/html-vite',
@@ -18,5 +19,5 @@ export default {
   ],
   // Milo's libs/ is served as-is, never bundled or modified.
   staticDirs: [{ from: LIBS, to: '/libs' }],
-  viteFinal: (config) => mergeConfig(config, { plugins: [cssprops(), designTokens()] }),
+  viteFinal: (config) => mergeConfig(config, { plugins: [cssprops(), variants(), designTokens()] }),
 };

@@ -8,10 +8,10 @@ import LIBS from './libs.js';
 
 const PREFIX = 'virtual:cssprops/';
 const GLOBAL_CSS = { c1: 'styles/styles.css', c2: 'c2/styles/styles.css' };
-const BLOCKS = { c1: 'blocks', c2: 'c2/blocks' };
+export const BLOCKS = { c1: 'blocks', c2: 'c2/blocks' };
 const ROOT_SELECTORS = [':root', 'html', 'body'];
 
-const parse = (path) => postcss.parse(readFileSync(`${LIBS}${path}`, 'utf8'));
+export const parse = (path) => postcss.parse(readFileSync(`${LIBS}${path}`, 'utf8'));
 const clean = (value) => value.replace(/\s+/g, ' ').trim();
 const sorted = (names) => [...names].sort();
 const groupByName = (list) => list.reduce((map, d) => map.set(d.name, [...(map.get(d.name) ?? []), d]), new Map());
