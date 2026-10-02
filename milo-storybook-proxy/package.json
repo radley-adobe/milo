@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "storybook": "storybook dev -p 6006",
-    "build": "storybook build -o dist"
+    "build": "storybook build -o dist",
+    "check": "node scripts/check.js"
   },
   "devDependencies": {
     "@ljcl/storybook-addon-cssprops": "^6.1.0",
@@ -12,6 +13,7 @@
     "@storybook/addon-docs": "^10.6.1",
     "@storybook/html-vite": "^10.6.1",
     "@whitespace/storybook-addon-html": "^9.0.0",
+    "playwright": "^1.63.0",
     "postcss": "^8.5.28",
     "prettier": "^3.9.9",
     "storybook": "^10.6.1",

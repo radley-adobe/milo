@@ -69,9 +69,22 @@ When decoration finishes, the story's `main` element gets `data-milo-status="loa
 - The Design Tokens tab and the C2 › Design Tokens Docs page list every token in Milo's `libs/c2/styles/deps/tokens.*.css`, one category per group in those files. Semantic colors have a light and a dark category, and responsive tokens one per breakpoint. The addon reads only tokens inside `@tokens` comment blocks, so `.storybook/tokens.js` writes an annotated copy to `generated/tokens/tokens.css` when Storybook starts, with each value resolved and the value Milo declares as its description. On the Docs page, right-clicking a token lists the C2 blocks whose CSS reads it.
 - The Design Tokens tab also writes each token it shows onto the story's `html` element, and `.storybook/preview.js` removes those values until they're edited
 
+## Keep stories current
+
+Milo's code and its library pages change independently of this folder. `npm run check` reads the built site in `dist/`, so run `npm run build` first. It reports:
+
+- Library blocks in https://milo.adobe.com/docs/library/library.json with no story, apart from the pages listed in Known limits
+- Story files for blocks the library no longer lists
+- Library pages whose examples changed since `stories/library-examples.json` was written. `npm run check -- --update` rewrites that file once the stories match the pages again.
+- Stories whose `main` element doesn't reach `data-milo-status="loaded"` within 30 seconds. Merch Offers stories never finish loading in a headless browser, so the check skips them.
+
+It installs no browser. Run `npx playwright install chromium --only-shell` once.
+
+The `/rewrite` Claude Code skill (`.claude/skills/rewrite/` at the repo root) merges upstream Milo, runs the check, updates the stories it flags, and opens a pull request against `dev`.
+
 ## Branches and deployment
 
-- `dev` is the default branch: Milo's `stage` plus this folder and `.github/workflows/milo-storybook-proxy.yml`
+- `dev` is the default branch: Milo's `stage` plus this folder, `.github/workflows/milo-storybook-proxy.yml` and `.claude/skills/rewrite/`
 - The workflow runs on every push to `dev`, builds Storybook and deploys it to GitHub Pages
 - A daily scheduled run first merges `adobecom/milo` `stage` into `dev`, so the site tracks current Milo
 
