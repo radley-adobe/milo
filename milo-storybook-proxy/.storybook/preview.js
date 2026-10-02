@@ -114,7 +114,7 @@ export default {
             'Typography', ['Font Size', 'Letter Spacing', 'Line Height'],
             'Spacing', ['Viewport & Section Padding', 'Layout', 'Other'],
           ],
-        ]], 'C1'],
+        ]]],
       },
     },
     branches: { hostname: `${site.host}${site.pathname.replace(/\/$/, '')}` },

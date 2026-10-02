@@ -1,5 +1,5 @@
 // Checks the stories against current Milo and its block library, and prints what needs
-// updating: library blocks and C2 blocks with no story, stories for blocks the library no longer lists,
+// updating: C2 library blocks and C2 blocks with no story, stories for blocks the library no longer lists,
 // library pages whose examples changed, and stories that don't render or whose play function
 // fails, on each Milo branch's build. Reads the built site in dist/, so run `npm run build` first. Exits with 1 when it finds
 // anything.
@@ -20,9 +20,8 @@ const WORKERS = 6;
 // Each Milo branch's build, by its folder in dist/. scripts/build.js writes both.
 const BUILDS = { stage: '', main: 'main/' };
 
-// Library blocks with no story. README › Known limits says why.
-const NO_STORY = ['Section Metadata', 'Block Group', 'Card Metadata', 'Graybox Review',
-  'Mobile App Banner', 'Form', 'SUSI Light Login'];
+// C2 library blocks with no story. README › Known limits says why.
+const NO_STORY = ['Section Metadata'];
 
 // Folders in libs/c2/blocks/ with no story. README › Known limits says why.
 const NO_C2_STORY = ['card-metadata', 'email-collection-c2', 'firefly-globe', 'floating-cta',
@@ -30,7 +29,7 @@ const NO_C2_STORY = ['card-metadata', 'email-collection-c2', 'firefly-globe', 'f
 
 // Stories that never finish rendering in a headless browser, so the check skips them. README ›
 // Known limits says why.
-const NO_RENDER = ['C1/Merch Offers', 'C2/Tabs'];
+const NO_RENDER = ['C2/Tabs'];
 
 const TYPES = {
   '.html': 'text/html',
@@ -208,9 +207,9 @@ const stories = Object.values(index.entries).filter((e) => e.type === 'story');
 const storyFiles = await readStoryFiles();
 const savedExamples = JSON.parse(await readFile(EXAMPLES, 'utf8').catch(() => '{}'));
 const library = await (await fetch(LIBRARY_JSON)).json();
-const libraryTitles = ['c1', 'c2'].flatMap((c) => library[`${c}-blocks`].data
+const libraryTitles = library['c2-blocks'].data
   .filter(({ name }) => !NO_STORY.includes(name))
-  .map(({ name }) => `${c.toUpperCase()}/${name}`));
+  .map(({ name }) => `C2/${name}`);
 const storyTitles = new Set(stories.map((s) => s.title));
 // C2 stories are named after their block's folder: stories/c2/<block>.stories.js.
 const c2Blocks = (await readdir(new URL('libs/c2/blocks/', DIST), { withFileTypes: true }))
