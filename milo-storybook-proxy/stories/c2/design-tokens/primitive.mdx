@@ -1,0 +1,22 @@
+import { Meta, Subheading } from '@storybook/addon-docs/blocks';
+import { DesignTokenDocBlock } from 'storybook-design-token';
+import { categories, presenters, usageMap } from 'virtual:design-tokens';
+
+<Meta title="C2/Design Tokens/Primitive" />
+
+# Primitive tokens
+
+Every token in Milo's `libs/c2/styles/deps/tokens.primitives.css`, in the groups that file uses. Values are resolved. When Milo declares a token as another token, the description shows that reference.
+
+Right-click a token to see which C2 blocks read it in their CSS.
+
+{categories.filter((name) => name.startsWith('Primitive / ')).map((name) => (
+  <div key={name}>
+    <Subheading>{name.replace('Primitive / ', '')}</Subheading>
+    <DesignTokenDocBlock
+      categoryName={name}
+      usageMap={usageMap}
+      viewType={presenters[name] === 'Color' ? 'card' : 'table'}
+    />
+  </div>
+))}

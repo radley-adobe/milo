@@ -11,9 +11,9 @@ import LIBS from './libs.js';
 // finds files in. The copy gives each token's value fully resolved, with the value Milo declares
 // as its description.
 //
-// `import { categories, usageMap, values } from 'virtual:design-tokens'` gives the category names
-// in order, the C2 blocks whose CSS reads each token, and every value each token has across the
-// files.
+// `import { categories, presenters, usageMap, values } from 'virtual:design-tokens'` gives the
+// category names in order, the addon presenter each category uses, the C2 blocks whose CSS reads
+// each token, and every value each token has across the files.
 
 const ID = 'virtual:design-tokens';
 const DEPS = `${LIBS}c2/styles/deps/`;
@@ -81,6 +81,7 @@ function scan() {
   }));
 
   const categories = [];
+  const presenters = {};
   const values = {};
   const blocks = FILES.flatMap(({ name, prefix, suffix, scope }) => {
     const { width } = parsed[name];
@@ -92,6 +93,7 @@ function scan() {
       const tokens = group.tokens.map((t) => ({ ...t, resolved: resolve(t.value, scopeMap) }));
       const type = presenter(group.name, tokens.map((t) => t.resolved));
       categories.push(category);
+      if (type) presenters[category] = type;
       tokens.forEach((t) => { values[t.name] = [...new Set([...(values[t.name] ?? []), t.resolved])]; });
       const lines = tokens.map((t) => {
         const description = [t.resolved === t.value ? '' : t.value, t.note].filter(Boolean).join(' · ');
@@ -112,7 +114,7 @@ function scan() {
     });
   });
 
-  return { css, categories, usageMap, values };
+  return { css, categories, presenters, usageMap, values };
 }
 
 export default function designTokens() {
@@ -125,8 +127,9 @@ export default function designTokens() {
     resolveId: (id) => (id === ID ? `\0${ID}` : null),
     load(id) {
       if (id !== `\0${ID}`) return null;
-      const { categories, usageMap, values } = scan();
+      const { categories, presenters, usageMap, values } = scan();
       return `export const categories = ${JSON.stringify(categories)};
+export const presenters = ${JSON.stringify(presenters)};
 export const usageMap = ${JSON.stringify(usageMap)};
 export const values = ${JSON.stringify(values)};`;
     },

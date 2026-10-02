@@ -1,0 +1,24 @@
+import { Meta, Subheading } from '@storybook/addon-docs/blocks';
+import { DesignTokenDocBlock } from 'storybook-design-token';
+import { categories, presenters, usageMap } from 'virtual:design-tokens';
+
+<Meta title="C2/Design Tokens/Semantic" />
+
+# Semantic tokens
+
+Every token in Milo's `libs/c2/styles/deps/tokens.semantic*.css`, in the groups those files use. Values are resolved. When Milo declares a token as another token, the description shows that reference.
+
+Semantic colors have a light and a dark set.
+
+Right-click a token to see which C2 blocks read it in their CSS.
+
+{categories.filter((name) => name.startsWith('Semantic / ')).map((name) => (
+  <div key={name}>
+    <Subheading>{name.replace('Semantic / ', '')}</Subheading>
+    <DesignTokenDocBlock
+      categoryName={name}
+      usageMap={usageMap}
+      viewType={presenters[name] === 'Color' ? 'card' : 'table'}
+    />
+  </div>
+))}
