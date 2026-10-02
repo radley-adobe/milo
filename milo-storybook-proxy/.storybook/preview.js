@@ -102,7 +102,15 @@ export default {
     // Each story on a Docs page gets its own iframe, so Milo's page styles don't apply to the
     // Docs page itself. The table of contents lists a page's h3 headings.
     docs: { story: { inline: false, iframeHeight: '600px' }, toc: true },
-    options: { storySort: { order: ['C2', ['Design Tokens', ['Primitive', 'Semantic', 'Responsive']], 'C1'] } },
+    options: {
+      storySort: {
+        order: ['C2', ['Design Tokens', [
+          'Primitive', ['Color', 'Font', 'Spacing', 'Border', 'Effects'],
+          'Semantic', ['Color', 'Font', 'Spacing', 'Border', 'Effects'],
+          'Responsive', ['Typography', 'Spacing'],
+        ]], 'C1'],
+      },
+    },
     branches: { hostname: `${site.host}${site.pathname.replace(/\/$/, '')}` },
     // Stories render live pages, so they have no args to save to a story file. Without this,
     // setting the Variants control to the authored variants offers to save them.

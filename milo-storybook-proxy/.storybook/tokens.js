@@ -11,9 +11,9 @@ import LIBS from './libs.js';
 // finds files in. The copy gives each token's value fully resolved, with the value Milo declares
 // as its description.
 //
-// `import { categories, presenters, usageMap, values } from 'virtual:design-tokens'` gives the
-// category names in order, the addon presenter each category uses, the C2 blocks whose CSS reads
-// each token, and every value each token has across the files.
+// `import { pages, usageMap, values } from 'virtual:design-tokens'` gives the categories on each
+// Design Tokens Docs page, the C2 blocks whose CSS reads each token, and every value each token
+// has across the files.
 
 const ID = 'virtual:design-tokens';
 const DEPS = `${LIBS}c2/styles/deps/`;
@@ -46,6 +46,29 @@ const PRESENTERS = [
   [/Line Height$/, 'LineHeight'],
   [/Letter Spacing$/, 'LetterSpacing'],
 ];
+
+// The Docs page each group is on, by the file's prefix and the group's name. Each page is named
+// `<prefix> / <page>`, such as `Primitive / Color`.
+const PAGES = {
+  Primitive: [
+    ['Color', /^Color\b/],
+    ['Font', /^Font\b/],
+    ['Spacing', /^Spacing$/],
+    ['Border', /^Border\b/],
+    ['Effects', /^(Opacity|Shadow|Blur)$/],
+  ],
+  Semantic: [
+    ['Color', /^(Color\b|Other$)/],
+    ['Font', /^Font\b/],
+    ['Spacing', /^(Spacing|Layout)$/],
+    ['Border', /^Border\b/],
+    ['Effects', /^(Opacity|Blur)$/],
+  ],
+  Responsive: [
+    ['Typography', /^Typography\b/],
+    ['Spacing', /^(Viewport & Section Padding|Layout|Other)$/],
+  ],
+};
 
 // The addon's presenter for a group, or none. A group named Other gets one only when all its
 // values are colors or all are lengths.
@@ -80,20 +103,21 @@ function scan() {
     return [name, { groups: groups(css), width }];
   }));
 
-  const categories = [];
-  const presenters = {};
+  const pages = {};
   const values = {};
   const blocks = FILES.flatMap(({ name, prefix, suffix, scope }) => {
     const { width } = parsed[name];
     const scopeMap = new Map([...scope, name].flatMap((n) => parsed[n].groups.flatMap((g) => g.tokens))
       .map((t) => [t.name, t.value]));
-    const label = suffix && `${suffix}${width ? `, ${width} and up` : ''}`;
+    const label = suffix ? ` (${suffix}${width ? `, ${width} and up` : ''})` : '';
     return parsed[name].groups.map((group) => {
-      const category = [prefix, group.name].join(' / ') + (label ? ` (${label})` : '');
+      const category = `${prefix} / ${group.name}${label}`;
       const tokens = group.tokens.map((t) => ({ ...t, resolved: resolve(t.value, scopeMap) }));
       const type = presenter(group.name, tokens.map((t) => t.resolved));
-      categories.push(category);
-      if (type) presenters[category] = type;
+      const page = PAGES[prefix].find(([, pattern]) => pattern.test(group.name))?.[0];
+      if (!page) throw new Error(`No Design Tokens page for ${category}. Add its group to PAGES in .storybook/tokens.js.`);
+      const heading = `${group.name.replace(`${page} / `, '')}${label}`;
+      (pages[`${prefix} / ${page}`] ??= []).push({ category, heading, presenter: type });
       tokens.forEach((t) => { values[t.name] = [...new Set([...(values[t.name] ?? []), t.resolved])]; });
       const lines = tokens.map((t) => {
         const description = [t.resolved === t.value ? '' : t.value, t.note].filter(Boolean).join(' · ');
@@ -114,7 +138,7 @@ function scan() {
     });
   });
 
-  return { css, categories, presenters, usageMap, values };
+  return { css, pages, usageMap, values };
 }
 
 export default function designTokens() {
@@ -127,9 +151,8 @@ export default function designTokens() {
     resolveId: (id) => (id === ID ? `\0${ID}` : null),
     load(id) {
       if (id !== `\0${ID}`) return null;
-      const { categories, presenters, usageMap, values } = scan();
-      return `export const categories = ${JSON.stringify(categories)};
-export const presenters = ${JSON.stringify(presenters)};
+      const { pages, usageMap, values } = scan();
+      return `export const pages = ${JSON.stringify(pages)};
 export const usageMap = ${JSON.stringify(usageMap)};
 export const values = ${JSON.stringify(values)};`;
     },
