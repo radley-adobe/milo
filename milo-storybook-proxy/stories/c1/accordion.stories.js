@@ -1,7 +1,22 @@
-import { LIBRARY, renderPageBlock } from '../../src/milo.js';
+import { expect } from 'storybook/test';
+import { LIBRARY, renderPageBlock, waitForMilo } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c1/accordion';
+import variants from 'virtual:variants/c1/accordion';
 
-export default { title: 'C1/Accordion', parameters: { cssprops } };
+export default {
+  title: 'C1/Accordion',
+  parameters: { cssprops },
+  argTypes: { variants },
+  // Opens the first closed item.
+  play: async (context) => {
+    await waitForMilo(context);
+    await expect(context.canvasElement.querySelector('main').dataset.miloStatus).toBe('loaded');
+    const trigger = context.canvasElement.querySelector('.accordion-trigger[aria-expanded="false"]');
+    await context.userEvent.click(trigger);
+    await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    await expect(document.getElementById(trigger.getAttribute('aria-controls'))).toBeVisible();
+  },
+};
 
 const library = `${LIBRARY}/accordion`;
 

@@ -43,15 +43,18 @@ For C2 blocks, pass `{ foundation: 'c2' }`. This sets the `foundation` metadata 
 
 For a block with no usable live page, `renderBlock(html)` decorates inline authored markup instead: a `div` whose first class is the block name, one `div` per row and one `div` per cell. Milo's test mocks in `test/blocks/<name>/mocks/` show this markup for most blocks.
 
-To fill the CSS Custom Properties tab, import the block's variables from `virtual:cssprops/<c1|c2>/<block>` and set them as the `cssprops` parameter:
+To fill the CSS Custom Properties and Controls tabs, import the block's variables from `virtual:cssprops/<c1|c2>/<block>` and its variants from `virtual:variants/<c1|c2>/<block>`, and set them as the `cssprops` parameter and the `variants` argType:
 
 ```js
 import cssprops from 'virtual:cssprops/c1/accordion';
+import variants from 'virtual:variants/c1/accordion';
 
-export default { title: 'C1/Accordion', parameters: { cssprops } };
+export default { title: 'C1/Accordion', parameters: { cssprops }, argTypes: { variants } };
 ```
 
-Storybook merges a file's parameters into each of its stories, so in a file whose stories render different blocks, set `cssprops` on each story instead.
+Storybook merges a file's parameters and argTypes into each of its stories, so in a file whose stories render different blocks, set `cssprops` and `variants` on each story instead.
+
+A play function runs after Storybook renders the story, before Milo has decorated it. Start it with `await waitForMilo(context)` from `src/milo.js`.
 
 Placeholders and other site content Milo looks up resolve against https://milo.adobe.com.
 
@@ -68,6 +71,10 @@ When decoration finishes, the story's `main` element gets `data-milo-status="loa
 - Editing a value in that tab applies it to the story's `body`, so it has no visible effect on a variable the block sets on its own elements. The addon writes every listed value onto the `body` when the tab opens and saves them in localStorage. `.storybook/preview.js` removes the values that haven't been edited, and drops a story's saved values once Milo's CSS changes.
 - The Design Tokens tab and the C2 › Design Tokens Docs pages (Primitive, Semantic and Responsive) list every token in Milo's `libs/c2/styles/deps/tokens.*.css`, one category per group in those files. Semantic colors have a light and a dark category, and responsive tokens one per breakpoint. The addon reads only tokens inside `@tokens` comment blocks, so `.storybook/tokens.js` writes an annotated copy to `generated/tokens/tokens.css` when Storybook starts, with each value resolved and the value Milo declares as its description. On the Docs pages, color categories show as cards and the rest as tables, and right-clicking a token lists the C2 blocks whose CSS reads it.
 - The Design Tokens tab also writes each token it shows onto the story's `html` element, and `.storybook/preview.js` removes those values until they're edited
+- The Controls tab lists the story block's variants as checkboxes: the classes the block's CSS combines with the block's own class, such as `light` from `.marquee.light`. `.storybook/variants.js` reads them. Once Milo has decorated the story, `.storybook/preview.js` checks the ones the block was authored with. Changing a checkbox renders the story again with the new classes, and authored classes that aren't listed stay. Reset controls returns to the authored classes.
+- Variants that only a block's JavaScript reads, such as the accordion's `seo`, aren't listed, and most C2 blocks have none listed. The list can include classes that Milo adds itself, such as `descr-list` or `promobar-ready`.
+- The Actions tab logs each click on a link or button, with its text, `href` and `daa-ll` analytics label, and the `milo:tab:changed`, `milo:modal:loaded` and `milo:modal:closed` events. Links don't navigate away from the story, apart from Milo's modal links and links to a `#` on the same page.
+- The Interactions tab shows the steps of a story's play function. Accordion, Tabs, Carousel and Carousel C2 stories open an item, select the second tab or move to the next slide, and check the result. The Accessibility checks run after the play function, so on these stories they check the state it leaves.
 
 ## Keep stories current
 

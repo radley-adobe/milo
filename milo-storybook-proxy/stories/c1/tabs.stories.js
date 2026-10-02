@@ -1,7 +1,24 @@
-import { LIBRARY, renderLibraryExample } from '../../src/milo.js';
+import { expect } from 'storybook/test';
+import { LIBRARY, renderLibraryExample, waitForMilo } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c1/tabs';
+import variants from 'virtual:variants/c1/tabs';
 
-export default { title: 'C1/Tabs', parameters: { cssprops } };
+export default {
+  title: 'C1/Tabs',
+  parameters: { cssprops },
+  argTypes: { variants },
+  // Selects the second tab. Radio tabs link to their panel with data-control-id.
+  play: async (context) => {
+    await waitForMilo(context);
+    await expect(context.canvasElement.querySelector('main').dataset.miloStatus).toBe('loaded');
+    const tab = context.canvasElement.querySelectorAll('[role="tab"], [role="radio"]')[1];
+    const selected = tab.getAttribute('role') === 'radio' ? 'aria-checked' : 'aria-selected';
+    await context.userEvent.click(tab);
+    await expect(tab).toHaveAttribute(selected, 'true');
+    const panel = document.getElementById(tab.getAttribute('aria-controls') ?? tab.dataset.controlId);
+    await expect(panel).toBeVisible();
+  },
+};
 
 const library = `${LIBRARY}/tabs`;
 

@@ -1,7 +1,8 @@
 import { LIBRARY, renderPageBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c1/editorial-card';
+import variants from 'virtual:variants/c1/editorial-card';
 
-export default { title: 'C1/Editorial Card', parameters: { cssprops } };
+export default { title: 'C1/Editorial Card', parameters: { cssprops }, argTypes: { variants } };
 
 const library = `${LIBRARY}/editorial-card`;
 

@@ -10,6 +10,33 @@ export const HOMEPAGE_FRAGMENTS = 'https://main--upp--adobecom.aem.live/homepage
 
 let utils;
 
+// The story being rendered, set by the beforeEach hook in .storybook/preview.js. The render
+// helpers read its Variants arg and argType from it.
+let story;
+
+// The story's main element, the variants its block shows once the block is fetched, and whether
+// it was rendered with the authored variants.
+let current;
+
+export function setStory(context) {
+  story = context;
+}
+
+// The variants the current story's block shows, or undefined when it has no Variants control.
+export function shownVariants() {
+  return current?.shown;
+}
+
+// Milo decorates a story after Storybook renders it. Waits until the story's main element has a
+// data-milo-status, or 30 seconds pass.
+export async function waitForMilo({ canvasElement }) {
+  const main = canvasElement.querySelector('main');
+  const end = Date.now() + 30000;
+  while (main && !main.dataset.miloStatus && Date.now() < end) {
+    await new Promise((resolve) => { setTimeout(resolve, 100); });
+  }
+}
+
 async function getUtils() {
   if (!utils) {
     utils = await import(/* @vite-ignore */ `${LIBS}/utils/utils.js`);
@@ -80,13 +107,42 @@ function section(...children) {
   return div;
 }
 
+const sameClasses = (a, b) => Array.isArray(a) && Array.isArray(b)
+  && a.length === b.length && a.every((name) => b.includes(name));
+
+// Sets the classes a story's Variants control selects on the first block of its type: the
+// block's name, the authored classes the control doesn't list, then the selected ones. With
+// nothing selected yet, keeps the authored classes and returns the listed ones among them.
+function applyVariants(main, { block, options }, variants) {
+  const el = [...main.querySelectorAll(':scope > div > div')].find((div) => div.classList[0] === block);
+  if (!el) return undefined;
+  const [name, ...authored] = el.classList;
+  if (!variants) return authored.filter((c) => options.includes(c));
+  el.className = [name, ...authored.filter((c) => !options.includes(c)), ...variants].join(' ');
+  return variants;
+}
+
 // Renders sections the way a Milo page would: filled with authored markup, then decorated by
 // loadArea. Errors are shown in place of the story.
+//
+// After a story renders with its authored variants, .storybook/preview.js sets its Variants
+// control to them, and Storybook renders it again. That render returns the same main element,
+// which Storybook's renderer leaves in place.
 function render(getSections, foundation) {
+  const { id, args = {}, argTypes = {} } = story ?? {};
+  if (current?.id === id && current.authored && sameClasses(args.variants, current.shown)) {
+    current.authored = false;
+    return current.main;
+  }
   const main = document.createElement('main');
+  const entry = { id, main, authored: !args.variants };
+  current = entry;
   requestAnimationFrame(async () => {
     try {
       main.append(...await getSections());
+      if (argTypes.variants?.options.length) {
+        entry.shown = applyVariants(main, argTypes.variants, args.variants);
+      }
       setFoundation(foundation);
       const { decorateSVG, loadArea } = await getUtils();
       decorateSvgLinks(main, decorateSVG);

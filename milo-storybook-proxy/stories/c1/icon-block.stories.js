@@ -1,7 +1,8 @@
 import { LIBRARY, renderPageBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c1/icon-block';
+import variants from 'virtual:variants/c1/icon-block';
 
-export default { title: 'C1/IconBlock', parameters: { cssprops } };
+export default { title: 'C1/IconBlock', parameters: { cssprops }, argTypes: { variants } };
 
 const library = `${LIBRARY}/icon-block`;
 
