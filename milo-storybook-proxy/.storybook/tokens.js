@@ -2,6 +2,7 @@ import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import postcss from 'postcss';
 import { resolve } from './cssprops.js';
+import LIBS from './libs.js';
 
 // Vite plugin for the design token addon. The addon reads only tokens inside `@tokens` comment
 // blocks, and Milo's C2 token files have plain group comments such as `/* Color / Blue */`, so
@@ -15,7 +16,6 @@ import { resolve } from './cssprops.js';
 // files.
 
 const ID = 'virtual:design-tokens';
-const LIBS = fileURLToPath(new URL('../../libs/', import.meta.url));
 const DEPS = `${LIBS}c2/styles/deps/`;
 const BLOCKS = `${LIBS}c2/blocks/`;
 const OUT = fileURLToPath(new URL('../generated/tokens/', import.meta.url));

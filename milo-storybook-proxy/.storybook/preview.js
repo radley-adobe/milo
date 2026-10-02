@@ -68,6 +68,12 @@ function dropStaleCssprops(storyId) {
   localStorage.setItem('addon-cssprops', JSON.stringify(saved));
 }
 
+// scripts/build.js builds the default branch at the site's root and each other branch in a
+// folder named after it, and gives each build the branch switcher's state. The switcher links to
+// another build by host and path, so it needs the site's path, such as /milo on GitHub Pages.
+const { currentBranch, defaultBranch } = JSON.parse(import.meta.env.STORYBOOK_BRANCH_SWITCHER_STATE ?? '{}');
+const site = new URL(currentBranch === defaultBranch ? '.' : '..', window.location.href);
+
 export default {
   tags: ['autodocs'],
   parameters: {
@@ -75,6 +81,7 @@ export default {
     // Docs page itself.
     docs: { story: { inline: false, iframeHeight: '600px' } },
     options: { storySort: { order: ['C2', 'C1'] } },
+    branches: { hostname: `${site.host}${site.pathname.replace(/\/$/, '')}` },
   },
   beforeEach: ({ id, parameters }) => {
     cssprops = parameters.cssprops ?? {};
