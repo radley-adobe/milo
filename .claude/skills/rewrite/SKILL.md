@@ -96,6 +96,13 @@ Handle each section of the check output:
   item to open, a tab to select, a slide to move to), add a play function to the default export,
   modeled on Accordion, Tabs or Carousel. A C2 block with no library page renders from `HOMEPAGE_FRAGMENTS`. If it isn't on the
   homepage, it renders from `renderBlock` with markup from `test/blocks/<block>/mocks/`.
+- **C2 blocks with no story.** Add `stories/c2/<block>.stories.js`, titled `C2/` plus the block's
+  name in title case. Find public pages that use the block: the `HOMEPAGE`, `ACROBAT`,
+  `ACROBAT_TEST_FRAGMENTS` and `CC_PRO_TEST_FRAGMENTS` pages in `src/milo.js`, and the test URLs
+  in the descriptions of the upstream pull requests that changed the block. Write one story per
+  page, with `{ metadata: true, foundation: 'c2' }`. With no public page, use `renderBlock` with
+  markup from `test/blocks/<block>/mocks/` or `test/c2/blocks/<block>/mocks/`. With neither, add
+  the folder name to `NO_C2_STORY` in `scripts/check.js` and the reason to README › Known limits.
 - **Stories for blocks the library no longer lists.** If the block folder is gone from `libs/`,
   delete the story file. If the library only renamed the block, change the story title.
 - **Library pages whose examples changed.** The output gives the page's current example list.

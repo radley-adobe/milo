@@ -8,6 +8,17 @@ export const LIBRARY = 'https://main--milo--adobecom.aem.page/docs/library/block
 export const HOMEPAGE = 'https://main--upp--adobecom.aem.live/homepage/index-loggedout';
 export const HOMEPAGE_FRAGMENTS = 'https://main--upp--adobecom.aem.live/homepage/fragments/loggedout/redesign/default';
 
+// The redesigned Acrobat pages, built from C2 blocks.
+export const ACROBAT = 'https://main--da-dc--adobecom.aem.live/acrobat';
+
+// Fragments of the Acrobat and Creative Cloud Pro redesign tests. They hold C2 blocks that no
+// published page uses yet.
+export const ACROBAT_TEST_FRAGMENTS = 'https://main--da-dc--adobecom.aem.live/dc-shared/fragments/tests/2026/q2/ace1205/fragments';
+export const CC_PRO_TEST_FRAGMENTS = 'https://main--da-cc--adobecom.aem.live/cc-shared/fragments/tests/2026/q3/ace1209/fragments';
+
+// Milo's Nala test pages, one folder per block.
+export const NALA = 'https://main--milo--adobecom.aem.page/drafts/nala/blocks';
+
 let utils;
 
 // The story being rendered, set by the beforeEach hook in .storybook/preview.js. The render
@@ -69,6 +80,9 @@ function setFoundation(foundation) {
 
 // Fetches a live page's authored markup, with relative URLs resolved against the page so
 // images and fragments load from its site.
+//
+// Links authored as URLs on the page's own site, such as an SVG background, move to the host the
+// page was read from. Some sites only serve their aem.page host after sign-in.
 async function fetchPage(pageUrl) {
   const resp = await fetch(`${pageUrl}.plain.html`);
   if (!resp.ok) throw new Error(`${resp.status} for ${pageUrl}.plain.html`);
@@ -78,6 +92,13 @@ async function fetchPage(pageUrl) {
       const value = el.getAttribute(attr);
       if (value) el.setAttribute(attr, new URL(value, pageUrl).href);
     });
+  });
+  const { host, hostname } = new URL(pageUrl);
+  const siteHosts = new RegExp(`//${hostname.split('.')[0]}\\.(aem|hlx)\\.(page|live)/`, 'g');
+  doc.querySelectorAll('a').forEach((a) => {
+    if (a.children.length) return;
+    const text = a.textContent.replace(siteHosts, `//${host}/`);
+    if (text !== a.textContent) a.textContent = text;
   });
   return doc;
 }
@@ -156,12 +177,28 @@ function render(getSections, foundation) {
   return main;
 }
 
-// Renders the block at `index` among blocks named `name` on a live page.
-export function renderPageBlock(pageUrl, name, { index = 0, foundation = 'c1' } = {}) {
+// Renders the block at `index` among blocks named `name` on a live page. With `metadata`, the
+// block keeps its section's metadata, such as a background the block's colors depend on.
+export function renderPageBlock(pageUrl, name, { index = 0, metadata = false, foundation = 'c1' } = {}) {
   return render(async () => {
     const block = (await fetchPage(pageUrl)).querySelectorAll(`div.${name}`)[index];
     if (!block) throw new Error(`No .${name} block at index ${index} on ${pageUrl}`);
-    return [section(block)];
+    const sectionMetadata = metadata && block.parentElement.querySelector(':scope > .section-metadata');
+    return [sectionMetadata ? section(block, sectionMetadata) : section(block)];
+  }, foundation);
+}
+
+// Renders the section holding the block at `index` among blocks named `name` on a live page,
+// and the `count - 1` sections after it. Use it for a block that reads the sections after it,
+// such as C2 tabs, whose panels are those sections.
+export function renderPageSections(pageUrl, name, { index = 0, count = 1, foundation = 'c1' } = {}) {
+  return render(async () => {
+    const doc = await fetchPage(pageUrl);
+    const block = doc.querySelectorAll(`div.${name}`)[index];
+    if (!block) throw new Error(`No .${name} block at index ${index} on ${pageUrl}`);
+    const sections = [...doc.body.children];
+    const start = sections.indexOf(block.parentElement);
+    return sections.slice(start, start + count);
   }, foundation);
 }
 
