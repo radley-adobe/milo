@@ -107,7 +107,10 @@ export default {
         order: ['C2', ['Design Tokens', [
           'Primitive', ['Color', 'Font', 'Spacing', 'Border', 'Effects'],
           'Semantic', ['Color', 'Font', 'Spacing', 'Border', 'Effects'],
-          'Responsive', ['Typography', 'Spacing'],
+          'Responsive', [
+            'Typography', ['Font Size', 'Letter Spacing', 'Line Height'],
+            'Spacing', ['Viewport & Section Padding', 'Layout', 'Other'],
+          ],
         ]], 'C1'],
       },
     },

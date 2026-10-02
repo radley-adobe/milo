@@ -48,7 +48,7 @@ const PRESENTERS = [
 ];
 
 // The Docs page each group is on, by the file's prefix and the group's name. Each page is named
-// `<prefix> / <page>`, such as `Primitive / Color`.
+// `<prefix> / <page>`, such as `Primitive / Color` or `Responsive / Typography / Font Size`.
 const PAGES = {
   Primitive: [
     ['Color', /^Color\b/],
@@ -65,8 +65,12 @@ const PAGES = {
     ['Effects', /^(Opacity|Blur)$/],
   ],
   Responsive: [
-    ['Typography', /^Typography\b/],
-    ['Spacing', /^(Viewport & Section Padding|Layout|Other)$/],
+    ['Typography / Font Size', /^Typography \/ Font Size$/],
+    ['Typography / Letter Spacing', /^Typography \/ Letter Spacing$/],
+    ['Typography / Line Height', /^Typography \/ Line Height$/],
+    ['Spacing / Viewport & Section Padding', /^Viewport & Section Padding$/],
+    ['Spacing / Layout', /^Layout$/],
+    ['Spacing / Other', /^Other$/],
   ],
 };
 
@@ -116,8 +120,8 @@ function scan() {
       const type = presenter(group.name, tokens.map((t) => t.resolved));
       const page = PAGES[prefix].find(([, pattern]) => pattern.test(group.name))?.[0];
       if (!page) throw new Error(`No Design Tokens page for ${category}. Add its group to PAGES in .storybook/tokens.js.`);
-      const heading = `${group.name.replace(`${page} / `, '')}${label}`;
-      (pages[`${prefix} / ${page}`] ??= []).push({ category, group: group.name, heading, presenter: type });
+      const heading = `${group.name.replace(`${page.split(' / ')[0]} / `, '')}${label}`;
+      (pages[`${prefix} / ${page}`] ??= []).push({ category, heading, presenter: type });
       tokens.forEach((t) => { values[t.name] = [...new Set([...(values[t.name] ?? []), t.resolved])]; });
       const lines = tokens.map((t) => {
         const description = [t.resolved === t.value ? '' : t.value, t.note].filter(Boolean).join(' · ');
@@ -127,12 +131,6 @@ function scan() {
     });
   });
   const css = `:root {\n${blocks.join('\n\n')}\n}\n`;
-
-  // Responsive pages list each group's breakpoints together, in the order the groups first appear.
-  Object.entries(pages).filter(([page]) => page.startsWith('Responsive / ')).forEach(([, entries]) => {
-    const order = [...new Set(entries.map((e) => e.group))];
-    entries.sort((a, b) => order.indexOf(a.group) - order.indexOf(b.group));
-  });
 
   const usageMap = {};
   readdirSync(BLOCKS).sort().forEach((block) => {
