@@ -39,12 +39,17 @@ Some library examples hold several blocks or span several sections, such as tabs
 
 C2 sections often set a dark style or a background in their section metadata, and the block's colors depend on it. Pass `{ metadata: true }` to `renderPageBlock()` to keep the block's section metadata.
 
+Milo builds a page's global navigation and footer from the content its `gnav-source` and `footer-source` metadata name. `renderGlobalNavigation(source)` and `renderGlobalFooter(source)` set that metadata and build them before and after the story's empty `main` element, where they are on a page. Pass other page metadata the navigation reads as `{ metadata: { 'gnav-dark-font': 'true' } }`. Without `gnav-dark-font`, the redesigned navigation has light text for a dark page top, so those stories set Storybook's dark background with `globals: { backgrounds: { value: 'dark' } }`.
+
+A link to a fragment with a hash, such as `/federal/footer/fragments/regions#langnav`, opens the fragment in a modal. Milo keeps only the link's path and loads it from the current site, apart from paths under `/federal/`, which load from Federal. So only Federal fragments open in a modal in a story.
+
 Most C2 blocks have no library page. Their stories use pages from the adobe.com redesign:
 
 - `HOMEPAGE` is the redesigned homepage, and `HOMEPAGE_FRAGMENTS` is the folder of fragments it is built from
 - `ACROBAT` is the redesigned Acrobat pages
 - `ACROBAT_TEST_FRAGMENTS` and `CC_PRO_TEST_FRAGMENTS` are the fragments of the Acrobat and Creative Cloud Pro redesign tests. They hold blocks that no published page uses yet.
 - `NALA` is Milo's Nala test pages, one folder per block
+- `FEDERAL` is Federal, the site that holds the global navigation and footer content shared by every adobe.com site
 
 Pages from adobe.com sites work through each site's `aem.live` origin, for example `https://main--cc--adobecom.aem.live` or `https://main--bacom--adobecom.aem.live`. Requests to www.adobe.com itself are rejected in headless browsers.
 
@@ -85,7 +90,7 @@ When decoration finishes, the story's `main` element gets `data-milo-status="loa
 - The Controls tab lists the story block's variants as checkboxes: the classes the block's CSS combines with the block's own class, such as `light` from `.marquee.light`. `.storybook/variants.js` reads them. Once Milo has decorated the story, `.storybook/preview.js` checks the ones the block was authored with. Changing a checkbox renders the story again with the new classes, and authored classes that aren't listed stay. Reset controls returns to the authored classes.
 - Variants that only a block's JavaScript reads, such as the accordion's `seo`, aren't listed, and most C2 blocks have none listed. The list can include classes that Milo adds itself, such as `descr-list` or `promobar-ready`.
 - The Actions tab logs each click on a link or button, with its text, `href` and `daa-ll` analytics label, and the `milo:tab:changed`, `milo:modal:loaded` and `milo:modal:closed` events. Links don't navigate away from the story, apart from Milo's modal links and links to a `#` on the same page.
-- The Interactions tab shows the steps of a story's play function. Accordion, Tabs, Carousel and Carousel C2 stories open an item, select the second tab or move to the next slide, and check the result. The Accessibility checks run after the play function, so on these stories they check the state it leaves.
+- The Interactions tab shows the steps of a story's play function. Accordion, Tabs, Carousel and Carousel C2 stories open an item, select the second tab or move to the next slide, and check the result. The C2 Modal story opens its modal. The Accessibility checks run after the play function, so on these stories they check the state it leaves.
 
 ## Keep stories current
 
@@ -132,8 +137,8 @@ git merge upstream/stage
 - Marquee anchors load their arrow and external-link icons from `libs/img/ui/`, which is site content and not in this repo, so those icons are missing
 - Milo loads a video authored as a `media_*.mp4` link from `libs/` on the current site, which only serves it on the site itself, so those videos are missing
 - Globe Gallery fetches its card fragment itself and loads the card images from the current site, so the cards show without images
+- The global navigation's universal navigation, such as sign-in and the app switcher, loads from a CDN that only allows adobe.com origins, so the Global Navigation stories leave it out
 - Some C2 blocks have no story:
   - Card Metadata, Martech Metadata, Modal Metadata, Section Metadata and Visually Hidden show nothing of their own
-  - Global Navigation, Global Footer, Region Nav and Modal are page chrome that Milo builds from page metadata and links, not authored blocks
   - Floating CTA shows only once the page scrolls past an earlier section
   - Email Collection C2, Firefly Globe and Pill Group are on no public page

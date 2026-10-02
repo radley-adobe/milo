@@ -19,6 +19,10 @@ export const CC_PRO_TEST_FRAGMENTS = 'https://main--da-cc--adobecom.aem.live/cc-
 // Milo's Nala test pages, one folder per block.
 export const NALA = 'https://main--milo--adobecom.aem.page/drafts/nala/blocks';
 
+// Federal, the site that holds the content of the global navigation and footer shared by every
+// adobe.com site.
+export const FEDERAL = 'https://main--federal--adobecom.aem.page/federal';
+
 let utils;
 
 // The story being rendered, set by the beforeEach hook in .storybook/preview.js. The render
@@ -76,6 +80,20 @@ function setFoundation(foundation) {
     document.head.append(link);
   }
   link.href = `${LIBS}${foundation === 'c2' ? '/c2' : ''}/styles/styles.css`;
+}
+
+// The page metadata the last story set, removed before the next story renders.
+let pageMetadata = [];
+
+function setPageMetadata(metadata) {
+  pageMetadata.forEach((meta) => meta.remove());
+  pageMetadata = Object.entries(metadata).map(([name, content]) => {
+    const meta = document.createElement('meta');
+    meta.name = name;
+    meta.content = content;
+    document.head.append(meta);
+    return meta;
+  });
 }
 
 // Fetches a live page's authored markup, with relative URLs resolved against the page so
@@ -144,12 +162,13 @@ function applyVariants(main, { block, options }, variants) {
 }
 
 // Renders sections the way a Milo page would: filled with authored markup, then decorated by
-// loadArea. Errors are shown in place of the story.
+// loadArea, or by `load` when given. `metadata` sets page metadata. Errors are shown in place of
+// the story.
 //
 // After a story renders with its authored variants, .storybook/preview.js sets its Variants
 // control to them, and Storybook renders it again. That render returns the same main element,
 // which Storybook's renderer leaves in place.
-function render(getSections, foundation) {
+function render(getSections, foundation, { metadata = {}, load = (milo, main) => milo.loadArea(main) } = {}) {
   const { id, args = {}, argTypes = {} } = story ?? {};
   if (current?.id === id && current.authored && sameClasses(args.variants, current.shown)) {
     current.authored = false;
@@ -158,16 +177,19 @@ function render(getSections, foundation) {
   const main = document.createElement('main');
   const entry = { id, main, authored: !args.variants };
   current = entry;
+  // Milo closes an open modal, which sits outside the story, when the hash changes.
+  if (window.location.hash) window.location.hash = '';
   requestAnimationFrame(async () => {
     try {
+      setFoundation(foundation);
+      setPageMetadata(metadata);
       main.append(...await getSections());
       if (argTypes.variants?.options.length) {
         entry.shown = applyVariants(main, argTypes.variants, args.variants);
       }
-      setFoundation(foundation);
-      const { decorateSVG, loadArea } = await getUtils();
-      decorateSvgLinks(main, decorateSVG);
-      await loadArea(main);
+      const milo = await getUtils();
+      decorateSvgLinks(main, milo.decorateSVG);
+      await load(milo, main);
       main.dataset.miloStatus = 'loaded';
     } catch (e) {
       main.textContent = e.message;
@@ -223,6 +245,46 @@ export function renderLibraryExample(pageUrl, index, { foundation = 'c1' } = {})
     });
     return sections;
   }, foundation);
+}
+
+// Renders Milo's global navigation from the gnav content at `source`, the way Milo builds a page's
+// header from its `gnav-source` metadata. `metadata` sets other page metadata the navigation
+// reads, such as `universal-nav`. The header goes before the story's empty main element, where
+// it is on a page.
+export function renderGlobalNavigation(source, { metadata = {}, foundation = 'c1' } = {}) {
+  return render(async () => [], foundation, {
+    metadata: { 'gnav-source': source, ...metadata },
+    load: async ({ getConfig, isLocalNav, loadBlock }, main) => {
+      const header = document.createElement('header');
+      header.className = 'global-navigation';
+      main.before(header);
+      // A local navigation mounts in an element Milo adds after the header.
+      if (isLocalNav()) {
+        const localNav = document.createElement('div');
+        localNav.className = 'feds-localnav';
+        header.after(localNav);
+      }
+      await loadBlock(header);
+      await getConfig().federal?.fedsGlobalNavigation;
+    },
+  });
+}
+
+// Renders Milo's global footer from the footer content at `source`, the way Milo builds a page's
+// footer from its `footer-source` metadata. The footer goes after the story's empty main element,
+// where it is on a page.
+export function renderGlobalFooter(source, { metadata = {}, foundation = 'c1' } = {}) {
+  return render(async () => [], foundation, {
+    metadata: { 'footer-source': source, ...metadata },
+    // The footer fetches its content after it loads, and calls onFooterReady or onFooterError.
+    load: ({ getConfig, loadBlock }, main) => new Promise((resolve, reject) => {
+      const footer = document.createElement('footer');
+      footer.className = 'global-footer';
+      main.after(footer);
+      Object.assign(getConfig(), { onFooterReady: resolve, onFooterError: reject });
+      loadBlock(footer);
+    }),
+  });
 }
 
 // Renders inline authored block markup, for blocks with no usable live page.

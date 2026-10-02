@@ -26,8 +26,7 @@ const NO_STORY = ['Section Metadata', 'Block Group', 'Card Metadata', 'Graybox R
 
 // Folders in libs/c2/blocks/ with no story. README › Known limits says why.
 const NO_C2_STORY = ['card-metadata', 'email-collection-c2', 'firefly-globe', 'floating-cta',
-  'global-footer', 'global-navigation', 'martech-metadata', 'modal', 'modal-metadata',
-  'pill-group', 'region-nav', 'section-metadata', 'visually-hidden'];
+  'martech-metadata', 'modal-metadata', 'pill-group', 'section-metadata', 'visually-hidden'];
 
 // Stories that never finish rendering in a headless browser, so the check skips them. README ›
 // Known limits says why.
