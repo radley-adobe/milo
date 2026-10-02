@@ -132,6 +132,9 @@ function scan() {
   });
   const css = `:root {\n${blocks.join('\n\n')}\n}\n`;
 
+  // Brand colors lead the Primitive color page.
+  pages['Primitive / Color']?.sort((a, b) => (b.heading === 'Brand') - (a.heading === 'Brand'));
+
   const usageMap = {};
   readdirSync(BLOCKS).sort().forEach((block) => {
     readdirSync(`${BLOCKS}${block}`).filter((f) => f.endsWith('.css')).forEach((file) => {
