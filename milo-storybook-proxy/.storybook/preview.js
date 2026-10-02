@@ -102,6 +102,9 @@ export default {
     // Each story on a Docs page gets its own iframe, so Milo's page styles don't apply to the
     // Docs page itself. The table of contents lists a page's h3 headings.
     docs: { story: { inline: false, iframeHeight: '600px' }, toc: true },
+    // The CSS Custom Properties tab lists the tokens each block reads, and the Design Tokens Docs
+    // pages list every token, so the Design Tokens tab is hidden.
+    designToken: { disable: true },
     options: {
       storySort: {
         order: ['C2', ['Design Tokens', [

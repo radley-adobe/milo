@@ -4,7 +4,9 @@ import LIBS from './libs.js';
 
 // Vite plugin. `import cssprops from 'virtual:cssprops/<c1|c2>/<block>'` gives a story the
 // parameters for the CSS custom properties addon: every variable the block's CSS sets or reads,
-// with its value. Values come from the block's CSS and from Milo's global styles.css.
+// with its value. Values come from the block's CSS and from Milo's global styles.css. The groups
+// are Block (set in the block's CSS), Tokens (design tokens the block reads), Global (other
+// variables set in styles.css) and Other (set in neither).
 
 const PREFIX = 'virtual:cssprops/';
 const GLOBAL_CSS = { c1: 'styles/styles.css', c2: 'c2/styles/styles.css' };
@@ -16,6 +18,8 @@ const clean = (value) => value.replace(/\s+/g, ' ').trim();
 const sorted = (names) => [...names].sort();
 const groupByName = (list) => list.reduce((map, d) => map.set(d.name, [...(map.get(d.name) ?? []), d]), new Map());
 const declarationLine = (d) => `- \`${d.context}\`: \`${d.value}\``;
+// Milo's C2 design tokens, the variables in libs/c2/styles/deps/tokens.*.css, all start with --s2a-.
+const isToken = (name) => name.startsWith('--s2a-');
 
 // The viewport width a rule applies from, or null when it sits in anything other than a plain
 // min-width media query.
@@ -117,8 +121,9 @@ function scan(foundation, block) {
     params[name.slice(2)] = row(resolve(list[0].value, blockScope), list.map(declarationLine).join('\n'), 'Block');
   });
 
+  // Design tokens come before other global variables, so the addon lists the Tokens group first.
   const unset = [];
-  sorted(read).filter((name) => !declared.has(name)).forEach((name) => {
+  sorted(read).filter((name) => !declared.has(name)).sort((a, b) => isToken(b) - isToken(a)).forEach((name) => {
     const others = elsewhere.get(name) ?? [];
     // The :root value from each breakpoint where it changes.
     const steps = [];
@@ -142,7 +147,7 @@ function scan(foundation, block) {
       ? reference(steps[0])
       : [...steps.map(stepLine), ...others.map(declarationLine)].join('\n');
     const value = steps[0]?.resolved ?? resolve(others[0].value, scopeAt(others[0].width));
-    params[name.slice(2)] = row(value, description, 'Global');
+    params[name.slice(2)] = row(value, description, isToken(name) ? 'Tokens' : 'Global');
   });
 
   unset.forEach((name) => {
