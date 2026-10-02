@@ -2,7 +2,7 @@ import { CC_PRO_TEST_FRAGMENTS, renderPageBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/roller-carousel';
 import variants from 'virtual:variants/c2/roller-carousel';
 
-export default { title: 'C2/Roller Carousel', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Roller Carousel', parameters: { cssprops }, argTypes: { variants } };
 
 export const CreativeCloudProOffer = {
   name: 'adobe.com: Creative Cloud Pro offer',

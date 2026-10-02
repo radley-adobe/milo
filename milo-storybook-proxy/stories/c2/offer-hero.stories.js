@@ -2,7 +2,7 @@ import { ACROBAT, CC_PRO_TEST_FRAGMENTS, renderPageBlock } from '../../src/milo.
 import cssprops from 'virtual:cssprops/c2/offer-hero';
 import variants from 'virtual:variants/c2/offer-hero';
 
-export default { title: 'C2/Offer Hero', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Offer Hero', parameters: { cssprops }, argTypes: { variants } };
 
 export const AcrobatStudio = {
   name: 'adobe.com: Acrobat Studio',

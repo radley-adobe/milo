@@ -2,7 +2,7 @@ import { ACROBAT, CC_PRO_TEST_FRAGMENTS, renderPageSections } from '../../src/mi
 import cssprops from 'virtual:cssprops/c2/tabs';
 import variants from 'virtual:variants/c2/tabs';
 
-export default { title: 'C2/Tabs', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Tabs', parameters: { cssprops }, argTypes: { variants } };
 
 // The tabs and their panels, which are the sections after them. Each panel of the first tabs
 // holds a second tabs block and its panels.

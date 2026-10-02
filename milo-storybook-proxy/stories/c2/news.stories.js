@@ -2,7 +2,7 @@ import { HOMEPAGE_FRAGMENTS, renderPage } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/news';
 import variants from 'virtual:variants/c2/news';
 
-export default { title: 'C2/News', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'News', parameters: { cssprops }, argTypes: { variants } };
 
 export const HomepageNews = {
   name: 'adobe.com: Homepage news',

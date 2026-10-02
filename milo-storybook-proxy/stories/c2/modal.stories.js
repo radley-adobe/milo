@@ -4,7 +4,7 @@ import cssprops from 'virtual:cssprops/c2/modal';
 import variants from 'virtual:variants/c2/modal';
 
 export default {
-  title: 'C2/Modal',
+  title: 'Modal',
   parameters: { cssprops },
   argTypes: { variants },
   // Opens the modal. Milo adds it to the end of the page's body.

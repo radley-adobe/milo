@@ -2,7 +2,7 @@ import { ACROBAT, CC_PRO_TEST_FRAGMENTS, renderPageBlock } from '../../src/milo.
 import cssprops from 'virtual:cssprops/c2/hub-hero';
 import variants from 'virtual:variants/c2/hub-hero';
 
-export default { title: 'C2/Hub Hero', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Hub Hero', parameters: { cssprops }, argTypes: { variants } };
 
 export const PdfAndDocumentEssentials = {
   name: 'adobe.com: PDF and document essentials',

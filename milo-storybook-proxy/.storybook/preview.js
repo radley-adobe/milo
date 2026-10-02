@@ -1,6 +1,7 @@
 import { action } from 'storybook/actions';
-import { UPDATE_STORY_ARGS } from 'storybook/internal/core-events';
+import { GLOBALS_UPDATED, UPDATE_STORY_ARGS } from 'storybook/internal/core-events';
 import { addons } from 'storybook/preview-api';
+import { themes } from 'storybook/theming';
 import { format } from 'prettier/standalone';
 import htmlPlugin from 'prettier/plugins/html';
 import { values as tokenValues } from 'virtual:design-tokens';
@@ -90,6 +91,34 @@ document.addEventListener('click', (e) => {
   window.addEventListener(name, () => action(name)());
 });
 
+// On a Docs page, each story renders in its own iframe, and only the Docs page itself gets the
+// toolbar's Preview background. A story iframe on a Docs page copies that background when it
+// loads and whenever it changes, before its story first renders. Elsewhere, the parent window is
+// Storybook's manager, which has no preview, or a page on another site, which can't be read.
+// Returns a function that stops following it.
+function followDocsBackground() {
+  let docsPage;
+  try {
+    if (window.parent !== window) docsPage = window.parent.__STORYBOOK_PREVIEW__;
+  } catch {
+    return undefined;
+  }
+  if (!docsPage) return undefined;
+  const preview = window.__STORYBOOK_PREVIEW__;
+  const follow = () => {
+    const { backgrounds } = docsPage.storyStoreValue.userGlobals.get();
+    if (JSON.stringify(backgrounds) === JSON.stringify(preview.storyStoreValue.userGlobals.get().backgrounds)) return;
+    preview.onUpdateGlobals({ globals: { backgrounds } });
+  };
+  const stop = () => docsPage.channel.off(GLOBALS_UPDATED, follow);
+  preview.ready().then(() => {
+    follow();
+    docsPage.channel.on(GLOBALS_UPDATED, follow);
+  });
+  window.addEventListener('pagehide', stop);
+  return stop;
+}
+
 // scripts/build.js builds the default branch at the site's root and each other branch in a
 // folder named after it, and gives each build the branch switcher's state. The switcher links to
 // another build by host and path, so it needs the site's path, such as /milo on GitHub Pages.
@@ -98,23 +127,25 @@ const site = new URL(currentBranch === defaultBranch ? '.' : '..', window.locati
 
 export default {
   tags: ['autodocs'],
+  beforeAll: followDocsBackground,
   parameters: {
     // Each story on a Docs page gets its own iframe, so Milo's page styles don't apply to the
-    // Docs page itself. The table of contents lists a page's h3 headings.
-    docs: { story: { inline: false, iframeHeight: '600px' }, toc: true },
+    // Docs page itself. The table of contents lists a page's h3 headings. Docs pages are light or
+    // dark as the browser prefers, like the rest of Storybook.
+    docs: { theme: themes.normal, story: { inline: false, iframeHeight: '600px' }, toc: true },
     // The CSS Custom Properties tab lists the tokens each block reads, and the Design Tokens Docs
     // pages list every token, so the Design Tokens tab is hidden.
     designToken: { disable: true },
     options: {
       storySort: {
-        order: ['C2', ['Design Tokens', [
+        order: ['Design Tokens', [
           'Primitive', ['Color', 'Font', 'Spacing', 'Border', 'Effects'],
           'Semantic', ['Color', 'Font', 'Spacing', 'Border', 'Effects'],
           'Responsive', [
             'Typography', ['Font Size', 'Letter Spacing', 'Line Height'],
             'Spacing', ['Viewport & Section Padding', 'Layout', 'Other'],
           ],
-        ]], 'C1'],
+        ]],
       },
     },
     branches: { hostname: `${site.host}${site.pathname.replace(/\/$/, '')}` },

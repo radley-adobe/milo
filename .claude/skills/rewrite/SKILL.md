@@ -67,8 +67,8 @@ npm run check
 both builds, runs its play function, and reports the stories that fail on each branch: Milo
 doesn't finish decorating them, or their play function fails. It runs them at 1280 × 720.
 
-If the build fails, the cause is usually a story importing `virtual:cssprops/<c1|c2>/<block>` or
-`virtual:variants/<c1|c2>/<block>` for a block whose CSS was renamed or removed, or a change to a Milo function that `src/milo.js` or
+If the build fails, the cause is usually a story importing `virtual:cssprops/c2/<block>` or
+`virtual:variants/c2/<block>` for a block whose CSS was renamed or removed, or a change to a Milo function that `src/milo.js` or
 `.storybook/` calls. Find the upstream commit with `git log -p upstream/stage -- <path>`, or
 `upstream/main` when only the `main` build fails, fix the story or helper, and rebuild.
 
@@ -85,18 +85,18 @@ failed run (step 4), listing the failing hosts found with `curl -sI https://milo
 
 Handle each section of the check output:
 
-- **Library blocks with no story.** Add `stories/<c1|c2>/<block>.stories.js`. The title is
-  `C1/` or `C2/` plus the block's name in `library.json`. Write one story per example on the
-  library page. Use `renderPageBlock` for an example that is one block and `renderLibraryExample`
+- **C2 library blocks with no story.** Add `stories/c2/<block>.stories.js`. The title is
+  the block's name in `library.json`. Write one story per example on the
+  library page, with `{ foundation: 'c2' }`. Use `renderPageBlock` for an example that is one block and `renderLibraryExample`
   for one that has several blocks or sections. Name each story after its example's heading,
   shortened the way the existing stories are. When the block has a CSS file, import its
   `virtual:cssprops` and `virtual:variants` and set `parameters: { cssprops }` and
   `argTypes: { variants }` on the default export, or on each story in a file whose stories
   render different blocks. If the block has an interaction like the ones with play functions (an
   item to open, a tab to select, a slide to move to), add a play function to the default export,
-  modeled on Accordion, Tabs or Carousel. A C2 block with no library page renders from `HOMEPAGE_FRAGMENTS`. If it isn't on the
+  modeled on Carousel C2 or Modal. A C2 block with no library page renders from `HOMEPAGE_FRAGMENTS`. If it isn't on the
   homepage, it renders from `renderBlock` with markup from `test/blocks/<block>/mocks/`.
-- **C2 blocks with no story.** Add `stories/c2/<block>.stories.js`, titled `C2/` plus the block's
+- **C2 blocks with no story.** Add `stories/c2/<block>.stories.js`, titled with the block's
   name in title case. Find public pages that use the block: the `HOMEPAGE`, `ACROBAT`,
   `ACROBAT_TEST_FRAGMENTS` and `CC_PRO_TEST_FRAGMENTS` pages in `src/milo.js`, and the test URLs
   in the descriptions of the upstream pull requests that changed the block. Write one story per
@@ -119,8 +119,7 @@ Handle each section of the check output:
   `scripts/check.js` and its reason to README › Known limits.
 - **Stories whose play function fails.** A play function sits on its file's default export, so
   every story in the file runs it, and it assumes the example has something to interact with. If
-  a library example changed so its story no longer does, give that story its own `play`, as
-  C1 › Carousel › mWeb does for widths where its buttons are hidden. If the block's markup
+  a library example changed so its story no longer does, give that story its own `play`. If the block's markup
   changed, fix the shared play function. Never change a play function so that it passes without
   checking anything.
 - **Stories that pass on `stage` but fail on `main`.** The stories follow `stage`, and Milo

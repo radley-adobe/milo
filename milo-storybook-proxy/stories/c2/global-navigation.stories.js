@@ -4,7 +4,7 @@ import cssprops from 'virtual:cssprops/c2/global-navigation';
 // No Variants control: the classes the block's CSS lists are ones Milo sets itself. The Docs
 // iframes leave room for an open menu.
 export default {
-  title: 'C2/Global Navigation',
+  title: 'Global Navigation',
   parameters: { cssprops, docs: { story: { iframeHeight: '700px' } } },
 };
 
