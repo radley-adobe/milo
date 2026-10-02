@@ -4,6 +4,9 @@ import { categories, presenters, usageMap } from 'virtual:design-tokens';
 
 <Meta title="C2/Design Tokens/Semantic" />
 
+{/* The table of contents scrolls with the page instead of in its own fixed panel. */}
+<style>{'.sbdocs-toc--custom nav { position: static; padding-top: 0; }'}</style>
+
 # Semantic tokens
 
 Every token in Milo's `libs/c2/styles/deps/tokens.semantic*.css`, in the groups those files use. Values are resolved. When Milo declares a token as another token, the description shows that reference.
