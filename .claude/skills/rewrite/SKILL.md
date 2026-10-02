@@ -1,8 +1,9 @@
 ---
 name: rewrite
 description: >
-  Brings milo-storybook-proxy up to date with upstream Milo. Merges adobecom/milo stage, runs
-  the story check, updates the stories that it flags, and merges them into dev through a pull
+  Brings milo-storybook-proxy up to date with upstream Milo's stage and main branches. Merges
+  adobecom/milo stage, builds Storybook for stage and main, runs the story check on both builds,
+  updates the stories that it flags, and merges them into dev through a pull
   request when the check passes. A failed run pushes a report branch, and GitHub emails the
   report. Runs unattended, so it can be scheduled daily.
 disable-model-invocation: true
@@ -30,21 +31,25 @@ fail, and goes in the failure report (step 4).
 ```sh
 git status --porcelain            # stop if the working tree isn't clean
 git fetch origin dev
-git fetch https://github.com/adobecom/milo.git stage:refs/remotes/upstream/stage
+git fetch https://github.com/adobecom/milo.git stage:refs/remotes/upstream/stage main:refs/remotes/upstream/main
 git switch -c claude/rewrite-$(date +%F) origin/dev   # scheduled cloud runs may only push claude/ branches
 git log --oneline HEAD..upstream/stage
 ```
 
-If the log is empty, `dev` already has the latest Milo. The GitHub workflow merges it every day.
+The site follows two Milo branches. `stage` is merged into `dev`, and the stories follow it.
+`main` is never merged: `npm run build` takes `main`'s `libs/` from adobecom/milo on every build.
+
+If the log is empty, `dev` already has the latest `stage`. The GitHub workflow merges it every day.
 Otherwise, run `git merge --no-edit upstream/stage`. On a merge conflict, run `git merge --abort` and
 finish as a failed run (step 4), listing the conflicting files. Upstream never touches this
 folder, so a conflict needs a person.
 
-List the upstream commits from the last two days that touch block code. The report uses them to
-explain story changes:
+List the upstream commits from the last two days that touch block code, on each branch. The
+report uses them to explain story changes:
 
 ```sh
 git log --since='2 days ago' --oneline upstream/stage -- libs/blocks libs/c2/blocks libs/utils libs/styles libs/c2/styles
+git log --since='2 days ago' --oneline upstream/main -- libs/blocks libs/c2/blocks libs/utils libs/styles libs/c2/styles
 ```
 
 ## 2. Build and check
@@ -58,19 +63,20 @@ npm run check
 ```
 
 `npm run build` builds Storybook twice: for Milo's `stage` at the root of `dist/`, and for Milo's
-`main` in `dist/main/`. The stories follow `stage`, and `npm run check` checks only that build.
+`main` in `dist/main/`. Both builds use the same stories. `npm run check` renders every story in
+both builds and reports the ones that don't render on each branch.
 
 If the build fails, the cause is usually a story importing `virtual:cssprops/<c1|c2>/<block>` for
 a block whose CSS was renamed or removed, or a change to a Milo function that `src/milo.js` or
-`.storybook/` calls. Find the upstream commit with `git log -p upstream/stage -- <path>`, fix the
-story or helper, and rebuild.
+`.storybook/` calls. Find the upstream commit with `git log -p upstream/stage -- <path>`, or
+`upstream/main` when only the `main` build fails, fix the story or helper, and rebuild.
 
 `npm run check` prints one section per kind of finding and exits with 1 if it finds anything. Its
 output ending in "All stories match Milo and render." means there is nothing to update. Skip to
 step 4.
 
 If the check can't fetch `library.json` or library pages, or more than a quarter of the stories
-don't render, the cause is the network, not the stories. Don't change any story. Finish as a
+don't render on both branches, the cause is the network, not the stories. Don't change any story. Finish as a
 failed run (step 4), listing the failing hosts found with `curl -sI https://milo.adobe.com/docs/library/library.json` and
 `curl -sI <page>.plain.html`.
 
@@ -96,9 +102,15 @@ Handle each section of the check output:
   it moved, lost the block, or has fewer blocks than `index`. Then check the upstream log for a
   change to the block or to a function the helpers call. Fix the story or `src/milo.js`. If the
   live page is broken and nothing in this folder can fix it, leave the story alone. The run then
-fails with that finding.
+  fails with that finding.
   If a story can never render in a headless browser, add its title to `NO_RENDER` in
   `scripts/check.js` and its reason to README › Known limits.
+- **Stories that render on `stage` but not on `main`.** The stories follow `stage`, and Milo
+  releases `stage` to `main` about once a day. Compare the branches for the story's block and the
+  Milo code the helpers call: `git log --oneline upstream/main..upstream/stage -- libs/blocks/<block> libs/c2/blocks/<block> libs/utils`.
+  If `stage` has changes there that `main` doesn't, `main` catches up at Milo's next release.
+  Don't change the story, and list it as waiting for a Milo release. Otherwise, treat it like any
+  other story that doesn't render.
 
 Then rebuild and check again, writing the new examples snapshot:
 
@@ -113,7 +125,8 @@ once the stories match the library pages, because it records the current example
 ## 4. Finish
 
 The run passed if the build succeeds and `npm run check` ends with "All stories match Milo and
-render." Anything else is a failed run: a merge conflict, a network failure, findings left for a
+render.", or its only findings are `main` stories waiting for a Milo release (step 3). List those
+in the final message and, when there is one, the pull request body. Anything else is a failed run: a merge conflict, a network failure, findings left for a
 person, or a pull request that can't be opened or merged.
 
 ### Passed
