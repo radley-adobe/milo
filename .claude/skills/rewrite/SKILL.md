@@ -57,6 +57,9 @@ npm run build
 npm run check
 ```
 
+`npm run build` builds Storybook twice: for Milo's `stage` at the root of `dist/`, and for Milo's
+`main` in `dist/main/`. The stories follow `stage`, and `npm run check` checks only that build.
+
 If the build fails, the cause is usually a story importing `virtual:cssprops/<c1|c2>/<block>` for
 a block whose CSS was renamed or removed, or a change to a Milo function that `src/milo.js` or
 `.storybook/` calls. Find the upstream commit with `git log -p upstream/stage -- <path>`, fix the

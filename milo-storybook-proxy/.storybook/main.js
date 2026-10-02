@@ -1,5 +1,6 @@
 import { mergeConfig } from 'vite';
 import cssprops from './cssprops.js';
+import LIBS from './libs.js';
 import designTokens from './tokens.js';
 
 export default {
@@ -13,8 +14,9 @@ export default {
     // Reads the annotated token files that tokens.js writes. The path is relative to the folder
     // Storybook runs from.
     { name: 'storybook-design-token', options: { designTokenGlob: 'generated/tokens/*.css' } },
+    'storybook-branch-switcher',
   ],
   // Milo's libs/ is served as-is, never bundled or modified.
-  staticDirs: [{ from: '../../libs', to: '/libs' }],
+  staticDirs: [{ from: LIBS, to: '/libs' }],
   viteFinal: (config) => mergeConfig(config, { plugins: [cssprops(), designTokens()] }),
 };

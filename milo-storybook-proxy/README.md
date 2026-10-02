@@ -12,7 +12,7 @@ npm install
 npm run storybook
 ```
 
-Storybook runs at http://localhost:6006. `npm run build` writes the static site to `dist/`.
+Storybook runs at http://localhost:6006, with this repo's `libs/`. `npm run build` writes the static site to `dist/`, with one build for each Milo branch it follows. See Branches and deployment.
 
 ## Write a story
 
@@ -71,7 +71,7 @@ When decoration finishes, the story's `main` element gets `data-milo-status="loa
 
 ## Keep stories current
 
-Milo's code and its library pages change independently of this folder. `npm run check` reads the built site in `dist/`, so run `npm run build` first. It reports:
+Milo's code and its library pages change independently of this folder. `npm run check` reads the `stage` build at the root of `dist/`, so run `npm run build` first. It reports:
 
 - Library blocks in https://milo.adobe.com/docs/library/library.json with no story, apart from the pages listed in Known limits
 - Story files for blocks the library no longer lists
@@ -87,6 +87,15 @@ The `/rewrite` Claude Code skill (`.claude/skills/rewrite/` at the repo root) me
 - `dev` is the default branch: Milo's `stage` plus this folder, `.claude/skills/rewrite/` and two workflows, `.github/workflows/milo-storybook-proxy.yml` and `.github/workflows/milo-storybook-rewrite-failed.yml`
 - The workflow runs on every push to `dev`, builds Storybook and deploys it to GitHub Pages
 - A daily scheduled run first merges `adobecom/milo` `stage` into `dev`, so the site tracks current Milo
+
+The site has one build for each `adobecom/milo` branch it follows. The branch menu in the toolbar (`storybook-branch-switcher`) moves between them and keeps the open story.
+
+- `stage`, at the site's root, serves this repo's `libs/`
+- `main`, Milo's production branch, is in `main/`. `scripts/build.js` fetches `main` from adobecom/milo on every build and serves its `libs/`, so the `main` build is as current as the last deploy.
+
+Both builds use the same stories, which follow `stage`. Milo releases `stage` to `main` about once a day, so a block can have a story before it reaches `main`. In the `main` build, that story's CSS Custom Properties tab is empty. `npm run check` checks the `stage` build only.
+
+`MILO_LIBS=<path> npm run storybook` runs Storybook with another copy of Milo's `libs/`, such as one from `main`.
 
 To merge upstream Milo locally:
 

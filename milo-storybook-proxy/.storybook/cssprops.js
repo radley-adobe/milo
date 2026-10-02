@@ -1,13 +1,12 @@
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import { existsSync, readFileSync } from 'node:fs';
 import postcss from 'postcss';
+import LIBS from './libs.js';
 
 // Vite plugin. `import cssprops from 'virtual:cssprops/<c1|c2>/<block>'` gives a story the
 // parameters for the CSS custom properties addon: every variable the block's CSS sets or reads,
 // with its value. Values come from the block's CSS and from Milo's global styles.css.
 
 const PREFIX = 'virtual:cssprops/';
-const LIBS = fileURLToPath(new URL('../../libs/', import.meta.url));
 const GLOBAL_CSS = { c1: 'styles/styles.css', c2: 'c2/styles/styles.css' };
 const BLOCKS = { c1: 'blocks', c2: 'c2/blocks' };
 const ROOT_SELECTORS = [':root', 'html', 'body'];
@@ -160,7 +159,11 @@ export default function cssprops() {
     load(id) {
       if (!id.startsWith(`\0${PREFIX}`)) return null;
       const [foundation, block] = id.slice(PREFIX.length + 1).split('/');
-      return `export default ${JSON.stringify(scan(foundation, block))};`;
+      // The stories follow this repo's libs/. Another copy, such as Milo's main branch before a
+      // release, can be missing a block that has a story. That block gets no variables.
+      const missing = process.env.MILO_LIBS
+        && !existsSync(`${LIBS}${BLOCKS[foundation]}/${block}/${block}.css`);
+      return `export default ${JSON.stringify(missing ? {} : scan(foundation, block))};`;
     },
   };
 }
