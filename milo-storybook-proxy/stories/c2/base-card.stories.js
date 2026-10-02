@@ -2,7 +2,7 @@ import { HOMEPAGE_FRAGMENTS, LIBRARY, renderPage, renderPageBlock } from '../../
 import cssprops from 'virtual:cssprops/c2/base-card';
 import variants from 'virtual:variants/c2/base-card';
 
-export default { title: 'C2/Base Card', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Base Card', parameters: { cssprops }, argTypes: { variants } };
 
 const library = `${LIBRARY}/c2/base-card`;
 

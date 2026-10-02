@@ -86,7 +86,7 @@ failed run (step 4), listing the failing hosts found with `curl -sI https://milo
 Handle each section of the check output:
 
 - **C2 library blocks with no story.** Add `stories/c2/<block>.stories.js`. The title is
-  `C2/` plus the block's name in `library.json`. Write one story per example on the
+  the block's name in `library.json`. Write one story per example on the
   library page, with `{ foundation: 'c2' }`. Use `renderPageBlock` for an example that is one block and `renderLibraryExample`
   for one that has several blocks or sections. Name each story after its example's heading,
   shortened the way the existing stories are. When the block has a CSS file, import its
@@ -96,7 +96,7 @@ Handle each section of the check output:
   item to open, a tab to select, a slide to move to), add a play function to the default export,
   modeled on Carousel C2 or Modal. A C2 block with no library page renders from `HOMEPAGE_FRAGMENTS`. If it isn't on the
   homepage, it renders from `renderBlock` with markup from `test/blocks/<block>/mocks/`.
-- **C2 blocks with no story.** Add `stories/c2/<block>.stories.js`, titled `C2/` plus the block's
+- **C2 blocks with no story.** Add `stories/c2/<block>.stories.js`, titled with the block's
   name in title case. Find public pages that use the block: the `HOMEPAGE`, `ACROBAT`,
   `ACROBAT_TEST_FRAGMENTS` and `CC_PRO_TEST_FRAGMENTS` pages in `src/milo.js`, and the test URLs
   in the descriptions of the upstream pull requests that changed the block. Write one story per

@@ -21,7 +21,7 @@ A story names a live page and a block on it. `renderPageBlock()` fetches the pag
 ```js
 import { LIBRARY, renderPageBlock } from '../../src/milo.js';
 
-export default { title: 'C2/Base Card' };
+export default { title: 'Base Card' };
 
 export const Default = {
   render: () => renderPageBlock(`${LIBRARY}/c2/base-card`, 'base-card', { index: 1, foundation: 'c2' }),
@@ -64,7 +64,7 @@ To fill the CSS Custom Properties and Controls tabs, import the block's variable
 import cssprops from 'virtual:cssprops/c2/base-card';
 import variants from 'virtual:variants/c2/base-card';
 
-export default { title: 'C2/Base Card', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Base Card', parameters: { cssprops }, argTypes: { variants } };
 ```
 
 Storybook merges a file's parameters and argTypes into each of its stories, so in a file whose stories render different blocks, set `cssprops` and `variants` on each story instead.
@@ -84,7 +84,7 @@ When decoration finishes, the story's `main` element gets `data-milo-status="loa
 - The HTML tab shows each story's markup after Milo has decorated it, formatted with Prettier. The addon reads the markup before Milo runs, so the same `afterEach` hook sends the decorated markup to the tab once `data-milo-status` is set.
 - The CSS Custom Properties tab lists every variable the story's block sets or reads. `.storybook/cssprops.js` reads the block's CSS and Milo's global `styles.css`, and groups the variables as Block (set in the block's CSS), Tokens (C2 design tokens, the `--s2a-` variables), Global (other variables set in `styles.css`) and Other (set in neither, for example by JavaScript). A row's value is the first value the CSS gives it, at the smallest viewport. Its description lists where the variable is set and its value at each breakpoint.
 - Editing a value in that tab applies it to the story's `body`, so it has no visible effect on a variable the block sets on its own elements. The addon writes every listed value onto the `body` when the tab opens and saves them in localStorage. `.storybook/preview.js` removes the values that haven't been edited, and drops a story's saved values once Milo's CSS changes.
-- The C2 › Design Tokens Docs pages list every token in Milo's `libs/c2/styles/deps/tokens.*.css`, one category per group in those files. The Docs pages split each tier by content: Primitive and Semantic into Color, Font, Spacing, Border and Effects, and Responsive into Typography (Font Size, Letter Spacing and Line Height) and Spacing (Viewport & Section Padding, Layout and Other). `PAGES` in `.storybook/tokens.js` assigns each group to a page, and Storybook stops with an error if a group has no page. Semantic colors have a light and a dark category, and responsive tokens one per breakpoint. The addon reads only tokens inside `@tokens` comment blocks, so `.storybook/tokens.js` writes an annotated copy to `generated/tokens/tokens.css` when Storybook starts, with each value resolved and the value Milo declares as its description. On the Docs pages, color categories show as cards and the rest as tables, and right-clicking a token lists the C2 blocks whose CSS reads it.
+- The Design Tokens Docs pages list every token in Milo's `libs/c2/styles/deps/tokens.*.css`, one category per group in those files. The Docs pages split each tier by content: Primitive and Semantic into Color, Font, Spacing, Border and Effects, and Responsive into Typography (Font Size, Letter Spacing and Line Height) and Spacing (Viewport & Section Padding, Layout and Other). `PAGES` in `.storybook/tokens.js` assigns each group to a page, and Storybook stops with an error if a group has no page. Semantic colors have a light and a dark category, and responsive tokens one per breakpoint. The addon reads only tokens inside `@tokens` comment blocks, so `.storybook/tokens.js` writes an annotated copy to `generated/tokens/tokens.css` when Storybook starts, with each value resolved and the value Milo declares as its description. On the Docs pages, color categories show as cards and the rest as tables, and right-clicking a token lists the C2 blocks whose CSS reads it.
 - The design token addon's own Design Tokens tab lists every token rather than the story's, so `.storybook/preview.js` hides it with `designToken: { disable: true }`. When shown, the tab writes each token it lists onto the story's `html` element, and `.storybook/preview.js` removes those values until they're edited
 - The Controls tab lists the story block's variants as checkboxes: the classes the block's CSS combines with the block's own class, such as `dark` from `.tour.dark`. `.storybook/variants.js` reads them. Once Milo has decorated the story, `.storybook/preview.js` checks the ones the block was authored with. Changing a checkbox renders the story again with the new classes, and authored classes that aren't listed stay. Reset controls returns to the authored classes.
 - Variants that only a block's JavaScript reads aren't listed, and about half the C2 blocks have none listed. The list can include classes that Milo adds itself, such as `scroll-driven-ready` on Offer Hero or `event` on the global footer.

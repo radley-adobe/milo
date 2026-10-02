@@ -2,7 +2,7 @@ import { ACROBAT, CC_PRO_TEST_FRAGMENTS, renderPageBlock } from '../../src/milo.
 import cssprops from 'virtual:cssprops/c2/product-marquee-grid';
 import variants from 'virtual:variants/c2/product-marquee-grid';
 
-export default { title: 'C2/Product Marquee Grid', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Product Marquee Grid', parameters: { cssprops }, argTypes: { variants } };
 
 export const Acrobat = {
   name: 'adobe.com: Acrobat',

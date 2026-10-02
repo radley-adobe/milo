@@ -107,14 +107,14 @@ export default {
     designToken: { disable: true },
     options: {
       storySort: {
-        order: ['C2', ['Design Tokens', [
+        order: ['Design Tokens', [
           'Primitive', ['Color', 'Font', 'Spacing', 'Border', 'Effects'],
           'Semantic', ['Color', 'Font', 'Spacing', 'Border', 'Effects'],
           'Responsive', [
             'Typography', ['Font Size', 'Letter Spacing', 'Line Height'],
             'Spacing', ['Viewport & Section Padding', 'Layout', 'Other'],
           ],
-        ]]],
+        ]],
       },
     },
     branches: { hostname: `${site.host}${site.pathname.replace(/\/$/, '')}` },

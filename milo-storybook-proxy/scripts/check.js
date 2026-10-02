@@ -29,7 +29,7 @@ const NO_C2_STORY = ['card-metadata', 'email-collection-c2', 'firefly-globe', 'f
 
 // Stories that never finish rendering in a headless browser, so the check skips them. README ›
 // Known limits says why.
-const NO_RENDER = ['C2/Tabs'];
+const NO_RENDER = ['Tabs'];
 
 const TYPES = {
   '.html': 'text/html',
@@ -209,7 +209,7 @@ const savedExamples = JSON.parse(await readFile(EXAMPLES, 'utf8').catch(() => '{
 const library = await (await fetch(LIBRARY_JSON)).json();
 const libraryTitles = library['c2-blocks'].data
   .filter(({ name }) => !NO_STORY.includes(name))
-  .map(({ name }) => `C2/${name}`);
+  .map(({ name }) => name);
 const storyTitles = new Set(stories.map((s) => s.title));
 // C2 stories are named after their block's folder: stories/c2/<block>.stories.js.
 const c2Blocks = (await readdir(new URL('libs/c2/blocks/', DIST), { withFileTypes: true }))
