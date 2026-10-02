@@ -1,5 +1,5 @@
 // Checks the stories against current Milo and its block library, and prints what needs
-// updating: library blocks with no story, stories for blocks the library no longer lists,
+// updating: library blocks and C2 blocks with no story, stories for blocks the library no longer lists,
 // library pages whose examples changed, and stories that don't render or whose play function
 // fails, on each Milo branch's build. Reads the built site in dist/, so run `npm run build` first. Exits with 1 when it finds
 // anything.
@@ -24,9 +24,13 @@ const BUILDS = { stage: '', main: 'main/' };
 const NO_STORY = ['Section Metadata', 'Block Group', 'Card Metadata', 'Graybox Review',
   'Mobile App Banner', 'Form', 'SUSI Light Login'];
 
+// Folders in libs/c2/blocks/ with no story. README › Known limits says why.
+const NO_C2_STORY = ['card-metadata', 'email-collection-c2', 'firefly-globe', 'floating-cta',
+  'martech-metadata', 'modal-metadata', 'pill-group', 'section-metadata', 'visually-hidden'];
+
 // Stories that never finish rendering in a headless browser, so the check skips them. README ›
 // Known limits says why.
-const NO_RENDER = ['C1/Merch Offers'];
+const NO_RENDER = ['C1/Merch Offers', 'C2/Tabs'];
 
 const TYPES = {
   '.html': 'text/html',
@@ -208,6 +212,10 @@ const libraryTitles = ['c1', 'c2'].flatMap((c) => library[`${c}-blocks`].data
   .filter(({ name }) => !NO_STORY.includes(name))
   .map(({ name }) => `${c.toUpperCase()}/${name}`));
 const storyTitles = new Set(stories.map((s) => s.title));
+// C2 stories are named after their block's folder: stories/c2/<block>.stories.js.
+const c2Blocks = (await readdir(new URL('libs/c2/blocks/', DIST), { withFileTypes: true }))
+  .filter((d) => d.isDirectory()).map((d) => d.name);
+const c2Story = (block) => `stories/c2/${block}.stories.js`;
 
 const server = await serve();
 const base = `http://localhost:${server.address().port}`;
@@ -224,8 +232,14 @@ try {
     libraryTitles.filter((t) => !storyTitles.has(t)),
   );
   found += report(
+    'C2 blocks with no story',
+    c2Blocks.filter((b) => !NO_C2_STORY.includes(b) && !storyFiles.some((f) => f.file === c2Story(b))),
+  );
+  // A C2 story for a block in libs/c2/blocks/ stays, whether or not the library lists the block.
+  found += report(
     'Stories for blocks the library no longer lists',
-    storyFiles.filter((f) => !libraryTitles.includes(f.title)).map((f) => `${f.title} (${f.file})`),
+    storyFiles.filter((f) => !libraryTitles.includes(f.title) && !c2Blocks.some((b) => f.file === c2Story(b)))
+      .map((f) => `${f.title} (${f.file})`),
   );
 
   const withPage = storyFiles.filter((f) => f.page).sort((a, b) => a.title.localeCompare(b.title));
