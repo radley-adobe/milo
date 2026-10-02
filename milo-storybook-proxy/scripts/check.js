@@ -150,7 +150,9 @@ async function fetchThroughNode(route) {
 async function renderStory(page, base, id) {
   await page.goto(`${base}/iframe.html?id=${id}&viewMode=story`, { waitUntil: 'domcontentloaded' });
   try {
-    const main = await page.waitForSelector('main[data-milo-status]', { timeout: 30000 });
+    // Some stories show nothing at the default viewport, such as mobile-only blocks, so this
+    // waits for the attribute, not for main to be visible.
+    const main = await page.waitForSelector('main[data-milo-status]', { state: 'attached', timeout: 30000 });
     if (await main.getAttribute('data-milo-status') === 'loaded') return null;
     return (await main.textContent()).trim();
   } catch {
