@@ -83,7 +83,7 @@ Milo's code and its library pages change independently of this folder. `npm run 
 - Library blocks in https://milo.adobe.com/docs/library/library.json with no story, apart from the pages listed in Known limits
 - Story files for blocks the library no longer lists
 - Library pages whose examples changed since `stories/library-examples.json` was written. `npm run check -- --update` rewrites that file once the stories match the pages again.
-- Stories whose `main` element doesn't reach `data-milo-status="loaded"` within 30 seconds, for the `stage` and `main` builds separately. Merch Offers stories never finish loading in a headless browser, so the check skips them.
+- Stories that fail, for the `stage` and `main` builds separately: their `main` element doesn't reach `data-milo-status="loaded"` within 30 seconds, or their play function fails. Storybook reports a failed play function only on its event channel, so the check listens there. The check runs at 1280 × 720, where some mobile-only controls are hidden. Merch Offers stories never finish loading in a headless browser, so the check skips them.
 
 It installs no browser. Run `npx playwright install chromium --only-shell` once. When `HTTPS_PROXY` is set, as in a Claude Code cloud session, the check sends the browser's requests through Node's `fetch`, because Chromium doesn't trust the proxy's certificate.
 

@@ -64,10 +64,11 @@ npm run check
 
 `npm run build` builds Storybook twice: for Milo's `stage` at the root of `dist/`, and for Milo's
 `main` in `dist/main/`. Both builds use the same stories. `npm run check` renders every story in
-both builds and reports the ones that don't render on each branch.
+both builds, runs its play function, and reports the stories that fail on each branch: Milo
+doesn't finish decorating them, or their play function fails. It runs them at 1280 × 720.
 
-If the build fails, the cause is usually a story importing `virtual:cssprops/<c1|c2>/<block>` for
-a block whose CSS was renamed or removed, or a change to a Milo function that `src/milo.js` or
+If the build fails, the cause is usually a story importing `virtual:cssprops/<c1|c2>/<block>` or
+`virtual:variants/<c1|c2>/<block>` for a block whose CSS was renamed or removed, or a change to a Milo function that `src/milo.js` or
 `.storybook/` calls. Find the upstream commit with `git log -p upstream/stage -- <path>`, or
 `upstream/main` when only the `main` build fails, fix the story or helper, and rebuild.
 
@@ -76,7 +77,7 @@ output ending in "All stories match Milo and render." means there is nothing to 
 step 4.
 
 If the check can't fetch `library.json` or library pages, or more than a quarter of the stories
-don't render on both branches, the cause is the network, not the stories. Don't change any story. Finish as a
+fail on both branches, the cause is the network, not the stories. Don't change any story. Finish as a
 failed run (step 4), listing the failing hosts found with `curl -sI https://milo.adobe.com/docs/library/library.json` and
 `curl -sI <page>.plain.html`.
 
@@ -88,8 +89,12 @@ Handle each section of the check output:
   `C1/` or `C2/` plus the block's name in `library.json`. Write one story per example on the
   library page. Use `renderPageBlock` for an example that is one block and `renderLibraryExample`
   for one that has several blocks or sections. Name each story after its example's heading,
-  shortened the way the existing stories are. Import the block's cssprops when the block has a
-  CSS file. A C2 block with no library page renders from `HOMEPAGE_FRAGMENTS`. If it isn't on the
+  shortened the way the existing stories are. When the block has a CSS file, import its
+  `virtual:cssprops` and `virtual:variants` and set `parameters: { cssprops }` and
+  `argTypes: { variants }` on the default export, or on each story in a file whose stories
+  render different blocks. If the block has an interaction like the ones with play functions (an
+  item to open, a tab to select, a slide to move to), add a play function to the default export,
+  modeled on Accordion, Tabs or Carousel. A C2 block with no library page renders from `HOMEPAGE_FRAGMENTS`. If it isn't on the
   homepage, it renders from `renderBlock` with markup from `test/blocks/<block>/mocks/`.
 - **Stories for blocks the library no longer lists.** If the block folder is gone from `libs/`,
   delete the story file. If the library only renamed the block, change the story title.
@@ -98,19 +103,25 @@ Handle each section of the check output:
   of every story after the change. In `renderPageBlock`, `index` counts blocks with that name on
   the page. In `renderLibraryExample`, it counts examples. Keep the story order the same as the
   example order.
-- **Stories that don't render.** Open the story's page with `curl -s <page>.plain.html` to see if
+- **Stories that fail because Milo doesn't finish decorating them.** Open the story's page with `curl -s <page>.plain.html` to see if
   it moved, lost the block, or has fewer blocks than `index`. Then check the upstream log for a
   change to the block or to a function the helpers call. Fix the story or `src/milo.js`. If the
   live page is broken and nothing in this folder can fix it, leave the story alone. The run then
   fails with that finding.
   If a story can never render in a headless browser, add its title to `NO_RENDER` in
   `scripts/check.js` and its reason to README › Known limits.
-- **Stories that render on `stage` but not on `main`.** The stories follow `stage`, and Milo
+- **Stories whose play function fails.** A play function sits on its file's default export, so
+  every story in the file runs it, and it assumes the example has something to interact with. If
+  a library example changed so its story no longer does, give that story its own `play`, as
+  C1 › Carousel › mWeb does for widths where its buttons are hidden. If the block's markup
+  changed, fix the shared play function. Never change a play function so that it passes without
+  checking anything.
+- **Stories that pass on `stage` but fail on `main`.** The stories follow `stage`, and Milo
   releases `stage` to `main` about once a day. Compare the branches for the story's block and the
   Milo code the helpers call: `git log --oneline upstream/main..upstream/stage -- libs/blocks/<block> libs/c2/blocks/<block> libs/utils`.
   If `stage` has changes there that `main` doesn't, `main` catches up at Milo's next release.
   Don't change the story, and list it as waiting for a Milo release. Otherwise, treat it like any
-  other story that doesn't render.
+  other failing story.
 
 Then rebuild and check again, writing the new examples snapshot:
 
