@@ -1,0 +1,20 @@
+name: milo-storybook-rewrite-failed
+
+# The /rewrite skill pushes a claude/rewrite-failed-* branch when a run fails, with its report as
+# the last commit message. This job fails on purpose so that GitHub emails the account that pushed
+# the branch, and shows the report in the run's summary.
+on:
+  push:
+    branches: ['claude/rewrite-failed-*']
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report the failed /rewrite run
+        env:
+          REPORT: ${{ github.event.head_commit.message }}
+        run: |
+          echo "$REPORT" >> "$GITHUB_STEP_SUMMARY"
+          echo "::error title=/rewrite failed::$(head -n 1 <<< "$REPORT")"
+          exit 1
