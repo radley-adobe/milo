@@ -78,9 +78,9 @@ export default {
   tags: ['autodocs'],
   parameters: {
     // Each story on a Docs page gets its own iframe, so Milo's page styles don't apply to the
-    // Docs page itself.
-    docs: { story: { inline: false, iframeHeight: '600px' } },
-    options: { storySort: { order: ['C2', 'C1'] } },
+    // Docs page itself. The table of contents lists a page's h3 headings.
+    docs: { story: { inline: false, iframeHeight: '600px' }, toc: true },
+    options: { storySort: { order: ['C2', ['Design Tokens', ['Primitive', 'Semantic', 'Responsive']], 'C1'] } },
     branches: { hostname: `${site.host}${site.pathname.replace(/\/$/, '')}` },
   },
   beforeEach: ({ id, parameters }) => {
