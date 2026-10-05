@@ -86,16 +86,20 @@ function presenter(group, values) {
   return null;
 }
 
+// The button styles in the button color token names, such as `primary-outlined`, by heading.
+const BUTTON_STYLES = [
+  ['Accent', 'accent'],
+  ['Primary (Solid)', 'primary-solid'],
+  ['Outline', 'primary-outlined'],
+  ['Transparent', 'primary-transparent'],
+];
+
 // Groups too long to read as one, by name, and the groups their tokens move to by name. The
 // tokens left over stay in the group, after the new ones.
 const SPLITS = {
-  // Button and icon button colors, by style.
-  Other: [
-    ['Color / Button / Accent', /^--s2a-color-(button|iconbutton)-\w+-accent-/],
-    ['Color / Button / Primary (Solid)', /^--s2a-color-(button|iconbutton)-\w+-primary-solid-/],
-    ['Color / Button / Outline', /^--s2a-color-(button|iconbutton)-\w+-primary-outlined-/],
-    ['Color / Button / Transparent', /^--s2a-color-(button|iconbutton)-\w+-primary-transparent-/],
-  ],
+  // Button and icon button colors, by style, such as Accent - Button and Accent - Icon Button.
+  Other: BUTTON_STYLES.flatMap(([style, key]) => [['Button', 'button'], ['Icon Button', 'iconbutton']]
+    .map(([kind, prefix]) => [`Color / Button / ${style} - ${kind}`, new RegExp(`^--s2a-color-${prefix}-\\w+-${key}-`)])),
 };
 
 // The groups in a token file: each group comment on its own line, with the declarations after
