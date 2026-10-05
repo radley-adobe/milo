@@ -58,7 +58,7 @@ const PAGES = {
     ['Effects', /^(Opacity|Shadow|Blur)$/],
   ],
   Semantic: [
-    ['Color - Button', /^Color \/ (Button|Icon Button)$/],
+    ['Color - Button', /^Color \/ Button \//],
     ['Color', /^(Color\b|Other$)/],
     ['Font', /^Font\b/],
     ['Spacing', /^(Spacing|Layout)$/],
@@ -89,9 +89,12 @@ function presenter(group, values) {
 // Groups too long to read as one, by name, and the groups their tokens move to by name. The
 // tokens left over stay in the group, after the new ones.
 const SPLITS = {
+  // Button and icon button colors, by style.
   Other: [
-    ['Color / Button', /^--s2a-color-button-/],
-    ['Color / Icon Button', /^--s2a-color-iconbutton-/],
+    ['Color / Button / Accent', /^--s2a-color-(button|iconbutton)-\w+-accent-/],
+    ['Color / Button / Primary (Solid)', /^--s2a-color-(button|iconbutton)-\w+-primary-solid-/],
+    ['Color / Button / Outline', /^--s2a-color-(button|iconbutton)-\w+-primary-outlined-/],
+    ['Color / Button / Transparent', /^--s2a-color-(button|iconbutton)-\w+-primary-transparent-/],
   ],
 };
 
