@@ -1,0 +1,47 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+import * as Examples from './motion.stories.js';
+import { Declarations } from './foundations.jsx';
+
+<Meta title="Foundations/Motion" />
+
+# Motion
+
+The scroll animations in Milo's `libs/c2/styles/styles.css`. Each `parallax-` class animates its element as it scrolls into view. Scroll inside each example to see it.
+
+The classes use CSS scroll-driven animations. In a browser without them, such as Firefox, the examples don't move. On a page in such a browser, Milo loads `libs/c2/scroll-animations.js` instead. When the operating system is set to reduce motion, the classes don't animate.
+
+### Element effects
+
+Each class sets one property the animation starts from, so they can be combined on one element.
+
+<Story of={Examples.ElementEffects} />
+
+<Declarations selectors={['.parallax-move-up', '.parallax-scale-up', '.parallax-scale-down', '.parallax-blur', '.parallax-opacity']} />
+
+### Stagger
+
+`parallax-stagger-ltr` and `parallax-stagger-rtl` on a column grid start each child at a different vertical offset, set by its column and row, so the children settle at different times. `ltr` and `rtl` set the order of the columns. They animate from 768px.
+
+<Story of={Examples.Stagger} />
+
+### Grid scale down
+
+`parallax-scale-down-grid` on a container starts it at the full width of the frame and shrinks it to the container's own width as it scrolls in.
+
+<Story of={Examples.GridScaleDown} />
+
+### Section effects
+
+These apply to sections.
+
+`parallax-move-up-fast` keeps a section at the top of the page and moves it up and darkens it as the page scrolls, while the next sections scroll over it.
+
+<Story of={Examples.MoveUpFast} />
+
+`parallax-garage-door-reveal` slides a section down into place as it scrolls in, scales up its background image and moves up its foreground content.
+
+<Story of={Examples.GarageDoorReveal} />
+
+`parallax-double-garage-door` slides a section down from behind the section before it as it scrolls in, and down again as it scrolls out.
+
+<Story of={Examples.DoubleGarageDoor} />

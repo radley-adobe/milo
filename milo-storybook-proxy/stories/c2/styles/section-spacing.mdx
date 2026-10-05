@@ -1,0 +1,27 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+import * as Examples from './section-spacing.stories.js';
+import { SectionSpacing } from './foundations.jsx';
+
+<Meta title="Foundations/Section Spacing" />
+
+# Section spacing
+
+The `spacing-` classes in Milo's `libs/c2/styles/styles.css` set the top and bottom padding of a section. A section gets them from the style in its section metadata.
+
+- `spacing-<size>` changes its padding at breakpoints
+- `spacing-<size>-static` has the same padding at every width
+- `-top` or `-bottom` after either sets one side only, such as `spacing-md-top` or `spacing-md-static-bottom`
+
+The examples shade each section's padding at the width of its frame. The tables list the padding on each side, with a column for each breakpoint where a value changes.
+
+### Scaled
+
+<Story of={Examples.Scaled} />
+
+<SectionSpacing />
+
+### Static
+
+<Story of={Examples.Static} />
+
+<SectionSpacing kind="static" />

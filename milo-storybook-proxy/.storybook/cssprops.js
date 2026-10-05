@@ -93,15 +93,22 @@ function row(value, description, category) {
   };
 }
 
-function scan(foundation, block) {
-  const globals = declarations(parse(GLOBAL_CSS[foundation]));
+// The breakpoints in a global stylesheet's custom properties on :root, html and body, smallest
+// first, and the variables in scope at each one. Also returns the stylesheet's other custom
+// properties.
+export function rootScopes(path) {
+  const globals = declarations(parse(path));
   const onRoot = globals.filter((d) => d.onRoot && d.width !== null);
-  const elsewhere = groupByName(globals.filter((d) => !onRoot.includes(d)));
-  // The values on :root, html and body at each breakpoint, smallest first.
   const widths = [...new Set(onRoot.map((d) => d.width))].sort((a, b) => a - b);
   const scopes = widths.map((width) => new Map(onRoot
     .filter((d) => d.width <= width)
     .map((d) => [d.name, d.value])));
+  return { widths, scopes, elsewhere: globals.filter((d) => !onRoot.includes(d)) };
+}
+
+function scan(foundation, block) {
+  const { widths, scopes, elsewhere: others } = rootScopes(GLOBAL_CSS[foundation]);
+  const elsewhere = groupByName(others);
   const scopeAt = (width) => scopes[widths.findLastIndex((w) => w <= (width ?? 0))];
 
   const blockCss = parse(`${BLOCKS[foundation]}/${block}/${block}.css`);

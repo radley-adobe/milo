@@ -58,6 +58,8 @@ const PAGES = {
     ['Effects', /^(Opacity|Shadow|Blur)$/],
   ],
   Semantic: [
+    ['Color - Button', /^Color \/ Button \//],
+    ['Color - Icon Button', /^Color \/ Icon Button \//],
     ['Color', /^(Color\b|Other$)/],
     ['Font', /^Font\b/],
     ['Spacing', /^(Spacing|Layout)$/],
@@ -85,6 +87,22 @@ function presenter(group, values) {
   return null;
 }
 
+// The button styles in the button color token names, such as `primary-outlined`, by heading.
+const BUTTON_STYLES = [
+  ['Accent', 'accent'],
+  ['Primary (Solid)', 'primary-solid'],
+  ['Outline', 'primary-outlined'],
+  ['Transparent', 'primary-transparent'],
+];
+
+// Groups too long to read as one, by name, and the groups their tokens move to by name. The
+// tokens left over stay in the group, after the new ones.
+const SPLITS = {
+  // Button and icon button colors, by style, such as Color / Icon Button / Accent.
+  Other: [['Button', 'button'], ['Icon Button', 'iconbutton']].flatMap(([kind, prefix]) => BUTTON_STYLES
+    .map(([style, key]) => [`Color / ${kind} / ${style}`, new RegExp(`^--s2a-color-${prefix}-\\w+-${key}-`)])),
+};
+
 // The groups in a token file: each group comment on its own line, with the declarations after
 // it. A comment after a declaration on the same line is a note on that token.
 function groups(css) {
@@ -97,7 +115,12 @@ function groups(css) {
       else if (node.prev()?.type === 'decl') list.at(-1).tokens.at(-1).note = node.text.replace(/^\*\s*/, '');
     }
   });
-  return list.filter((group) => group.tokens.length);
+  return list.flatMap((group) => {
+    const splits = (SPLITS[group.name] ?? []).map(([name, pattern]) => (
+      { name, tokens: group.tokens.filter((t) => pattern.test(t.name)) }));
+    const rest = group.tokens.filter((t) => !splits.some((s) => s.tokens.includes(t)));
+    return [...splits, { name: group.name, tokens: rest }];
+  }).filter((group) => group.tokens.length);
 }
 
 function scan() {
@@ -120,7 +143,7 @@ function scan() {
       const type = presenter(group.name, tokens.map((t) => t.resolved));
       const page = PAGES[prefix].find(([, pattern]) => pattern.test(group.name))?.[0];
       if (!page) throw new Error(`No Design Tokens page for ${category}. Add its group to PAGES in .storybook/tokens.js.`);
-      const heading = `${group.name.replace(`${page.split(' / ')[0]} / `, '')}${label}`;
+      const heading = `${group.name.split(' / ').at(-1)}${label}`;
       (pages[`${prefix} / ${page}`] ??= []).push({ category, heading, presenter: type });
       tokens.forEach((t) => { values[t.name] = [...new Set([...(values[t.name] ?? []), t.resolved])]; });
       const lines = tokens.map((t) => {

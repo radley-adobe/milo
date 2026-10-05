@@ -1,0 +1,13 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import * as Samples from '../typography.stories.js';
+import { TextStyles } from '../foundations.jsx';
+
+<Meta title="Foundations/Typography/Misc" />
+
+# Misc
+
+The eyebrow, label and caption classes in Milo's `libs/c2/styles/styles.css`. Each also applies to an element with a class that contains `eyebrow-`, `label-` or `caption-`.
+
+Each sample shows the class at the width of its frame. Each table has a column for each breakpoint where one of the class's values changes. Under each value is the token the class's token points to at that width. The Design Tokens pages list every token.
+
+<TextStyles stories={Samples} names={['eyebrow', 'label', 'caption']} />
