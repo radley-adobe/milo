@@ -164,7 +164,7 @@ export default {
           'Layout', 'Section Spacing', 'Motion', 'Utilities',
         ], 'Design Tokens', [
           'Primitive', ['Color', 'Font', 'Spacing', 'Border', 'Effects'],
-          'Semantic', ['Color', 'Font', 'Spacing', 'Border', 'Effects'],
+          'Semantic', ['Color', 'Color - Button', 'Font', 'Spacing', 'Border', 'Effects'],
           'Responsive', [
             'Typography', ['Font Size', 'Letter Spacing', 'Line Height'],
             'Spacing', ['Viewport & Section Padding', 'Layout', 'Other'],
