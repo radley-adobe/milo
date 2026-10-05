@@ -59,6 +59,7 @@ const PAGES = {
   ],
   Semantic: [
     ['Color - Button', /^Color \/ Button \//],
+    ['Color - Icon Button', /^Color \/ Icon Button \//],
     ['Color', /^(Color\b|Other$)/],
     ['Font', /^Font\b/],
     ['Spacing', /^(Spacing|Layout)$/],
@@ -97,9 +98,9 @@ const BUTTON_STYLES = [
 // Groups too long to read as one, by name, and the groups their tokens move to by name. The
 // tokens left over stay in the group, after the new ones.
 const SPLITS = {
-  // Button and icon button colors, by style, such as Accent - Button and Accent - Icon Button.
-  Other: BUTTON_STYLES.flatMap(([style, key]) => [['Button', 'button'], ['Icon Button', 'iconbutton']]
-    .map(([kind, prefix]) => [`Color / Button / ${style} - ${kind}`, new RegExp(`^--s2a-color-${prefix}-\\w+-${key}-`)])),
+  // Button and icon button colors, by style, such as Color / Icon Button / Accent.
+  Other: [['Button', 'button'], ['Icon Button', 'iconbutton']].flatMap(([kind, prefix]) => BUTTON_STYLES
+    .map(([style, key]) => [`Color / ${kind} / ${style}`, new RegExp(`^--s2a-color-${prefix}-\\w+-${key}-`)])),
 };
 
 // The groups in a token file: each group comment on its own line, with the declarations after
