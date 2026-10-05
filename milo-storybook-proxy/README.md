@@ -58,6 +58,8 @@ Every story passes `{ foundation: 'c2' }`. This sets the `foundation` metadata s
 
 For a block with no usable live page, `renderBlock(html)` decorates inline authored markup instead: a `div` whose first class is the block name, one `div` per row and one `div` per cell. Milo's test mocks in `test/blocks/<name>/mocks/` show this markup for most blocks.
 
+`renderStyles(html)` renders markup as it is, with Milo's C2 styles and fonts, and decorates nothing. Stories of global classes, such as `heading-1` or `con-button`, use it. Milo hides a section until it decorates it, so each top-level `div` in the markup needs the `section` class. `html` can also be a function that returns the markup or a promise of it. Milo loads its fonts only for a whole page, so `renderStyles()` loads them with Milo's own font loader. Block stories don't load them.
+
 To fill the CSS Custom Properties and Controls tabs, import the block's variables from `virtual:cssprops/c2/<block>` and its variants from `virtual:variants/c2/<block>`, and set them as the `cssprops` parameter and the `variants` argType:
 
 ```js
@@ -77,10 +79,27 @@ On a live site, Milo loads SVG icons authored as `.aem.` or `.hlx.` links from t
 
 When decoration finishes, the story's `main` element gets `data-milo-status="loaded"`. If the page or block can't be fetched, the story shows the error instead and `main` gets `data-milo-status="error"`.
 
+## Foundations and Button
+
+The Foundations Docs pages show the global classes in Milo's `libs/c2/styles/styles.css`:
+
+- Typography: Headings, Body and Small Text, one entry per text class
+- Layout: the `--grid-` variables, containers and column grids
+- Section Spacing: the `spacing-` classes
+- Motion: the `parallax-` scroll animations
+- Utilities: helper classes such as `hide-block` and `sr-only`
+
+Their tables come from `.storybook/foundations.js`, which reads `styles.css` when Storybook starts and resolves each value at every breakpoint where the variables on `:root` change. Each value also shows the variable it points to, one step down. A table has a column for the base value and one for each breakpoint where one of its values changes. `import { ... } from 'virtual:foundations'` gives the data, and `stories/c2/styles/foundations.jsx` draws the tables. A class missing from a build's `styles.css` shows as missing.
+
+The pages are MDX files in `stories/c2/styles/`. Their examples are stories in the same folder, tagged `!dev` so the sidebar hides them. The Typography pages show one example story per class, named after the class in PascalCase, such as `Heading1` for `heading-1`. To add a text class, add its story to `typography.stories.js` and its name to the page. The examples use classes from `demo.css` to outline boxes and shade padding. Those names avoid text that Milo's attribute selectors match, such as `up` in `[class*="up"]`.
+
+The Button story in the same folder shows `con-button` and its variants, with controls, and the promo CTA link.
+
 ## Addons
 
 - Every block has a Docs page that shows all of its stories. Each story renders in its own 600px-high iframe, so Milo's styles don't apply to the Docs page itself. A story can set its own height with `parameters.docs.story.iframeHeight`. Every Docs page has a table of contents of its h3 headings.
-- Storybook's own interface and the Docs pages are light or dark, as the browser or operating system prefers. Each story iframe on a Docs page follows the toolbar's Preview background, the way a story page does. `followDocsBackground()` in `.storybook/preview.js` copies the background from the Docs page into each iframe, because Storybook only gives it to the Docs page.
+- Storybook's own interface and the Docs pages are light or dark, as the browser or operating system prefers. Each story iframe on a Docs page follows the toolbar's Preview background and Theme, the way a story page does. `followDocsGlobals()` in `.storybook/preview.js` copies them from the Docs page into each iframe, because Storybook only gives them to the Docs page.
+- The Theme menu in the toolbar switches every story between Milo's light and dark themes. Dark puts Milo's `dark` class on the story's `body`, which sets the dark color tokens, the way a section with the `dark` style does.
 - The Accessibility tab runs axe-core checks on each story. Milo decorates a story after Storybook renders it, so an `afterEach` hook in `.storybook/preview.js` waits for `data-milo-status` (up to 30 seconds) before the checks run.
 - The HTML tab shows each story's markup after Milo has decorated it, formatted with Prettier. The addon reads the markup before Milo runs, so the same `afterEach` hook sends the decorated markup to the tab once `data-milo-status` is set.
 - The CSS Custom Properties tab lists every variable the story's block sets or reads. `.storybook/cssprops.js` reads the block's CSS and Milo's global `styles.css`, and groups the variables as Block (set in the block's CSS), Tokens (C2 design tokens, the `--s2a-` variables), Global (other variables set in `styles.css`) and Other (set in neither, for example by JavaScript). A row's value is the first value the CSS gives it, at the smallest viewport. Its description lists where the variable is set and its value at each breakpoint.
@@ -98,7 +117,7 @@ Milo's code and its library pages change independently of this folder. `npm run 
 
 - C2 library blocks in https://milo.adobe.com/docs/library/library.json with no story, apart from the blocks listed in Known limits
 - C2 blocks in `libs/c2/blocks/` with no `stories/c2/<block>.stories.js`, apart from the blocks listed in Known limits
-- Story files for blocks the library no longer lists. A C2 story file stays while its block's folder is in `libs/c2/blocks/`.
+- Story files for blocks the library no longer lists. A C2 story file stays while its block's folder is in `libs/c2/blocks/`. Story files in `stories/c2/styles/` show global styles, not blocks, so this skips them.
 - Library pages whose examples changed since `stories/library-examples.json` was written. `npm run check -- --update` rewrites that file once the stories match the pages again.
 - Stories that fail, for the `stage` and `main` builds separately: their `main` element doesn't reach `data-milo-status="loaded"` within 30 seconds, or their play function fails. Storybook reports a failed play function only on its event channel, so the check listens there. The check runs at 1280 × 720, where some mobile-only controls are hidden. C2 Tabs stories never finish loading in a headless browser, so the check skips them.
 

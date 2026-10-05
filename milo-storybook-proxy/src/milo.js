@@ -1,5 +1,5 @@
 // Resolves next to iframe.html, so it works on localhost and under a hosted subpath.
-const LIBS = new URL('libs', window.location.href).pathname;
+export const LIBS = new URL('libs', window.location.href).pathname;
 
 // Milo's block library: one example page per block, the source authors copy blocks from.
 export const LIBRARY = 'https://main--milo--adobecom.aem.page/docs/library/blocks';
@@ -294,4 +294,34 @@ export function renderBlock(html, { foundation = 'c1' } = {}) {
     div.innerHTML = html;
     return [div];
   }, foundation);
+}
+
+let fonts;
+
+// Renders markup as it is, with Milo's C2 styles and fonts, for stories of global classes such as
+// `heading-1` or `con-button`. `html` is the markup, or a function that returns it or a promise of
+// it. Milo hides a section until it decorates it, so each top-level `div` has the `section`
+// class. Nothing is decorated and no block loads.
+//
+// Milo loads its fonts only for a whole page, so this loads them with Milo's own font loader.
+export function renderStyles(html) {
+  return render(async () => {
+    const template = document.createElement('template');
+    template.innerHTML = typeof html === 'function' ? await html() : html;
+    return [...template.content.children];
+  }, 'c2', {
+    load: async ({ getConfig }) => {
+      const link = document.getElementById('milo-styles');
+      if (!link.sheet) {
+        await new Promise((resolve) => {
+          link.addEventListener('load', resolve, { once: true });
+          link.addEventListener('error', resolve, { once: true });
+        });
+      }
+      fonts ??= import(/* @vite-ignore */ `${LIBS}/utils/fonts.js`)
+        .then(({ default: loadFonts }) => loadFonts(getConfig().locale));
+      await fonts;
+      await document.fonts.ready;
+    },
+  });
 }

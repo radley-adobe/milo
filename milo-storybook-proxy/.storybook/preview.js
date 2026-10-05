@@ -92,11 +92,11 @@ document.addEventListener('click', (e) => {
 });
 
 // On a Docs page, each story renders in its own iframe, and only the Docs page itself gets the
-// toolbar's Preview background. A story iframe on a Docs page copies that background when it
-// loads and whenever it changes, before its story first renders. Elsewhere, the parent window is
+// toolbar's Preview background and Theme. A story iframe on a Docs page copies them when it
+// loads and whenever they change, before its story first renders. Elsewhere, the parent window is
 // Storybook's manager, which has no preview, or a page on another site, which can't be read.
-// Returns a function that stops following it.
-function followDocsBackground() {
+// Returns a function that stops following them.
+function followDocsGlobals() {
   let docsPage;
   try {
     if (window.parent !== window) docsPage = window.parent.__STORYBOOK_PREVIEW__;
@@ -106,9 +106,10 @@ function followDocsBackground() {
   if (!docsPage) return undefined;
   const preview = window.__STORYBOOK_PREVIEW__;
   const follow = () => {
-    const { backgrounds } = docsPage.storyStoreValue.userGlobals.get();
-    if (JSON.stringify(backgrounds) === JSON.stringify(preview.storyStoreValue.userGlobals.get().backgrounds)) return;
-    preview.onUpdateGlobals({ globals: { backgrounds } });
+    const { backgrounds, theme } = docsPage.storyStoreValue.userGlobals.get();
+    const own = preview.storyStoreValue.userGlobals.get();
+    if (JSON.stringify(backgrounds) === JSON.stringify(own.backgrounds) && theme === own.theme) return;
+    preview.onUpdateGlobals({ globals: { backgrounds, theme } });
   };
   const stop = () => docsPage.channel.off(GLOBALS_UPDATED, follow);
   preview.ready().then(() => {
@@ -127,7 +128,25 @@ const site = new URL(currentBranch === defaultBranch ? '.' : '..', window.locati
 
 export default {
   tags: ['autodocs'],
-  beforeAll: followDocsBackground,
+  beforeAll: followDocsGlobals,
+  // The Theme menu in the toolbar puts Milo's `dark` class on the body, which sets the dark
+  // color tokens for every story.
+  globalTypes: {
+    theme: {
+      description: "Milo's light or dark theme",
+      toolbar: {
+        title: 'Theme',
+        icon: 'contrast',
+        items: [{ value: 'light', title: 'Light' }, { value: 'dark', title: 'Dark' }],
+        dynamicTitle: true,
+      },
+    },
+  },
+  initialGlobals: { theme: 'light' },
+  decorators: [(story, { globals }) => {
+    document.body.classList.toggle('dark', globals.theme === 'dark');
+    return story();
+  }],
   parameters: {
     // Each story on a Docs page gets its own iframe, so Milo's page styles don't apply to the
     // Docs page itself. The table of contents lists a page's h3 headings. Docs pages are light or
@@ -137,8 +156,13 @@ export default {
     // pages list every token, so the Design Tokens tab is hidden.
     designToken: { disable: true },
     options: {
+      // Titles after the listed ones sort by name. Stories in one file keep their file's order.
       storySort: {
-        order: ['Design Tokens', [
+        method: 'alphabetical',
+        order: ['Foundations', [
+          'Typography', ['Headings', 'Body', 'Small Text'],
+          'Layout', 'Section Spacing', 'Motion', 'Utilities',
+        ], 'Design Tokens', [
           'Primitive', ['Color', 'Font', 'Spacing', 'Border', 'Effects'],
           'Semantic', ['Color', 'Font', 'Spacing', 'Border', 'Effects'],
           'Responsive', [

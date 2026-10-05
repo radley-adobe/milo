@@ -1,0 +1,31 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+import * as Examples from './layout.stories.js';
+import { ColumnCounts, Declarations, GridVariables } from './foundations.jsx';
+
+<Meta title="Foundations/Layout" />
+
+# Layout
+
+The grid variables, containers and column grids in Milo's `libs/c2/styles/styles.css`. The examples show each class at the width of its frame. The tables have a column for each breakpoint where a value changes.
+
+### Grid variables
+
+The variables on `:root` that the container and column grid classes read.
+
+<GridVariables />
+
+### Containers
+
+`container` sets the side padding of its content to the grid margin, or wider when the frame is wider than the maximum width. `fluid` widens the maximum and removes the margin. `fixed` keeps the fixed margin at every width. A container inside another container has no padding of its own.
+
+<Story of={Examples.Containers} />
+
+<Declarations selectors={['.container', '.container.fluid', '.container.fixed', '.container .container']} />
+
+### Column grids
+
+`two-up`, `three-up`, `four-up` and `six-up` set their children in equal columns, with the grid gutter between them. From 768px, with `fill-last-row` on `two-up`, an odd last child spans both columns.
+
+<Story of={Examples.ColumnGrids} />
+
+<ColumnCounts />

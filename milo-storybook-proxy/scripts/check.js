@@ -31,6 +31,9 @@ const NO_C2_STORY = ['card-metadata', 'email-collection-c2', 'firefly-globe', 'f
 // Known limits says why.
 const NO_RENDER = ['Tabs'];
 
+// The folder of stories for Milo's global styles, such as Button and the Foundations examples.
+const STYLE_STORIES = 'stories/c2/styles/';
+
 const TYPES = {
   '.html': 'text/html',
   '.js': 'text/javascript',
@@ -235,9 +238,11 @@ try {
     c2Blocks.filter((b) => !NO_C2_STORY.includes(b) && !storyFiles.some((f) => f.file === c2Story(b))),
   );
   // A C2 story for a block in libs/c2/blocks/ stays, whether or not the library lists the block.
+  // Stories in stories/c2/styles/ show Milo's global styles, not a block.
   found += report(
     'Stories for blocks the library no longer lists',
-    storyFiles.filter((f) => !libraryTitles.includes(f.title) && !c2Blocks.some((b) => f.file === c2Story(b)))
+    storyFiles.filter((f) => !libraryTitles.includes(f.title) && !c2Blocks.some((b) => f.file === c2Story(b))
+      && !f.file.startsWith(STYLE_STORIES))
       .map((f) => `${f.title} (${f.file})`),
   );
 

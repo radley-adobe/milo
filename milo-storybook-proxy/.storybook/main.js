@@ -1,5 +1,6 @@
 import { mergeConfig } from 'vite';
 import cssprops from './cssprops.js';
+import foundations from './foundations.js';
 import LIBS from './libs.js';
 import designTokens from './tokens.js';
 import variants from './variants.js';
@@ -19,5 +20,5 @@ export default {
   ],
   // Milo's libs/ is served as-is, never bundled or modified.
   staticDirs: [{ from: LIBS, to: '/libs' }],
-  viteFinal: (config) => mergeConfig(config, { plugins: [cssprops(), variants(), designTokens()] }),
+  viteFinal: (config) => mergeConfig(config, { plugins: [cssprops(), variants(), designTokens(), foundations()] }),
 };

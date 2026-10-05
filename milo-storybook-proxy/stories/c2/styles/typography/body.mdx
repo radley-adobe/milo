@@ -1,0 +1,13 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import * as Samples from '../typography.stories.js';
+import { TextStyles } from '../foundations.jsx';
+
+<Meta title="Foundations/Typography/Body" />
+
+# Body
+
+The body text classes in Milo's `libs/c2/styles/styles.css`. Text with no class gets the size, line height and letter spacing of `body-md` from the `body` element.
+
+Each sample shows the class at the width of its frame. Each table has a column for each breakpoint where one of the class's values changes. Under each value is the token the class's token points to at that width. The Design Tokens pages list every token.
+
+<TextStyles stories={Samples} names={['body-lg', 'body-md', 'body-sm']} />
