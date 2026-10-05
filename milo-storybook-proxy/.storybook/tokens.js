@@ -85,6 +85,15 @@ function presenter(group, values) {
   return null;
 }
 
+// Groups too long to read as one, by name, and the groups their tokens move to by name. The
+// tokens left over stay in the group, after the new ones.
+const SPLITS = {
+  Other: [
+    ['Color / Button', /^--s2a-color-button-/],
+    ['Color / Icon Button', /^--s2a-color-iconbutton-/],
+  ],
+};
+
 // The groups in a token file: each group comment on its own line, with the declarations after
 // it. A comment after a declaration on the same line is a note on that token.
 function groups(css) {
@@ -97,7 +106,12 @@ function groups(css) {
       else if (node.prev()?.type === 'decl') list.at(-1).tokens.at(-1).note = node.text.replace(/^\*\s*/, '');
     }
   });
-  return list.filter((group) => group.tokens.length);
+  return list.flatMap((group) => {
+    const splits = (SPLITS[group.name] ?? []).map(([name, pattern]) => (
+      { name, tokens: group.tokens.filter((t) => pattern.test(t.name)) }));
+    const rest = group.tokens.filter((t) => !splits.some((s) => s.tokens.includes(t)));
+    return [...splits, { name: group.name, tokens: rest }];
+  }).filter((group) => group.tokens.length);
 }
 
 function scan() {
