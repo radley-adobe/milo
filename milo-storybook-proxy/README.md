@@ -54,11 +54,13 @@ Pages from adobe.com sites work through each site's `aem.live` origin, for examp
 
 Some sites, such as `da-dc` and `da-cc`, serve their `aem.page` origin only after sign-in. A link whose text is a URL on the page's own site, such as an SVG section background, loads from the origin the story reads the page from.
 
+Milo loads its fonts only for a whole page, so every render helper loads them with Milo's own font loader, `libs/utils/fonts.js`, before it sets `data-milo-status`.
+
 Every story passes `{ foundation: 'c2' }`. This sets the `foundation` metadata so Milo loads the block and its styles from `libs/c2/`.
 
 For a block with no usable live page, `renderBlock(html)` decorates inline authored markup instead: a `div` whose first class is the block name, one `div` per row and one `div` per cell. Milo's test mocks in `test/blocks/<name>/mocks/` show this markup for most blocks.
 
-`renderStyles(html)` renders markup as it is, with Milo's C2 styles and fonts, and decorates nothing. Stories of global classes, such as `heading-1` or `con-button`, use it. Milo hides a section until it decorates it, so each top-level `div` in the markup needs the `section` class. `html` can also be a function that returns the markup or a promise of it. Milo loads its fonts only for a whole page, so `renderStyles()` loads them with Milo's own font loader. Block stories don't load them.
+`renderStyles(html)` renders markup as it is, with Milo's C2 styles and fonts, and decorates nothing. Stories of global classes, such as `heading-1` or `con-button`, use it. Milo hides a section until it decorates it, so each top-level `div` in the markup needs the `section` class. `html` can also be a function that returns the markup or a promise of it.
 
 To fill the CSS Custom Properties and Controls tabs, import the block's variables from `virtual:cssprops/c2/<block>` and its variants from `virtual:variants/c2/<block>`, and set them as the `cssprops` parameter and the `variants` argType:
 

@@ -63,6 +63,17 @@ async function getUtils() {
   return utils;
 }
 
+let fonts;
+
+// Milo loads its fonts only for a whole page, so each story loads them with Milo's own font
+// loader, once per frame. Waits until the fonts the story uses have loaded or failed.
+async function loadFonts({ getConfig }) {
+  fonts ??= import(/* @vite-ignore */ `${LIBS}/utils/fonts.js`)
+    .then(({ default: load }) => load(getConfig().locale));
+  await fonts;
+  await document.fonts.ready;
+}
+
 function setFoundation(foundation) {
   let meta = document.head.querySelector('meta[name="foundation"]');
   if (!meta) {
@@ -162,8 +173,8 @@ function applyVariants(main, { block, options }, variants) {
 }
 
 // Renders sections the way a Milo page would: filled with authored markup, then decorated by
-// loadArea, or by `load` when given. `metadata` sets page metadata. Errors are shown in place of
-// the story.
+// loadArea, or by `load` when given, then set in Milo's fonts. `metadata` sets page metadata.
+// Errors are shown in place of the story.
 //
 // After a story renders with its authored variants, .storybook/preview.js sets its Variants
 // control to them, and Storybook renders it again. That render returns the same main element,
@@ -190,6 +201,7 @@ function render(getSections, foundation, { metadata = {}, load = (milo, main) =>
       const milo = await getUtils();
       decorateSvgLinks(main, milo.decorateSVG);
       await load(milo, main);
+      await loadFonts(milo);
       main.dataset.miloStatus = 'loaded';
     } catch (e) {
       main.textContent = e.message;
@@ -296,21 +308,17 @@ export function renderBlock(html, { foundation = 'c1' } = {}) {
   }, foundation);
 }
 
-let fonts;
-
 // Renders markup as it is, with Milo's C2 styles and fonts, for stories of global classes such as
 // `heading-1` or `con-button`. `html` is the markup, or a function that returns it or a promise of
 // it. Milo hides a section until it decorates it, so each top-level `div` has the `section`
 // class. Nothing is decorated and no block loads.
-//
-// Milo loads its fonts only for a whole page, so this loads them with Milo's own font loader.
 export function renderStyles(html) {
   return render(async () => {
     const template = document.createElement('template');
     template.innerHTML = typeof html === 'function' ? await html() : html;
     return [...template.content.children];
   }, 'c2', {
-    load: async ({ getConfig }) => {
+    load: async () => {
       const link = document.getElementById('milo-styles');
       if (!link.sheet) {
         await new Promise((resolve) => {
@@ -318,10 +326,6 @@ export function renderStyles(html) {
           link.addEventListener('error', resolve, { once: true });
         });
       }
-      fonts ??= import(/* @vite-ignore */ `${LIBS}/utils/fonts.js`)
-        .then(({ default: loadFonts }) => loadFonts(getConfig().locale));
-      await fonts;
-      await document.fonts.ready;
     },
   });
 }
