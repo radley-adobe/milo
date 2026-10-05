@@ -85,7 +85,7 @@ When decoration finishes, the story's `main` element gets `data-milo-status="loa
 
 The Foundations Docs pages show the global classes in Milo's `libs/c2/styles/styles.css`:
 
-- Typography: Headings, Body and Small Text, one entry per text class
+- Typography: Headings, Body and Misc, one entry per text class
 - Layout: the `--grid-` variables, containers and column grids
 - Section Spacing: the `spacing-` classes
 - Motion: the `parallax-` scroll animations

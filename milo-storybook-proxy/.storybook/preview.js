@@ -160,7 +160,7 @@ export default {
       storySort: {
         method: 'alphabetical',
         order: ['Foundations', [
-          'Typography', ['Headings', 'Body', 'Small Text'],
+          'Typography', ['Headings', 'Body', 'Misc'],
           'Layout', 'Section Spacing', 'Motion', 'Utilities',
         ], 'Design Tokens', [
           'Primitive', ['Color', 'Font', 'Spacing', 'Border', 'Effects'],
