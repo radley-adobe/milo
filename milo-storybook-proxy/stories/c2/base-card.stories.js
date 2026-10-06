@@ -61,22 +61,6 @@ export default {
   },
 };
 
-// The library's featured card, in the width of a container section.
-export const Featured = {
-  ...cardStory('container'),
-  args: {
-    variants: ['featured'],
-    icon: icon('premiere-pro-64'),
-    showIcon: true,
-    image: `${LIBRARY}/c2/media_1240ea9838a6b2823276406377ef7c85c4f4e2381.png?width=2000&format=webply&optimize=medium`,
-    imageAlt: '',
-    heading: 'Featured base card.',
-    body: 'Colour grading purpose-built for editors. Now in Premiere (beta).',
-    ctaLabel: 'Explore Premiere',
-    ctaHref: 'https://www.adobe.com/products/premiere/color-mode.html',
-  },
-};
-
 // The library's first card in the width of one column of a three-up section. The homepage has
 // the same card, with a link and a larger image.
 export const Default = {
@@ -94,20 +78,36 @@ export const Default = {
   },
 };
 
+// The library's featured card, in the width of a container section.
+export const Featured = {
+  ...cardStory('container'),
+  args: {
+    variants: ['featured'],
+    icon: icon('premiere-pro-64'),
+    showIcon: true,
+    image: `${LIBRARY}/c2/media_1240ea9838a6b2823276406377ef7c85c4f4e2381.png?width=2000&format=webply&optimize=medium`,
+    imageAlt: '',
+    heading: 'Featured base card.',
+    body: 'Colour grading purpose-built for editors. Now in Premiere (beta).',
+    ctaLabel: 'Explore Premiere',
+    ctaHref: 'https://www.adobe.com/products/premiere/color-mode.html',
+  },
+};
+
 // The section stories render the library page as published, so they have no controls.
 const published = { controls: { disable: true } };
+
+// The library's three base cards with the section that holds them, whose style is three-up.
+export const SectionThreeUp = {
+  name: 'Section: 3 up',
+  render: () => renderPageSections(library, 'base-card', { index: 1, foundation: 'c2' }),
+  parameters: published,
+};
 
 // The featured card with its section's metadata, which sets the section's container width,
 // spacing, background and parallax.
 export const SectionFeatured = {
   name: 'Section: Featured',
   render: () => renderPageBlock(library, 'base-card', { metadata: true, foundation: 'c2' }),
-  parameters: published,
-};
-
-// The library's three base cards with the section that holds them, whose style is three-up.
-export const SectionThreeUp = {
-  name: 'Section: 3 up',
-  render: () => renderPageSections(library, 'base-card', { index: 1, foundation: 'c2' }),
   parameters: published,
 };
