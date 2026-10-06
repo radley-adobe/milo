@@ -46,7 +46,7 @@ const tableClass = ({ category, presenter }) => {
 };
 
 // The categories on one Design Tokens page, such as `Primitive / Color`, each under its own
-// heading. Colors show as cards and the rest as tables.
+// heading. Colors show as cards and the rest as tables, without the addon's search field.
 export default function TokenCategories({ page }) {
   return (
     <>
@@ -62,6 +62,7 @@ export default function TokenCategories({ page }) {
             usageMap={usageMap}
             viewType={presenter === 'Color' ? 'card' : 'table'}
             presenters={presenters}
+            showSearch={false}
           />
         </div>
       ))}
