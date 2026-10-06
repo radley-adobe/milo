@@ -103,6 +103,29 @@ const SPLITS = {
     .map(([style, key]) => [`Color / ${kind} / ${style}`, new RegExp(`^--s2a-color-${prefix}-\\w+-${key}-`)])),
 };
 
+// Where a size name such as `3xs`, `md` or `2xl` falls from smallest to largest, with `none`
+// first and `round` last. NaN for other names.
+function sizeRank(size) {
+  if (size === 'none') return -1000;
+  if (size === 'round') return 1000;
+  const [, n, end] = size.match(/^(\d*)x([sl])$/) ?? [];
+  if (end) return (end === 's' ? -1 : 1) * (Number(n || 1) + 1);
+  return { sm: -1, md: 0, lg: 1 }[size] ?? NaN;
+}
+
+// Milo lists some semantic sizes out of order, such as `--s2a-spacing-3xs` after
+// `--s2a-spacing-4xl`. In a group whose token names all end in a size name, tokens with the same
+// name before the size stay together and go from smallest to largest.
+function bySize(tokens) {
+  const parts = tokens.map(({ name }) => name.match(/^(.*)-([^-]+)$/));
+  if (!parts.every((m) => m && !Number.isNaN(sizeRank(m[2])))) return tokens;
+  const stems = [...new Set(parts.map(([, stem]) => stem))];
+  return tokens
+    .map((token, i) => ({ token, stem: stems.indexOf(parts[i][1]), rank: sizeRank(parts[i][2]) }))
+    .sort((a, b) => a.stem - b.stem || a.rank - b.rank)
+    .map(({ token }) => token);
+}
+
 // The groups in a token file: each group comment on its own line, with the declarations after
 // it. A comment after a declaration on the same line is a note on that token.
 function groups(css) {
@@ -139,7 +162,8 @@ function scan() {
     const label = suffix ? ` (${suffix}${width ? `, ${width} and up` : ''})` : '';
     return parsed[name].groups.map((group) => {
       const category = `${prefix} / ${group.name}${label}`;
-      const tokens = group.tokens.map((t) => ({ ...t, resolved: resolve(t.value, scopeMap) }));
+      const ordered = prefix === 'Semantic' ? bySize(group.tokens) : group.tokens;
+      const tokens = ordered.map((t) => ({ ...t, resolved: resolve(t.value, scopeMap) }));
       const type = presenter(group.name, tokens.map((t) => t.resolved));
       const page = PAGES[prefix].find(([, pattern]) => pattern.test(group.name))?.[0];
       if (!page) throw new Error(`No Design Tokens page for ${category}. Add its group to PAGES in .storybook/tokens.js.`);
