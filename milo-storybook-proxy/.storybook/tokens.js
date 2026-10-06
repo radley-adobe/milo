@@ -189,7 +189,9 @@ function scan() {
       const type = presenter(group.name, tokens.map((t) => t.resolved));
       const page = PAGES[prefix].find(([, pattern]) => pattern.test(group.name))?.[0];
       if (!page) throw new Error(`No Design Tokens page for ${category}. Add its group to PAGES in .storybook/tokens.js.`);
-      const heading = `${group.name.split(' / ').at(-1)}${label}`;
+      // The Responsive Spacing Misc page heads Milo's Other group as Misc.
+      const shown = page === 'Spacing / Misc' && group.name === 'Other' ? 'Misc' : group.name.split(' / ').at(-1);
+      const heading = `${shown}${label}`;
       (pages[`${prefix} / ${page}`] ??= []).push({ category, heading, presenter: type });
       tokens.forEach((t) => { values[t.name] = [...new Set([...(values[t.name] ?? []), t.resolved])]; });
       const lines = tokens.map((t) => {
