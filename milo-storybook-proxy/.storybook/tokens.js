@@ -113,9 +113,9 @@ function sizeRank(size) {
   return { sm: -1, md: 0, lg: 1 }[size] ?? NaN;
 }
 
-// Milo lists some semantic sizes out of order, such as `--s2a-spacing-3xs` after
-// `--s2a-spacing-4xl`. In a group whose token names all end in a size name, tokens with the same
-// name before the size stay together and go from smallest to largest.
+// Milo lists some sizes out of order, such as `--s2a-spacing-3xs` after `--s2a-spacing-4xl`, or
+// from largest to smallest. In a group whose token names all end in a size name, tokens with the
+// same name before the size stay together and go from smallest to largest.
 function bySize(tokens) {
   const parts = tokens.map(({ name }) => name.match(/^(.*)-([^-]+)$/));
   if (!parts.every((m) => m && !Number.isNaN(sizeRank(m[2])))) return tokens;
@@ -162,8 +162,7 @@ function scan() {
     const label = suffix ? ` (${suffix}${width ? `, ${width} and up` : ''})` : '';
     return parsed[name].groups.map((group) => {
       const category = `${prefix} / ${group.name}${label}`;
-      const ordered = prefix === 'Semantic' ? bySize(group.tokens) : group.tokens;
-      const tokens = ordered.map((t) => ({ ...t, resolved: resolve(t.value, scopeMap) }));
+      const tokens = bySize(group.tokens).map((t) => ({ ...t, resolved: resolve(t.value, scopeMap) }));
       const type = presenter(group.name, tokens.map((t) => t.resolved));
       const page = PAGES[prefix].find(([, pattern]) => pattern.test(group.name))?.[0];
       if (!page) throw new Error(`No Design Tokens page for ${category}. Add its group to PAGES in .storybook/tokens.js.`);
