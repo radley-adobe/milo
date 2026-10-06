@@ -1,5 +1,5 @@
 import { action } from 'storybook/actions';
-import { GLOBALS_UPDATED, UPDATE_STORY_ARGS } from 'storybook/internal/core-events';
+import { GLOBALS_UPDATED, STORY_ARGS_UPDATED, UPDATE_STORY_ARGS } from 'storybook/internal/core-events';
 import { addons } from 'storybook/preview-api';
 import { themes } from 'storybook/theming';
 import { format } from 'prettier/standalone';
@@ -92,11 +92,12 @@ document.addEventListener('click', (e) => {
 });
 
 // On a Docs page, each story renders in its own iframe, and only the Docs page itself gets the
-// toolbar's Preview background and Theme. A story iframe on a Docs page copies them when it
-// loads and whenever they change, before its story first renders. Elsewhere, the parent window is
+// toolbar's Preview background and Theme and the args its Controls table sets. A story iframe on a
+// Docs page copies the background and Theme when it loads, before its story first renders, and
+// copies them and its story's args whenever they change. Elsewhere, the parent window is
 // Storybook's manager, which has no preview, or a page on another site, which can't be read.
 // Returns a function that stops following them.
-function followDocsGlobals() {
+function followDocsPage() {
   let docsPage;
   try {
     if (window.parent !== window) docsPage = window.parent.__STORYBOOK_PREVIEW__;
@@ -105,17 +106,70 @@ function followDocsGlobals() {
   }
   if (!docsPage) return undefined;
   const preview = window.__STORYBOOK_PREVIEW__;
-  const follow = () => {
+  const followGlobals = () => {
     const { backgrounds, theme } = docsPage.storyStoreValue.userGlobals.get();
     const own = preview.storyStoreValue.userGlobals.get();
     if (JSON.stringify(backgrounds) === JSON.stringify(own.backgrounds) && theme === own.theme) return;
     preview.onUpdateGlobals({ globals: { backgrounds, theme } });
   };
-  const stop = () => docsPage.channel.off(GLOBALS_UPDATED, follow);
+  // The iframe sends its own args updates to the Docs page too, so an update that matches the
+  // story's args is skipped. Storybook merges updated args into the story's, so args the Docs
+  // page no longer has, such as one Reset controls unset, are unset here too.
+  const ownStory = new URLSearchParams(window.location.search).get('id');
+  const followArgs = ({ storyId, args }) => {
+    if (storyId !== ownStory) return;
+    const own = preview.storyStoreValue.args.get(storyId);
+    if (JSON.stringify(args) === JSON.stringify(own)) return;
+    const unset = Object.fromEntries(Object.keys(own).map((name) => [name, undefined]));
+    preview.onUpdateArgs({ storyId, updatedArgs: { ...unset, ...args } });
+  };
+  const stop = () => {
+    docsPage.channel.off(GLOBALS_UPDATED, followGlobals);
+    docsPage.channel.off(STORY_ARGS_UPDATED, followArgs);
+  };
   preview.ready().then(() => {
-    follow();
-    docsPage.channel.on(GLOBALS_UPDATED, follow);
+    followGlobals();
+    docsPage.channel.on(GLOBALS_UPDATED, followGlobals);
+    docsPage.channel.on(STORY_ARGS_UPDATED, followArgs);
   });
+  window.addEventListener('pagehide', stop);
+  return stop;
+}
+
+// On a Docs page, each story iframe sits in a box as high as the story's `iframeHeight`
+// parameter. Makes the box as high as the story when the story is higher, whenever the story's
+// size changes. Positioned elements, such as menus and modals, don't count. Content sized to the
+// frame's height, such as `100vh`, grows each time the box does, so a change in the story's
+// height that matches the box's last change is left alone. Returns a function that stops.
+function fitDocsFrame() {
+  let box;
+  try {
+    if (window.parent !== window && window.parent.__STORYBOOK_PREVIEW__) box = window.frameElement?.parentElement;
+  } catch {
+    return undefined;
+  }
+  const min = parseFloat(box?.style.height);
+  if (!min) return undefined;
+  const root = document.getElementById('storybook-root');
+  let height = min;
+  let content = 0;
+  let change = 0;
+  const fit = () => {
+    const next = Math.ceil(root.getBoundingClientRect().bottom + window.scrollY
+      + parseFloat(getComputedStyle(document.body).paddingBottom));
+    const grew = next - content;
+    content = next;
+    const target = Math.max(min, next);
+    if (target === height || (change > 0 && grew === change)) return;
+    change = target - height;
+    height = target;
+    box.style.height = `${height}px`;
+  };
+  // Resizing the box resizes the story, so it waits for the next frame, outside the observer's
+  // callback.
+  const observer = new ResizeObserver(() => requestAnimationFrame(fit));
+  observer.observe(root);
+  const stop = () => observer.disconnect();
   window.addEventListener('pagehide', stop);
   return stop;
 }
@@ -128,7 +182,10 @@ const site = new URL(currentBranch === defaultBranch ? '.' : '..', window.locati
 
 export default {
   tags: ['autodocs'],
-  beforeAll: followDocsGlobals,
+  beforeAll: () => {
+    const stops = [followDocsPage(), fitDocsFrame()];
+    return () => stops.forEach((stop) => stop?.());
+  },
   // The Theme menu in the toolbar puts Milo's `dark` class on the body, which sets the dark
   // color tokens for every story.
   globalTypes: {
@@ -149,7 +206,8 @@ export default {
   }],
   parameters: {
     // Each story on a Docs page gets its own iframe, so Milo's page styles don't apply to the
-    // Docs page itself. The table of contents lists a page's h3 headings. Docs pages are light or
+    // Docs page itself. `iframeHeight` is the iframe's least height; fitDocsFrame() grows it to
+    // fit the story. The table of contents lists a page's h3 headings. Docs pages are light or
     // dark as the browser prefers, like the rest of Storybook.
     docs: { theme: themes.normal, story: { inline: false, iframeHeight: '600px' }, toc: true },
     // The CSS Custom Properties tab lists the tokens each block reads, and the Design Tokens Docs

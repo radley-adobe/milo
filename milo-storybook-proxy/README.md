@@ -34,7 +34,7 @@ Some library examples hold several blocks or span several sections. `renderLibra
 
 `renderPage(url)` renders every section of a page or fragment. Use it when a block depends on the sections around it, such as a C2 carousel whose slides are the sections that follow it.
 
-`renderPageSections(page, name, { index, count })` renders the section holding the block at `index` and the `count - 1` sections after it. C2 tabs use it, because their panels are the sections after them.
+`renderPageSections(page, name, { index, count })` renders the section holding the block at `index` and the `count - 1` sections after it. C2 tabs use it, because their panels are the sections after them, and Base Card's Section: 3 up story, because the section's `three-up` style lays its cards out in a grid. It leaves out the `library-metadata` block that tags examples on library pages.
 
 C2 sections often set a dark style or a background in their section metadata, and the block's colors depend on it. Pass `{ metadata: true }` to `renderPageBlock()` to keep the block's section metadata.
 
@@ -73,6 +73,8 @@ export default { title: 'Base Card', parameters: { cssprops }, argTypes: { varia
 
 Storybook merges a file's parameters and argTypes into each of its stories, so in a file whose stories render different blocks, set `cssprops` and `variants` on each story instead.
 
+To give a block's stories controls for its content, write the block's authored markup from the story's args and render it with `renderBlock()`. Give each arg a `control` and a `description`, and set its values in `args`, taken from a live page. Milo's test mocks in `test/blocks/<name>/mocks/` show the markup. A `docs.source.transform` that returns the same markup makes Show code give it. A block's Docs page shows the Controls table of its file's first story. Base Card's Featured and Default stories work this way. The `/block-stories` Claude Code skill (`.claude/skills/block-stories/` at the repo root) upgrades one block's stories to Base Card's pattern and stops for review. Set `parameters.docs.description.component` on the file's default export to put a Markdown description at the top of its Docs page.
+
 A play function runs after Storybook renders the story, before Milo has decorated it. Start it with `await waitForMilo(context)` from `src/milo.js`.
 
 Placeholders and other site content Milo looks up resolve against https://milo.adobe.com.
@@ -99,8 +101,8 @@ The Button story in the same folder shows `con-button` and its variants, with co
 
 ## Addons
 
-- Every block has a Docs page that shows all of its stories. Each story renders in its own 600px-high iframe, so Milo's styles don't apply to the Docs page itself. A story can set its own height with `parameters.docs.story.iframeHeight`. Every Docs page has a table of contents of its h3 headings.
-- Storybook's own interface and the Docs pages are light or dark, as the browser or operating system prefers. Each story iframe on a Docs page follows the toolbar's Preview background and Theme, the way a story page does. `followDocsGlobals()` in `.storybook/preview.js` copies them from the Docs page into each iframe, because Storybook only gives them to the Docs page.
+- Every block has a Docs page that shows all of its stories. Each story renders in its own iframe, so Milo's styles don't apply to the Docs page itself. The iframe is 600px high, or taller to fit the story: `fitDocsFrame()` in `.storybook/preview.js` grows it whenever the story's size changes. Menus and modals that open over a story don't count, so a story with one can set a least height with `parameters.docs.story.iframeHeight`, as Global Navigation does. Every Docs page has a table of contents of its h3 headings.
+- Storybook's own interface and the Docs pages are light or dark, as the browser or operating system prefers. Each story iframe on a Docs page follows the toolbar's Preview background and Theme and the Docs page's Controls table, the way a story page does. `followDocsPage()` in `.storybook/preview.js` copies them from the Docs page into each iframe, because Storybook only gives them to the Docs page.
 - The Theme menu in the toolbar switches every story between Milo's light and dark themes. Dark puts Milo's `dark` class on the story's `body`, which sets the dark color tokens, the way a section with the `dark` style does.
 - The Accessibility tab runs axe-core checks on each story. Milo decorates a story after Storybook renders it, so an `afterEach` hook in `.storybook/preview.js` waits for `data-milo-status` (up to 30 seconds) before the checks run.
 - The HTML tab shows each story's markup after Milo has decorated it, formatted with Prettier. The addon reads the markup before Milo runs, so the same `afterEach` hook sends the decorated markup to the tab once `data-milo-status` is set.

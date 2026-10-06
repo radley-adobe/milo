@@ -224,7 +224,9 @@ export function renderPageBlock(pageUrl, name, { index = 0, metadata = false, fo
 
 // Renders the section holding the block at `index` among blocks named `name` on a live page,
 // and the `count - 1` sections after it. Use it for a block that reads the sections after it,
-// such as C2 tabs, whose panels are those sections.
+// such as C2 tabs, whose panels are those sections, or for blocks that the section lays out
+// together. Library pages tag examples with a library-metadata block for Milo's library search,
+// which is left out.
 export function renderPageSections(pageUrl, name, { index = 0, count = 1, foundation = 'c1' } = {}) {
   return render(async () => {
     const doc = await fetchPage(pageUrl);
@@ -232,7 +234,9 @@ export function renderPageSections(pageUrl, name, { index = 0, count = 1, founda
     if (!block) throw new Error(`No .${name} block at index ${index} on ${pageUrl}`);
     const sections = [...doc.body.children];
     const start = sections.indexOf(block.parentElement);
-    return sections.slice(start, start + count);
+    const shown = sections.slice(start, start + count);
+    shown.forEach((section) => section.querySelectorAll(':scope > .library-metadata').forEach((el) => el.remove()));
+    return shown;
   }, foundation);
 }
 
