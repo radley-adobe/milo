@@ -70,9 +70,11 @@ const PAGES = {
     ['Typography / Font Size', /^Typography \/ Font Size$/],
     ['Typography / Letter Spacing', /^Typography \/ Letter Spacing$/],
     ['Typography / Line Height', /^Typography \/ Line Height$/],
-    ['Spacing / Viewport & Section Padding', /^(Viewport & Section Padding|Section Spacing|Viewport Vertical Padding)$/],
+    ['Spacing / Section Spacing', /^Section Spacing$/],
+    ['Spacing / Viewport Vertical Padding', /^Viewport Vertical Padding$/],
     ['Spacing / Layout', /^Layout$/],
-    ['Spacing / Other', /^Other$/],
+    // Tokens Milo adds to Viewport & Section Padding that neither split takes.
+    ['Spacing / Misc', /^(Other|Viewport & Section Padding)$/],
   ],
 };
 
@@ -201,9 +203,6 @@ function scan() {
 
   // Brand colors lead the Primitive color page.
   pages['Primitive / Color']?.sort((a, b) => (b.heading === 'Brand') - (a.heading === 'Brand'));
-  // Section spacing shows at every breakpoint before viewport vertical padding.
-  pages['Responsive / Spacing / Viewport & Section Padding']
-    ?.sort((a, b) => b.heading.startsWith('Section') - a.heading.startsWith('Section'));
 
   const usageMap = {};
   readdirSync(BLOCKS).sort().forEach((block) => {

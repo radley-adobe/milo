@@ -36,8 +36,8 @@ const presenters = {
   ),
 };
 
-// Tables whose rows grow to fit their preview.
-const FIT_ROWS = ['FontSize', 'LineHeight', 'LetterSpacing'];
+// Tables that show at full height, with rows that grow to fit their preview.
+const FIT_ROWS = ['FontSize', 'LineHeight', 'LetterSpacing', 'Spacing'];
 
 // The categories on one Design Tokens page, such as `Primitive / Color`, each under its own
 // heading. Colors show as cards and the rest as tables.
