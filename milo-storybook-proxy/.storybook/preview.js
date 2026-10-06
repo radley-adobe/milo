@@ -183,7 +183,7 @@ export default {
           'Semantic', ['Color', 'Color - Button', 'Color - Icon Button', 'Font', 'Spacing', 'Border', 'Effects'],
           'Responsive', [
             'Typography', ['Font Size', 'Letter Spacing', 'Line Height'],
-            'Spacing', ['Viewport & Section Padding', 'Layout', 'Other'],
+            'Spacing', ['Section Spacing', 'Viewport Vertical Padding', 'Layout', 'Misc'],
           ],
         ]],
       },
