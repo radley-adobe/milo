@@ -40,7 +40,7 @@ C2 sections often set a dark style or a background in their section metadata, an
 
 Milo builds a page's global navigation and footer from the content its `gnav-source` and `footer-source` metadata name. `renderGlobalNavigation(source)` and `renderGlobalFooter(source)` set that metadata and build them before and after the story's empty `main` element, where they are on a page. Pass other page metadata the navigation reads as `{ metadata: { 'gnav-dark-font': 'true' } }`. Without `gnav-dark-font`, the redesigned navigation has light text for a dark page top, so those stories set Storybook's dark background with `globals: { backgrounds: { value: 'dark' } }`.
 
-A link to a fragment with a hash, such as `/federal/footer/fragments/regions#langnav`, opens the fragment in a modal. Milo keeps only the link's path and loads it from the current site, apart from paths under `/federal/`, which load from Federal. So only Federal fragments open in a modal in a story.
+A link to a fragment with a hash, such as `/federal/footer/fragments/regions#langnav`, opens the fragment in a modal. Milo keeps only the link's path and loads it from the current site, apart from paths under `/federal/`, which load from Federal. So a modal in a story shows a Federal fragment or one that Storybook serves from `fragments/`. The Modal story opens `fragments/modal`, a Tour block with placeholder content, with a link whose path is `new URL('fragments/modal', window.location.href).pathname`, which works under the published site's subpath. A fragment's `./media_` images load from `fragments/`.
 
 Most C2 blocks have no library page. Their stories use pages from the adobe.com redesign:
 

@@ -18,7 +18,8 @@ export default {
     { name: 'storybook-design-token', options: { designTokenGlob: 'generated/tokens/*.css' } },
     'storybook-branch-switcher',
   ],
-  // Milo's libs/ is served as-is, never bundled or modified.
-  staticDirs: [{ from: LIBS, to: '/libs' }],
+  // Milo's libs/ is served as-is, never bundled or modified. fragments/ holds example fragments
+  // that stories open, which Milo loads from the story's own site.
+  staticDirs: [{ from: LIBS, to: '/libs' }, { from: '../fragments', to: '/fragments' }],
   viteFinal: (config) => mergeConfig(config, { plugins: [cssprops(), variants(), designTokens(), foundations()] }),
 };
