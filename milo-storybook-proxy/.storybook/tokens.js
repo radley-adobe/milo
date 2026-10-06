@@ -39,7 +39,7 @@ const PRESENTERS = [
   [/^Color\b/, 'Color'],
   [/^Border Radius$/, 'BorderRadius'],
   [/^Opacity$/, 'Opacity'],
-  [/^(Spacing|Layout|Viewport & Section Padding)$/, 'Spacing'],
+  [/^(Spacing|Layout|Viewport & Section Padding|Section Spacing|Viewport Vertical Padding)$/, 'Spacing'],
   [/^Font Family$/, 'FontFamily'],
   [/Font Size$/, 'FontSize'],
   [/^Font Weight$/, 'FontWeight'],
@@ -70,7 +70,7 @@ const PAGES = {
     ['Typography / Font Size', /^Typography \/ Font Size$/],
     ['Typography / Letter Spacing', /^Typography \/ Letter Spacing$/],
     ['Typography / Line Height', /^Typography \/ Line Height$/],
-    ['Spacing / Viewport & Section Padding', /^Viewport & Section Padding$/],
+    ['Spacing / Viewport & Section Padding', /^(Viewport & Section Padding|Section Spacing|Viewport Vertical Padding)$/],
     ['Spacing / Layout', /^Layout$/],
     ['Spacing / Other', /^Other$/],
   ],
@@ -95,9 +95,14 @@ const BUTTON_STYLES = [
   ['Transparent', 'primary-transparent'],
 ];
 
-// Groups too long to read as one, by name, and the groups their tokens move to by name. The
-// tokens left over stay in the group, after the new ones.
+// Groups that are too long to read as one or that mix kinds of tokens, by name, and the groups
+// their tokens move to by name. The tokens left over stay in the group, after the new ones.
 const SPLITS = {
+  // Section spacing and viewport vertical padding.
+  'Viewport & Section Padding': [
+    ['Section Spacing', /^--s2a-section-spacing-/],
+    ['Viewport Vertical Padding', /^--s2a-viewport-vertical-padding-/],
+  ],
   // Button and icon button colors, by style, such as Color / Icon Button / Accent.
   Other: [['Button', 'button'], ['Icon Button', 'iconbutton']].flatMap(([kind, prefix]) => BUTTON_STYLES
     .map(([style, key]) => [`Color / ${kind} / ${style}`, new RegExp(`^--s2a-color-${prefix}-\\w+-${key}-`)])),
@@ -124,6 +129,21 @@ function bySize(tokens) {
     .map((token, i) => ({ token, stem: stems.indexOf(parts[i][1]), rank: sizeRank(parts[i][2]) }))
     .sort((a, b) => a.stem - b.stem || a.rank - b.rank)
     .map(({ token }) => token);
+}
+
+// The text styles in the responsive typography token names, such as `heading-2` in
+// `--s2a-typography-font-size-heading-2`, from smallest to largest. Styles not listed go last.
+const TYPE_SCALE = ['caption', 'label', 'eyebrow', 'body-xs', 'body-sm', 'body-md', 'body-lg',
+  'heading-6', 'heading-5', 'heading-4', 'heading-3', 'heading-2', 'heading-1', 'super'];
+
+// Milo lists the responsive typography tokens from largest to smallest, starting with `super`.
+// Every breakpoint and property uses the same order, so the rows line up across the tables.
+function byTypeScale(tokens) {
+  const rank = ({ name }) => {
+    const i = TYPE_SCALE.findIndex((style) => name.endsWith(`-${style}`));
+    return i < 0 ? TYPE_SCALE.length : i;
+  };
+  return [...tokens].sort((a, b) => rank(a) - rank(b));
 }
 
 // The groups in a token file: each group comment on its own line, with the declarations after
@@ -162,7 +182,8 @@ function scan() {
     const label = suffix ? ` (${suffix}${width ? `, ${width} and up` : ''})` : '';
     return parsed[name].groups.map((group) => {
       const category = `${prefix} / ${group.name}${label}`;
-      const tokens = bySize(group.tokens).map((t) => ({ ...t, resolved: resolve(t.value, scopeMap) }));
+      const ordered = /^Typography \//.test(group.name) ? byTypeScale(group.tokens) : bySize(group.tokens);
+      const tokens = ordered.map((t) => ({ ...t, resolved: resolve(t.value, scopeMap) }));
       const type = presenter(group.name, tokens.map((t) => t.resolved));
       const page = PAGES[prefix].find(([, pattern]) => pattern.test(group.name))?.[0];
       if (!page) throw new Error(`No Design Tokens page for ${category}. Add its group to PAGES in .storybook/tokens.js.`);
@@ -180,6 +201,9 @@ function scan() {
 
   // Brand colors lead the Primitive color page.
   pages['Primitive / Color']?.sort((a, b) => (b.heading === 'Brand') - (a.heading === 'Brand'));
+  // Section spacing shows at every breakpoint before viewport vertical padding.
+  pages['Responsive / Spacing / Viewport & Section Padding']
+    ?.sort((a, b) => b.heading.startsWith('Section') - a.heading.startsWith('Section'));
 
   const usageMap = {};
   readdirSync(BLOCKS).sort().forEach((block) => {
