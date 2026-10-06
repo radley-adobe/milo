@@ -1,4 +1,4 @@
-import { HOMEPAGE_FRAGMENTS, LIBRARY, renderBlock, renderPage, renderPageBlock } from '../../src/milo.js';
+import { LIBRARY, renderBlock, renderPageBlock, renderPageSections } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/base-card';
 import variants from 'virtual:variants/c2/base-card';
 
@@ -12,6 +12,7 @@ A card with an image above its text. It's authored as one row with two cells: th
 - \`featured\` makes a wide card. From 1024px, its image is cropped to 2.2:1, its heading takes the left 5 of 12 columns and its link paragraph sits to the right of the heading.
 - Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the card different content at each viewport. An empty cell keeps the content of the viewport below it.
 - The block adds \`base-card-section\` to its section, which puts the section's cards in one column below 768px
+- Milo has no block that holds base cards. Base cards in the same section form a grid when the section's style sets its columns, such as \`three-up\` for three columns from 768px. \`two-up\`, \`four-up\` and \`six-up\` work the same way.
 `;
 
 export default {
@@ -68,7 +69,8 @@ export const Default = {
   render: () => renderPageBlock(library, 'base-card', { index: 1, foundation: 'c2' }),
 };
 
-export const HomepageExploreWhatsNew = {
-  name: "adobe.com: Homepage explore what's new",
-  render: () => renderPage(`${HOMEPAGE_FRAGMENTS}/explore-whats-new/explore-whats-new`, { foundation: 'c2' }),
+// The library's three base cards with the section that holds them, whose style is three-up.
+export const ThreeUp = {
+  name: 'Three-up',
+  render: () => renderPageSections(library, 'base-card', { index: 1, foundation: 'c2' }),
 };
