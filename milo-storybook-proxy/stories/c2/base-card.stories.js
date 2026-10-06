@@ -65,6 +65,14 @@ export const Featured = {
   render: () => renderPageBlock(library, 'base-card', { foundation: 'c2' }),
 };
 
+// The featured card with its section's metadata, which sets the section's container width,
+// spacing, background and parallax.
+export const FeaturedBlock = {
+  render: () => renderPageBlock(library, 'base-card', { metadata: true, foundation: 'c2' }),
+  // The container limits the card's width, so this fits it at any Docs page width.
+  parameters: { docs: { story: { iframeHeight: '850px' } } },
+};
+
 export const Default = {
   render: () => renderPageBlock(library, 'base-card', { index: 1, foundation: 'c2' }),
 };
