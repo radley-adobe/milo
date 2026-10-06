@@ -244,7 +244,7 @@ export default {
             'Typography', ['Font Size', 'Letter Spacing', 'Line Height'],
             'Spacing', ['Section Spacing', 'Viewport Vertical Padding', 'Layout', 'Misc'],
           ],
-        ]],
+        ], 'Blocks', 'Sections', 'Components', 'Navigation'],
       },
     },
     branches: { hostname: `${site.host}${site.pathname.replace(/\/$/, '')}` },

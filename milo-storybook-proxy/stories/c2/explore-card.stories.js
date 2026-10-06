@@ -51,7 +51,7 @@ const cardStory = (style) => ({
 });
 
 export default {
-  title: 'Explore Card',
+  title: 'Blocks/Explore Card',
   parameters: { cssprops, docs: { description: { component: description } } },
   argTypes: {
     variants,

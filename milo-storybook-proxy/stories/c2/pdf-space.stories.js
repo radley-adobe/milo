@@ -2,7 +2,7 @@ import { ACROBAT, renderPageBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/pdf-space';
 import variants from 'virtual:variants/c2/pdf-space';
 
-export default { title: 'PDF Space', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Blocks/PDF Space', parameters: { cssprops }, argTypes: { variants } };
 
 export const PdfAndDocumentEssentials = {
   name: 'adobe.com: PDF and document essentials',

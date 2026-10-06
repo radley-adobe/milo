@@ -2,7 +2,7 @@ import { ACROBAT, CC_PRO_TEST_FRAGMENTS, renderPageBlock } from '../../src/milo.
 import cssprops from 'virtual:cssprops/c2/side-by-side';
 import variants from 'virtual:variants/c2/side-by-side';
 
-export default { title: 'Side by Side', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Blocks/Side by Side', parameters: { cssprops }, argTypes: { variants } };
 
 const product = `${CC_PRO_TEST_FRAGMENTS}/cpro-product`;
 

@@ -92,17 +92,18 @@ Variants control when its classes are ones Milo sets itself, as Global Navigatio
 block has an interaction like the ones with play functions (a slide to move to, a modal to open),
 add a play function to the default export, modeled on Carousel C2 or Modal.
 
-- **Library blocks with no story.** Title the file with the block's name in `library.json`. A new
-  block usually also shows under C2 blocks with no story, and one file covers both. If a story
-  file for the block's folder already exists, the library renamed the block: change that file's
-  title to the new name. If `library.json` gives the block a library page, write one story per
-  example on it, with `{ foundation: 'c2' }`. Use `renderPageBlock` for an example that is one
-  block and `renderLibraryExample` for one that has several blocks or sections. Name each story
-  after its example's heading, shortened the way the existing stories are. With no library page,
-  write its stories as for a C2 block with no story. If the block can't have a story, add its name
-  to `NO_STORY` in `scripts/check.js` and the reason to README › Known limits.
-- **C2 blocks with no story.** Title the file with the block's name in title case. Find public
-  pages that use the block: the `HOMEPAGE`, `HOMEPAGE_FRAGMENTS`, `ACROBAT`,
+- **Library blocks with no story.** Title the file `Blocks/<name>`, with the block's name in
+  `library.json`. A new block usually also shows under C2 blocks with no story, and one file
+  covers both. If a story file for the block's folder already exists, the library renamed the
+  block: change that file's title to the new name. If `library.json` gives the block a library
+  page, write one story per example on it, with `{ foundation: 'c2' }`. Use `renderPageBlock` for
+  an example that is one block and `renderLibraryExample` for one that has several blocks or
+  sections. Name each story after its example's heading, shortened the way the existing stories
+  are. With no library page, write its stories as for a C2 block with no story. If the block can't
+  have a story, add its name to `NO_STORY` in `scripts/check.js` and the reason to README › Known
+  limits.
+- **C2 blocks with no story.** Title the file `Blocks/<Name>`, with the block's name in title
+  case. Find public pages that use the block: the `HOMEPAGE`, `HOMEPAGE_FRAGMENTS`, `ACROBAT`,
   `ACROBAT_TEST_FRAGMENTS`, `CC_PRO_TEST_FRAGMENTS` and `NALA` pages in `src/milo.js`, and the
   test URLs in the descriptions of the upstream pull requests that changed the block. Write one
   story per page, with `{ metadata: true, foundation: 'c2' }`. With no public page, use
@@ -117,8 +118,8 @@ add a play function to the default export, modeled on Carousel C2 or Modal.
   Add a story for each added example and remove the story for each removed one. Fix the `index`
   of every story after the change. In `renderPageBlock`, `index` counts blocks with that name on
   the page. In `renderLibraryExample`, it counts examples. Keep the story order the same as the
-  example order. Base Card's Featured and Default stories render the library's cards from args,
-  not from the page, so only its Section stories read the page.
+  example order. Base Card's stories render the library's cards from args, not from the page.
+  Its section stories in `stories/c2/sections/` read the page.
 - **Stories that fail because Milo doesn't finish decorating them.** Open the story's page with
   `curl -s <page>.plain.html` to see if it moved, lost the block, or has fewer blocks than
   `index`. Then check the upstream log for a

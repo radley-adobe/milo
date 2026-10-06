@@ -4,7 +4,7 @@ import cssprops from 'virtual:cssprops/c2/carousel-c2';
 import variants from 'virtual:variants/c2/carousel-c2';
 
 export default {
-  title: 'Carousel C2',
+  title: 'Blocks/Carousel C2',
   parameters: { cssprops },
   argTypes: { variants },
   // Moves to the next slide. The carousel clones slides at each end, so this follows the slide

@@ -1,4 +1,4 @@
-import { HOMEPAGE_FRAGMENTS, LIBRARY, renderBlock, renderPageBlock, renderPageSections } from '../../src/milo.js';
+import { HOMEPAGE_FRAGMENTS, LIBRARY, renderBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/base-card';
 import variants from 'virtual:variants/c2/base-card';
 
@@ -15,7 +15,6 @@ A card with an image above its text. It's authored as one row with two cells: th
 - Milo has no block that holds base cards. Base cards in the same section form a grid when the section's style sets its columns, such as \`three-up\` for three columns from 768px. \`two-up\`, \`four-up\` and \`six-up\` work the same way.
 `;
 
-const library = `${LIBRARY}/c2/base-card`;
 const icon = (name) => `https://main--federal--adobecom.aem.page/federal/assets/svgs/${name}.svg`;
 
 // An arg as an attribute value.
@@ -46,7 +45,7 @@ const cardStory = (style) => ({
 });
 
 export default {
-  title: 'Base Card',
+  title: 'Blocks/Base Card',
   parameters: { cssprops, docs: { description: { component: description } } },
   argTypes: {
     variants,
@@ -92,22 +91,4 @@ export const Featured = {
     ctaLabel: 'Explore Premiere',
     ctaHref: 'https://www.adobe.com/products/premiere/color-mode.html',
   },
-};
-
-// The section stories render the library page as published, so they have no controls.
-const published = { controls: { disable: true } };
-
-// The library's three base cards with the section that holds them, whose style is three-up.
-export const SectionThreeUp = {
-  name: 'Section: 3 up',
-  render: () => renderPageSections(library, 'base-card', { index: 1, foundation: 'c2' }),
-  parameters: published,
-};
-
-// The featured card with its section's metadata, which sets the section's container width,
-// spacing, background and parallax.
-export const SectionFeatured = {
-  name: 'Section: Featured',
-  render: () => renderPageBlock(library, 'base-card', { metadata: true, foundation: 'c2' }),
-  parameters: published,
 };
