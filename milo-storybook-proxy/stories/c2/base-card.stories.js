@@ -1,6 +1,8 @@
-import { LIBRARY, renderBlock, renderPageBlock, renderPageSections } from '../../src/milo.js';
+import { HOMEPAGE_FRAGMENTS, renderBlock, renderPageSections } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/base-card';
 import variants from 'virtual:variants/c2/base-card';
+
+// The stories follow the S2A MediaCard stories, with the base cards from the adobe.com homepage.
 
 const description = `
 A card with an image above its text. It's authored as one row with two cells: the text, then the image.
@@ -15,72 +17,123 @@ A card with an image above its text. It's authored as one row with two cells: th
 - Milo has no block that holds base cards. Base cards in the same section form a grid when the section's style sets its columns, such as \`three-up\` for three columns from 768px. \`two-up\`, \`four-up\` and \`six-up\` work the same way.
 `;
 
+// The homepage fragment with a featured base card in one section and three base cards in the
+// next, and its images.
+const HOMEPAGE = `${HOMEPAGE_FRAGMENTS}/explore-whats-new/explore-whats-new`;
+const media = (name) => `${HOMEPAGE_FRAGMENTS}/explore-whats-new/media_${name}.png?width=2000&format=webply&optimize=medium`;
+const icon = (name) => `https://main--federal--adobecom.aem.page/federal/assets/svgs/${name}.svg`;
+
+// An arg as an attribute value.
+const attr = (value = '') => String(value).replaceAll('&', '&amp;').replaceAll('"', '&quot;');
+
+// Authored markup for a section holding one card, from a story's args. `style` is the section's
+// style, which sets the card's width.
+const authored = ({ variants: classes = [], icon: iconUrl, showIcon, heading, body, ctaLabel, ctaHref, image, imageAlt }, style) => `
+<div class="${['base-card', ...classes].join(' ')}">
+  <div>
+    <div>
+      ${showIcon && iconUrl ? `<p><a href="${attr(iconUrl)}">${iconUrl}</a></p>` : ''}
+      ${heading ? `<h3>${heading}</h3>` : ''}
+      ${body ? `<p>${body}</p>` : ''}
+      ${ctaLabel ? `<p><a href="${attr(ctaHref)}">${ctaLabel}</a></p>` : ''}
+    </div>
+    ${image ? `<div><picture><img src="${attr(image)}" alt="${attr(imageAlt)}"></picture></div>` : ''}
+  </div>
+</div>
+<div class="section-metadata">
+  <div><div>style</div><div>${style}</div></div>
+</div>`.trim();
+
+// Renders a section holding one card from a story's args, with `style` as the section's style.
+const renderCard = (style) => (args) => renderBlock(authored(args, style), { foundation: 'c2' });
+
+// Show code gives the authored markup.
+const authoredSource = (style) => ({ language: 'html', transform: (code, { args }) => authored(args, style) });
+
+// One column of a three-up section, the width a card has in the homepage's grid.
+const CARD_STYLE = 'three-up, container';
+
+// The Variants arg applies to the first card in a story, so only the Featured story sets it. The
+// homepage stories keep their cards' authored classes.
 export default {
   title: 'Base Card',
-  parameters: { cssprops, docs: { description: { component: description } } },
-  argTypes: { variants },
-};
-
-const library = `${LIBRARY}/c2/base-card`;
-
-// Authored markup for one card, from the Playground story's args.
-const card = ({ icon, heading, body, ctaLabel, ctaHref, image, imageAlt }) => `
-  <div class="base-card">
-    <div>
-      <div>
-        ${icon ? `<p><a href="${icon}">${icon}</a></p>` : ''}
-        ${heading ? `<h3>${heading}</h3>` : ''}
-        ${body ? `<p>${body}</p>` : ''}
-        ${ctaLabel ? `<p><a href="${ctaHref}">${ctaLabel}</a></p>` : ''}
-      </div>
-      ${image ? `<div><picture><img src="${image}" alt="${imageAlt}"></picture></div>` : ''}
-    </div>
-  </div>`;
-
-export const Playground = {
-  args: {
-    icon: 'https://main--federal--adobecom.aem.page/federal/assets/svgs/premiere-pro-64.svg',
-    heading: 'Colour grading purpose-built for editors.',
-    body: 'Now in Premiere (beta).',
-    ctaLabel: 'Explore Premiere',
-    ctaHref: 'https://www.adobe.com/products/premiere/color-mode.html',
-    image: `${LIBRARY}/c2/media_1240ea9838a6b2823276406377ef7c85c4f4e2381.png?width=750&format=png&optimize=medium`,
-    imageAlt: '',
+  render: renderCard(CARD_STYLE),
+  parameters: {
+    cssprops,
+    docs: { description: { component: description }, source: authoredSource(CARD_STYLE) },
   },
   argTypes: {
-    icon: { control: 'text', description: 'URL of the SVG icon. Leave empty for no icon.' },
+    variants,
+    icon: { control: 'text', description: 'URL of the SVG icon' },
+    showIcon: { control: 'boolean', description: 'Show the icon' },
+    image: { control: 'text', description: 'Image URL. Leave empty for no image cell.' },
+    imageAlt: { control: 'text', description: 'Image alt text. Leave empty when the image is decorative.' },
     heading: { control: 'text', description: 'Heading, authored as an `h3`' },
     body: { control: 'text', description: 'Body copy' },
     ctaLabel: { control: 'text', description: 'Link text. Leave empty for no link.' },
     ctaHref: { control: 'text', description: 'Link URL' },
-    image: { control: 'text', description: 'Image URL. Leave empty for no image cell.' },
-    imageAlt: { control: 'text', description: 'Image alt text. Leave empty when the image is decorative.' },
   },
-  render: (args) => renderBlock(card(args), { foundation: 'c2' }),
+  args: {
+    icon: icon('acrobat-pro'),
+    showIcon: true,
+    image: media('11baea9af9d1d1306f14797ab9e4566c1620ecc11'),
+    imageAlt: 'An Adobe Acrobat PDF Space, with presentation slides being collected and an AI prompt field that reads, "Generate presentation"',
+    heading: 'Work smarter than ever with documents.',
+    body: 'Trusted PDF tools, now with AI for editing, insights, and content creation.',
+    ctaLabel: 'Explore Acrobat',
+    ctaHref: 'https://www.adobe.com/acrobat/generative-ai-pdf.html',
+  },
+};
+
+// The homepage stories render published sections, so they have no controls, and Show code gives
+// the story's code.
+const published = { controls: { disable: true }, docs: { source: { transform: (code) => code } } };
+
+export const Card = {
+  name: 'Card (4:3)',
 };
 
 export const Featured = {
-  render: () => renderPageBlock(library, 'base-card', { foundation: 'c2' }),
+  name: 'Featured (2.2:1)',
+  render: renderCard('container'),
+  parameters: { docs: { source: authoredSource('container') } },
+  args: {
+    variants: ['featured'],
+    icon: icon('experience-cloud-logo'),
+    image: media('1ffc572777c63f4a753a7ac51b7a94bd275e98cd7'),
+    imageAlt: '',
+    heading: 'Turn AI signals into business impact with Adobe Brand Visibility.',
+    body: 'Get the intelligence and tools to win customers in AI searches.',
+    ctaLabel: 'Learn more',
+    ctaHref: 'https://business.adobe.com/products/brand-visibility.html',
+  },
 };
 
-export const Default = {
-  render: () => renderPageBlock(library, 'base-card', { index: 1, foundation: 'c2' }),
+// The homepage's three base cards and the three-up section that holds them, as published.
+export const ThreeUpGrid = {
+  name: '3-Up Grid (homepage pattern)',
+  render: () => renderPageSections(HOMEPAGE, 'base-card', { index: 1, foundation: 'c2' }),
+  parameters: published,
 };
 
-// The Variants control changes only the first card in a story, so the section stories hide it.
-const hideVariants = { variants: { table: { disable: true } } };
-
-// The featured card with its section's metadata, which sets the section's container width,
-// spacing, background and parallax.
-export const SectionFeatured = {
-  name: 'Section: Featured',
-  render: () => renderPageBlock(library, 'base-card', { metadata: true, foundation: 'c2' }),
-  argTypes: hideVariants,
+// The homepage's featured base card and three-up grid, as published, without the section heading
+// above them.
+export const FullSection = {
+  name: 'Full Section (homepage)',
+  render: () => renderPageSections(HOMEPAGE, 'base-card', { count: 2, foundation: 'c2' }),
+  parameters: published,
 };
 
-// The library's three base cards with the section that holds them, whose style is three-up.
-export const SectionThreeUp = {
-  name: 'Section: 3 up',
-  render: () => renderPageSections(library, 'base-card', { index: 1, foundation: 'c2' }),
-  argTypes: hideVariants,
+export const NoIcon = {
+  name: 'No Icon',
+  args: {
+    icon: icon('photoshop'),
+    showIcon: false,
+    image: media('1179a8d50eb3482a8ef9a6fcb0ce35db8e25d43e2'),
+    imageAlt: '',
+    heading: 'Change only what you want.',
+    body: 'Photoshop AI Assistant edits what you ask. Everything else stays.',
+    ctaLabel: 'Try AI Assistant',
+    ctaHref: 'https://www.adobe.com/products/photoshop/app.html',
+  },
 };
