@@ -3,7 +3,7 @@ import cssprops from 'virtual:cssprops/c2/explore-card';
 import variants from 'virtual:variants/c2/explore-card';
 
 const description = `
-A card that links to a product, with an icon and text over an image that shows on hover. It's authored as one row with two cells: the text, then the image.
+A card with an icon and text over an image that shows on hover. It's authored as one row with two cells: the text, then the image.
 
 - The text cell holds an optional icon, a heading, body copy and a link. The heading shows at \`heading-5\` size.
 - An icon is a link to an SVG, alone in its paragraph. The block moves every image in the text cell into the first one's paragraph, at the top of the card. The heading and body copy sit at the bottom.
