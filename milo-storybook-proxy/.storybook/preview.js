@@ -1,5 +1,5 @@
 import { action } from 'storybook/actions';
-import { GLOBALS_UPDATED, STORY_ARGS_UPDATED, UPDATE_STORY_ARGS } from 'storybook/internal/core-events';
+import { DOCS_PREPARED, GLOBALS_UPDATED, STORY_ARGS_UPDATED, UPDATE_STORY_ARGS } from 'storybook/internal/core-events';
 import { addons } from 'storybook/preview-api';
 import { themes } from 'storybook/theming';
 import { format } from 'prettier/standalone';
@@ -70,9 +70,12 @@ function syncVariants({ id, args }) {
   addons.getChannel().emit(UPDATE_STORY_ARGS, { storyId: id, updatedArgs: { variants } });
 }
 
-// Logs each click on a link or button in the Actions tab. Links stay on the story, apart from
-// Milo's modal links and links to a # on the same page. Listens on the document, where it runs
-// after Milo's own click handlers and sees modals, which Milo opens outside the story's root.
+// Logs each click on a link or button in the Actions tab. Links stay on the story. Milo's modal
+// links and links to a # on the same page change the story's own hash, as they would on a page.
+// Storybook's preview page sets `<base target="_parent">`, so a link left to navigate would load
+// in the window that holds the story: Storybook's manager, or the Docs page. Listens on the
+// document, where it runs after Milo's own click handlers and sees modals, which Milo opens
+// outside the story's root.
 const samePageHash = (a) => a.hash && a.href.split('#')[0] === window.location.href.split('#')[0];
 document.addEventListener('click', (e) => {
   const el = e.target.closest('a, button');
@@ -83,7 +86,21 @@ document.addEventListener('click', (e) => {
     ...(el.href && { href: el.href }),
     ...(el.hasAttribute('daa-ll') && { analytics: el.getAttribute('daa-ll') }),
   });
-  if (el.href && !el.dataset.modalHash && !samePageHash(el)) e.preventDefault();
+  if (!el.href || e.defaultPrevented) return;
+  e.preventDefault();
+  if (el.dataset.modalHash || samePageHash(el)) window.location.hash = el.hash;
+});
+
+// The manager shows Docs pages and stories in the same preview window. A Docs page's table of
+// contents leaves its click, scroll and hashchange listeners on the window, and they throw on a
+// link to a #, such as a Milo modal link, which fails the story's play function. A story that
+// renders after a Docs page loads the window again first. A modal that a story opened sits
+// outside the story's root, so it would stay over a Docs page that replaces the story. Milo
+// closes it when the hash changes.
+let docsShown = false;
+addons.getChannel().on(DOCS_PREPARED, () => {
+  docsShown = true;
+  if (window.location.hash) window.location.hash = '';
 });
 
 // Events Milo blocks dispatch on window that a story can trigger.
@@ -236,6 +253,7 @@ export default {
     controls: { disableSaveFromUI: true },
   },
   beforeEach: (context) => {
+    if (docsShown) window.location.reload();
     setStory(context);
     cssprops = context.parameters.cssprops ?? {};
     dropStaleCssprops(context.id);
