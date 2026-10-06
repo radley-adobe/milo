@@ -1,5 +1,5 @@
 import { action } from 'storybook/actions';
-import { GLOBALS_UPDATED, STORY_ARGS_UPDATED, UPDATE_STORY_ARGS } from 'storybook/internal/core-events';
+import { DOCS_RENDERED, GLOBALS_UPDATED, STORY_ARGS_UPDATED, UPDATE_STORY_ARGS } from 'storybook/internal/core-events';
 import { addons } from 'storybook/preview-api';
 import { themes } from 'storybook/theming';
 import { format } from 'prettier/standalone';
@@ -90,6 +90,13 @@ document.addEventListener('click', (e) => {
   e.preventDefault();
   if (el.dataset.modalHash || samePageHash(el)) window.location.hash = el.hash;
 });
+
+// The manager shows Docs pages and stories in the same preview window. A Docs page's table of
+// contents leaves its click, scroll and hashchange listeners on the window, and they throw on a
+// link to a #, such as a Milo modal link, which fails the story's play function. A story that
+// renders after a Docs page loads the window again first.
+let docsShown = false;
+addons.getChannel().on(DOCS_RENDERED, () => { docsShown = true; });
 
 // Events Milo blocks dispatch on window that a story can trigger.
 ['milo:tab:changed', 'milo:modal:loaded', 'milo:modal:closed'].forEach((name) => {
@@ -241,6 +248,7 @@ export default {
     controls: { disableSaveFromUI: true },
   },
   beforeEach: (context) => {
+    if (docsShown) window.location.reload();
     setStory(context);
     cssprops = context.parameters.cssprops ?? {};
     dropStaleCssprops(context.id);
