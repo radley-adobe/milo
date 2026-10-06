@@ -1,5 +1,5 @@
 import { action } from 'storybook/actions';
-import { GLOBALS_UPDATED, UPDATE_STORY_ARGS } from 'storybook/internal/core-events';
+import { GLOBALS_UPDATED, STORY_ARGS_UPDATED, UPDATE_STORY_ARGS } from 'storybook/internal/core-events';
 import { addons } from 'storybook/preview-api';
 import { themes } from 'storybook/theming';
 import { format } from 'prettier/standalone';
@@ -92,11 +92,12 @@ document.addEventListener('click', (e) => {
 });
 
 // On a Docs page, each story renders in its own iframe, and only the Docs page itself gets the
-// toolbar's Preview background and Theme. A story iframe on a Docs page copies them when it
-// loads and whenever they change, before its story first renders. Elsewhere, the parent window is
+// toolbar's Preview background and Theme and the args its Controls table sets. A story iframe on a
+// Docs page copies the background and Theme when it loads, before its story first renders, and
+// copies them and its story's args whenever they change. Elsewhere, the parent window is
 // Storybook's manager, which has no preview, or a page on another site, which can't be read.
 // Returns a function that stops following them.
-function followDocsGlobals() {
+function followDocsPage() {
   let docsPage;
   try {
     if (window.parent !== window) docsPage = window.parent.__STORYBOOK_PREVIEW__;
@@ -105,16 +106,31 @@ function followDocsGlobals() {
   }
   if (!docsPage) return undefined;
   const preview = window.__STORYBOOK_PREVIEW__;
-  const follow = () => {
+  const followGlobals = () => {
     const { backgrounds, theme } = docsPage.storyStoreValue.userGlobals.get();
     const own = preview.storyStoreValue.userGlobals.get();
     if (JSON.stringify(backgrounds) === JSON.stringify(own.backgrounds) && theme === own.theme) return;
     preview.onUpdateGlobals({ globals: { backgrounds, theme } });
   };
-  const stop = () => docsPage.channel.off(GLOBALS_UPDATED, follow);
+  // The iframe sends its own args updates to the Docs page too, so an update that matches the
+  // story's args is skipped. Storybook merges updated args into the story's, so args the Docs
+  // page no longer has, such as one Reset controls unset, are unset here too.
+  const ownStory = new URLSearchParams(window.location.search).get('id');
+  const followArgs = ({ storyId, args }) => {
+    if (storyId !== ownStory) return;
+    const own = preview.storyStoreValue.args.get(storyId);
+    if (JSON.stringify(args) === JSON.stringify(own)) return;
+    const unset = Object.fromEntries(Object.keys(own).map((name) => [name, undefined]));
+    preview.onUpdateArgs({ storyId, updatedArgs: { ...unset, ...args } });
+  };
+  const stop = () => {
+    docsPage.channel.off(GLOBALS_UPDATED, followGlobals);
+    docsPage.channel.off(STORY_ARGS_UPDATED, followArgs);
+  };
   preview.ready().then(() => {
-    follow();
-    docsPage.channel.on(GLOBALS_UPDATED, follow);
+    followGlobals();
+    docsPage.channel.on(GLOBALS_UPDATED, followGlobals);
+    docsPage.channel.on(STORY_ARGS_UPDATED, followArgs);
   });
   window.addEventListener('pagehide', stop);
   return stop;
@@ -128,7 +144,7 @@ const site = new URL(currentBranch === defaultBranch ? '.' : '..', window.locati
 
 export default {
   tags: ['autodocs'],
-  beforeAll: followDocsGlobals,
+  beforeAll: followDocsPage,
   // The Theme menu in the toolbar puts Milo's `dark` class on the body, which sets the dark
   // color tokens for every story.
   globalTypes: {

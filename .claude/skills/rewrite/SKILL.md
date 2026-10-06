@@ -117,7 +117,7 @@ add a play function to the default export, modeled on Carousel C2 or Modal.
   Add a story for each added example and remove the story for each removed one. Fix the `index`
   of every story after the change. In `renderPageBlock`, `index` counts blocks with that name on
   the page. In `renderLibraryExample`, it counts examples. Keep the story order the same as the
-  example order.
+  example order. A Playground story renders no example: keep it first in its file.
 - **Stories that fail because Milo doesn't finish decorating them.** Open the story's page with
   `curl -s <page>.plain.html` to see if it moved, lost the block, or has fewer blocks than
   `index`. Then check the upstream log for a
