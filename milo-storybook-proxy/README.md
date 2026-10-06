@@ -34,7 +34,7 @@ Some library examples hold several blocks or span several sections. `renderLibra
 
 `renderPage(url)` renders every section of a page or fragment. Use it when a block depends on the sections around it, such as a C2 carousel whose slides are the sections that follow it.
 
-`renderPageSections(page, name, { index, count })` renders the section holding the block at `index` and the `count - 1` sections after it. C2 tabs use it, because their panels are the sections after them, and Base Card's Three-up story, because the section's `three-up` style lays its cards out in a grid. It leaves out the `library-metadata` block that tags examples on library pages.
+`renderPageSections(page, name, { index, count })` renders the section holding the block at `index` and the `count - 1` sections after it. C2 tabs use it, because their panels are the sections after them, and Base Card's Section: 3 up story, because the section's `three-up` style lays its cards out in a grid. It leaves out the `library-metadata` block that tags examples on library pages.
 
 C2 sections often set a dark style or a background in their section metadata, and the block's colors depend on it. Pass `{ metadata: true }` to `renderPageBlock()` to keep the block's section metadata.
 

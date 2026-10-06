@@ -65,20 +65,21 @@ export const Featured = {
   render: () => renderPageBlock(library, 'base-card', { foundation: 'c2' }),
 };
 
+export const Default = {
+  render: () => renderPageBlock(library, 'base-card', { index: 1, foundation: 'c2' }),
+};
+
 // The featured card with its section's metadata, which sets the section's container width,
 // spacing, background and parallax.
-export const FeaturedBlock = {
+export const SectionFeatured = {
+  name: 'Section: Featured',
   render: () => renderPageBlock(library, 'base-card', { metadata: true, foundation: 'c2' }),
   // The container limits the card's width, so this fits it at any Docs page width.
   parameters: { docs: { story: { iframeHeight: '850px' } } },
 };
 
-export const Default = {
-  render: () => renderPageBlock(library, 'base-card', { index: 1, foundation: 'c2' }),
-};
-
 // The library's three base cards with the section that holds them, whose style is three-up.
-export const ThreeUp = {
-  name: 'Three-up',
+export const SectionThreeUp = {
+  name: 'Section: 3 up',
   render: () => renderPageSections(library, 'base-card', { index: 1, foundation: 'c2' }),
 };
