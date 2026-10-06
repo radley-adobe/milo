@@ -70,9 +70,12 @@ function syncVariants({ id, args }) {
   addons.getChannel().emit(UPDATE_STORY_ARGS, { storyId: id, updatedArgs: { variants } });
 }
 
-// Logs each click on a link or button in the Actions tab. Links stay on the story, apart from
-// Milo's modal links and links to a # on the same page. Listens on the document, where it runs
-// after Milo's own click handlers and sees modals, which Milo opens outside the story's root.
+// Logs each click on a link or button in the Actions tab. Links stay on the story. Milo's modal
+// links and links to a # on the same page change the story's own hash, as they would on a page.
+// Storybook's preview page sets `<base target="_parent">`, so a link left to navigate would load
+// in the window that holds the story: Storybook's manager, or the Docs page. Listens on the
+// document, where it runs after Milo's own click handlers and sees modals, which Milo opens
+// outside the story's root.
 const samePageHash = (a) => a.hash && a.href.split('#')[0] === window.location.href.split('#')[0];
 document.addEventListener('click', (e) => {
   const el = e.target.closest('a, button');
@@ -83,7 +86,9 @@ document.addEventListener('click', (e) => {
     ...(el.href && { href: el.href }),
     ...(el.hasAttribute('daa-ll') && { analytics: el.getAttribute('daa-ll') }),
   });
-  if (el.href && !el.dataset.modalHash && !samePageHash(el)) e.preventDefault();
+  if (!el.href || e.defaultPrevented) return;
+  e.preventDefault();
+  if (el.dataset.modalHash || samePageHash(el)) window.location.hash = el.hash;
 });
 
 // Events Milo blocks dispatch on window that a story can trigger.
