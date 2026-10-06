@@ -136,6 +136,44 @@ function followDocsPage() {
   return stop;
 }
 
+// On a Docs page, each story iframe sits in a box as high as the story's `iframeHeight`
+// parameter. Makes the box as high as the story when the story is higher, whenever the story's
+// size changes. Positioned elements, such as menus and modals, don't count. Content sized to the
+// frame's height, such as `100vh`, grows each time the box does, so a change in the story's
+// height that matches the box's last change is left alone. Returns a function that stops.
+function fitDocsFrame() {
+  let box;
+  try {
+    if (window.parent !== window && window.parent.__STORYBOOK_PREVIEW__) box = window.frameElement?.parentElement;
+  } catch {
+    return undefined;
+  }
+  const min = parseFloat(box?.style.height);
+  if (!min) return undefined;
+  const root = document.getElementById('storybook-root');
+  let height = min;
+  let content = 0;
+  let change = 0;
+  const fit = () => {
+    const next = Math.ceil(root.getBoundingClientRect().bottom + window.scrollY
+      + parseFloat(getComputedStyle(document.body).paddingBottom));
+    const grew = next - content;
+    content = next;
+    const target = Math.max(min, next);
+    if (target === height || (change > 0 && grew === change)) return;
+    change = target - height;
+    height = target;
+    box.style.height = `${height}px`;
+  };
+  // Resizing the box resizes the story, so it waits for the next frame, outside the observer's
+  // callback.
+  const observer = new ResizeObserver(() => requestAnimationFrame(fit));
+  observer.observe(root);
+  const stop = () => observer.disconnect();
+  window.addEventListener('pagehide', stop);
+  return stop;
+}
+
 // scripts/build.js builds the default branch at the site's root and each other branch in a
 // folder named after it, and gives each build the branch switcher's state. The switcher links to
 // another build by host and path, so it needs the site's path, such as /milo on GitHub Pages.
@@ -144,7 +182,10 @@ const site = new URL(currentBranch === defaultBranch ? '.' : '..', window.locati
 
 export default {
   tags: ['autodocs'],
-  beforeAll: followDocsPage,
+  beforeAll: () => {
+    const stops = [followDocsPage(), fitDocsFrame()];
+    return () => stops.forEach((stop) => stop?.());
+  },
   // The Theme menu in the toolbar puts Milo's `dark` class on the body, which sets the dark
   // color tokens for every story.
   globalTypes: {
@@ -165,7 +206,8 @@ export default {
   }],
   parameters: {
     // Each story on a Docs page gets its own iframe, so Milo's page styles don't apply to the
-    // Docs page itself. The table of contents lists a page's h3 headings. Docs pages are light or
+    // Docs page itself. `iframeHeight` is the iframe's least height; fitDocsFrame() grows it to
+    // fit the story. The table of contents lists a page's h3 headings. Docs pages are light or
     // dark as the browser prefers, like the rest of Storybook.
     docs: { theme: themes.normal, story: { inline: false, iframeHeight: '600px' }, toc: true },
     // The CSS Custom Properties tab lists the tokens each block reads, and the Design Tokens Docs

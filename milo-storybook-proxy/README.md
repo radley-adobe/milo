@@ -101,7 +101,7 @@ The Button story in the same folder shows `con-button` and its variants, with co
 
 ## Addons
 
-- Every block has a Docs page that shows all of its stories. Each story renders in its own 600px-high iframe, so Milo's styles don't apply to the Docs page itself. A story can set its own height with `parameters.docs.story.iframeHeight`. Every Docs page has a table of contents of its h3 headings.
+- Every block has a Docs page that shows all of its stories. Each story renders in its own iframe, so Milo's styles don't apply to the Docs page itself. The iframe is 600px high, or taller to fit the story: `fitDocsFrame()` in `.storybook/preview.js` grows it whenever the story's size changes. Menus and modals that open over a story don't count, so a story with one can set a least height with `parameters.docs.story.iframeHeight`, as Global Navigation does. Every Docs page has a table of contents of its h3 headings.
 - Storybook's own interface and the Docs pages are light or dark, as the browser or operating system prefers. Each story iframe on a Docs page follows the toolbar's Preview background and Theme and the Docs page's Controls table, the way a story page does. `followDocsPage()` in `.storybook/preview.js` copies them from the Docs page into each iframe, because Storybook only gives them to the Docs page.
 - The Theme menu in the toolbar switches every story between Milo's light and dark themes. Dark puts Milo's `dark` class on the story's `body`, which sets the dark color tokens, the way a section with the `dark` style does.
 - The Accessibility tab runs axe-core checks on each story. Milo decorates a story after Storybook renders it, so an `afterEach` hook in `.storybook/preview.js` waits for `data-milo-status` (up to 30 seconds) before the checks run.

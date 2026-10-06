@@ -57,8 +57,6 @@ export const Playground = {
     imageAlt: { control: 'text', description: 'Image alt text. Leave empty when the image is decorative.' },
   },
   render: (args) => renderBlock(card(args), { foundation: 'c2' }),
-  // Tall enough for the card's text below its image at the Docs page's widest.
-  parameters: { docs: { story: { iframeHeight: '850px' } } },
 };
 
 export const Featured = {
@@ -74,8 +72,6 @@ export const Default = {
 export const SectionFeatured = {
   name: 'Section: Featured',
   render: () => renderPageBlock(library, 'base-card', { metadata: true, foundation: 'c2' }),
-  // The container limits the card's width, so this fits it at any Docs page width.
-  parameters: { docs: { story: { iframeHeight: '850px' } } },
 };
 
 // The library's three base cards with the section that holds them, whose style is three-up.
