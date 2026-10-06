@@ -36,8 +36,14 @@ const presenters = {
   ),
 };
 
-// Tables that show at full height, with rows that grow to fit their preview.
+// Tables that show at full height, with rows that grow to fit their preview and half the table's
+// width for it. Primitive Shadow, whose tokens are the parts of each shadow and have no preview,
+// shows at full height with the addon's columns.
 const FIT_ROWS = ['FontSize', 'LineHeight', 'LetterSpacing', 'Spacing'];
+const tableClass = ({ category, presenter }) => {
+  if (FIT_ROWS.includes(presenter)) return 'token-rows-fit token-wide-preview';
+  return category === 'Primitive / Shadow' ? 'token-rows-fit' : undefined;
+};
 
 // The categories on one Design Tokens page, such as `Primitive / Color`, each under its own
 // heading. Colors show as cards and the rest as tables.
@@ -49,7 +55,7 @@ export default function TokenCategories({ page }) {
         that reference. Right-click a token to see which C2 blocks read it in their CSS.
       </p>
       {pages[page].map(({ category, heading, presenter }) => (
-        <div key={category} className={FIT_ROWS.includes(presenter) ? 'token-rows-fit' : undefined}>
+        <div key={category} className={tableClass({ category, presenter })}>
           <Subheading>{heading}</Subheading>
           <DesignTokenDocBlock
             categoryName={category}

@@ -4,13 +4,14 @@
   /* Lets long variable names and values wrap in the tables on the Foundations pages. */
   .foundations-table td code { white-space: normal; overflow-wrap: anywhere; }
   /* The design token addon positions each table row itself, at the same height, and renders
-     only the rows its scroll box shows. A font size, line height, letter spacing or spacing table
-     shows at full height, so every row renders, and its rows go back into the table's flow and
+     only the rows its scroll box shows. A font size, line height, letter spacing, spacing or
+     shadow table shows at full height, so every row renders, and its rows go back into the table's flow and
      grow to fit their preview. */
   .token-rows-fit :has(> table) { max-height: none !important; }
   .token-rows-fit table { height: auto !important; }
   .token-rows-fit tbody > tr { position: static !important; height: auto !important; transform: none !important; align-items: center; }
-  /* Their previews get half the table's width, so the largest font sizes and spacings fit. */
-  .token-rows-fit :is(td, th):nth-of-type(1) { flex-basis: 25% !important; }
-  .token-rows-fit :is(td, th):nth-of-type(3) { flex-basis: 50% !important; }
+  /* Font size, line height, letter spacing and spacing previews get half the table's width, so
+     the largest font sizes and spacings fit. */
+  .token-wide-preview :is(td, th):nth-of-type(1) { flex-basis: 25% !important; }
+  .token-wide-preview :is(td, th):nth-of-type(3) { flex-basis: 50% !important; }
 </style>
