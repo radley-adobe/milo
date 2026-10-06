@@ -91,10 +91,10 @@ export const Center = {
 // The section stories render the homepage fragment as published, so they have no controls.
 const published = { controls: { disable: true } };
 
-// The homepage's nine explore cards with the section that holds them, whose style is three-up and
-// dark and whose layout is product-grid.
-export const SectionThreeUp = {
-  name: 'Section: 3 up',
+// The homepage's nine explore cards with the section that holds them, whose layout is
+// product-grid and whose style is three-up and dark.
+export const SectionProductGrid = {
+  name: 'Section: Product grid',
   render: () => renderPageSections(`${fragment}/all-products-card`, 'explore-card', { foundation: 'c2' }),
   parameters: published,
 };
