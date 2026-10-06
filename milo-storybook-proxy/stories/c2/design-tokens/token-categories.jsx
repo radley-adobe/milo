@@ -19,8 +19,9 @@ const BODY_FONT = '"Adobe Clean", adobe-clean, "Trebuchet MS", sans-serif';
 const SAMPLE = 'Lorem ipsum';
 const TEXT = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam veniam eum dicta.';
 
-// The addon's previews of font tokens, set in Milo's fonts. Font Size previews wrap instead of
-// overflowing their column, and preview-head.html lets their rows grow to fit them.
+// The addon's previews of font tokens, set in Milo's fonts. Font Size, Line Height and Letter
+// Spacing previews wrap instead of overflowing their column, and preview-head.html lets their
+// rows grow to fit them.
 const presenters = {
   FontFamily: ({ token }) => <div style={{ fontFamily: withWebFont(token.value) }}>{SAMPLE}</div>,
   FontSize: ({ token }) => (
@@ -28,12 +29,15 @@ const presenters = {
   ),
   FontWeight: ({ token }) => <div style={{ fontFamily: BODY_FONT, fontWeight: token.value }}>{SAMPLE}</div>,
   LineHeight: ({ token }) => (
-    <div style={{ fontFamily: BODY_FONT, lineHeight: token.value, height: '100%', overflow: 'auto' }}>{TEXT}</div>
+    <div style={{ fontFamily: BODY_FONT, lineHeight: token.value }}>{TEXT}</div>
   ),
   LetterSpacing: ({ token }) => (
-    <div style={{ fontFamily: BODY_FONT, letterSpacing: token.value, height: '100%', overflow: 'auto' }}>{TEXT}</div>
+    <div style={{ fontFamily: BODY_FONT, letterSpacing: token.value }}>{TEXT}</div>
   ),
 };
+
+// Tables whose rows grow to fit their preview.
+const FIT_ROWS = ['FontSize', 'LineHeight', 'LetterSpacing'];
 
 // The categories on one Design Tokens page, such as `Primitive / Color`, each under its own
 // heading. Colors show as cards and the rest as tables.
@@ -45,7 +49,7 @@ export default function TokenCategories({ page }) {
         that reference. Right-click a token to see which C2 blocks read it in their CSS.
       </p>
       {pages[page].map(({ category, heading, presenter }) => (
-        <div key={category} className={presenter === 'FontSize' ? 'token-rows-fit' : undefined}>
+        <div key={category} className={FIT_ROWS.includes(presenter) ? 'token-rows-fit' : undefined}>
           <Subheading>{heading}</Subheading>
           <DesignTokenDocBlock
             categoryName={category}
