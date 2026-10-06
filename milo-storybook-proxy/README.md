@@ -34,7 +34,7 @@ Some library examples hold several blocks or span several sections. `renderLibra
 
 `renderPage(url)` renders every section of a page or fragment. Use it when a block depends on the sections around it, such as a C2 carousel whose slides are the sections that follow it.
 
-`renderPageSections(page, name, { index, count })` renders the section holding the block at `index` and the `count - 1` sections after it. C2 tabs use it, because their panels are the sections after them, and Base Card's 3-Up Grid and Full Section stories, because the section's style lays out its cards. It leaves out the `library-metadata` block that tags examples on library pages.
+`renderPageSections(page, name, { index, count })` renders the section holding the block at `index` and the `count - 1` sections after it. C2 tabs use it, because their panels are the sections after them, and Base Card's Section: 3 up story, because the section's `three-up` style lays its cards out in a grid. It leaves out the `library-metadata` block that tags examples on library pages.
 
 C2 sections often set a dark style or a background in their section metadata, and the block's colors depend on it. Pass `{ metadata: true }` to `renderPageBlock()` to keep the block's section metadata.
 
@@ -73,7 +73,7 @@ export default { title: 'Base Card', parameters: { cssprops }, argTypes: { varia
 
 Storybook merges a file's parameters and argTypes into each of its stories, so in a file whose stories render different blocks, set `cssprops` and `variants` on each story instead.
 
-To give a block's stories controls for its content, write the block's authored markup from the story's args and render it with `renderBlock()`. Give each arg a `control` and a `description`, and set its values in `args`, taken from a live page. Milo's test mocks in `test/blocks/<name>/mocks/` show the markup. A `docs.source.transform` that returns the same markup makes Show code give it. A block's Docs page shows the Controls table of its file's first story. `stories/c2/base-card.stories.js` follows the S2A Storybook's MediaCard stories this way, with the cards from the adobe.com homepage. Set `parameters.docs.description.component` on the file's default export to put a Markdown description at the top of its Docs page.
+To give a block's stories controls for its content, write the block's authored markup from the story's args and render it with `renderBlock()`. Give each arg a `control` and a `description`, and set its values in `args`, taken from a live page. Milo's test mocks in `test/blocks/<name>/mocks/` show the markup. A `docs.source.transform` that returns the same markup makes Show code give it. A block's Docs page shows the Controls table of its file's first story. Base Card's Featured and Default stories work this way. Set `parameters.docs.description.component` on the file's default export to put a Markdown description at the top of its Docs page.
 
 A play function runs after Storybook renders the story, before Milo has decorated it. Start it with `await waitForMilo(context)` from `src/milo.js`.
 
