@@ -93,9 +93,10 @@ so Show code gives the markup. `cardStory(style)` in the reference does both.
   class in `variants`, such as Featured with `variants: ['featured']`.
 
 **Section stories.** These go in the sidebar's Sections group, not the block's file. Give each
-its own file, `stories/c2/sections/<block>-<name>.stories.js`, titled `Sections/<Block> (<name>)`,
-with one story of the same name so the sidebar shows it as one entry.
-`stories/c2/sections/base-card-3-up.stories.js` is the reference. Each renders a live section:
+its own file in `stories/c2/sections/`, titled `Sections/<name>`, with one story of the same name
+so the sidebar shows it as one entry. Ask for the name: Base Card's are Base Card (3 up) and Base
+Card (Featured), Explore Card's is Product Grid. `stories/c2/sections/base-card-3-up.stories.js`
+is the reference. Each renders a live section:
 `renderPageSections(page, name, { index })` for blocks that the section lays out together, or
 `renderPageBlock(page, name, { metadata: true })` for one block with its section's metadata. Tag
 the file `!autodocs` and set `parameters: { cssprops, controls: { disable: true } }`: it renders

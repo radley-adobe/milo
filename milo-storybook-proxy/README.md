@@ -31,9 +31,9 @@ export const Default = {
 The first part of a title is the story's group in the sidebar:
 
 - Blocks: one C2 block, titled with the block's name
-- Sections: a block's whole section from a live page, such as Base Card (3 up). Each has its own file in `stories/c2/sections/` with one story of the same name, so the sidebar shows it as one entry, and no Docs page.
-- Components: global classes that aren't a block, such as Button
-- Navigation: Global Navigation and Global Footer
+- Sections: a block's whole section from a live page, such as Base Card (3 up) or Product Grid. Each has its own file in `stories/c2/sections/` with one story of the same name, so the sidebar shows it as one entry, and no Docs page.
+- Components: Button, from global classes, and Modal
+- Navigation: Global Navigation, Global Footer and Region Nav
 
 `storySort` in `.storybook/preview.js` lists the groups after Foundations and Design Tokens.
 

@@ -1,4 +1,4 @@
-import { HOMEPAGE_FRAGMENTS, renderBlock, renderPageSections } from '../../src/milo.js';
+import { HOMEPAGE_FRAGMENTS, renderBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/explore-card';
 import variants from 'virtual:variants/c2/explore-card';
 
@@ -86,15 +86,4 @@ export const Default = {
 export const Center = {
   ...cardStory('three-up, container'),
   args: { ...Default.args, variants: ['center'] },
-};
-
-// The section stories render the homepage fragment as published, so they have no controls.
-const published = { controls: { disable: true } };
-
-// The homepage's nine explore cards with the section that holds them, whose layout is
-// product-grid and whose style is three-up and dark.
-export const SectionProductGrid = {
-  name: 'Section: Product grid',
-  render: () => renderPageSections(`${fragment}/all-products-card`, 'explore-card', { foundation: 'c2' }),
-  parameters: published,
 };

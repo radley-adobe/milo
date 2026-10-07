@@ -2,7 +2,7 @@ import { FEDERAL, renderPageBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/region-nav';
 import variants from 'virtual:variants/c2/region-nav';
 
-export default { title: 'Blocks/Region Nav', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Navigation/Region Nav', parameters: { cssprops }, argTypes: { variants } };
 
 // The global footer's Change region link opens this fragment in a modal.
 export const ChangeRegion = {
