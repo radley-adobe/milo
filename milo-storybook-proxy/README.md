@@ -49,7 +49,7 @@ C2 sections often set a dark style or a background in their section metadata, an
 
 The Bento sections are examples of how a bento section works, not copies of a page. `bentoStory(cards, { masonry, layout })` in `stories/c2/sections/bento.js` renders authored explore cards in a section with no background color, so the section follows the Theme menu. Each card has one heading and body, and an image for each theme: a light Acrobat image in the light theme and a dark Creative Cloud image in the dark one. The text takes the theme's colors.
 
-Milo builds a page's global navigation and footer from the content its `gnav-source` and `footer-source` metadata name. `renderGlobalNavigation(source)` and `renderGlobalFooter(source)` set that metadata and build them before and after the story's empty `main` element, where they are on a page. Pass other page metadata the navigation reads as `{ metadata: { 'gnav-dark-font': 'true' } }`. Without `gnav-dark-font`, the redesigned navigation has light text for a dark page top, so those stories set Storybook's dark background with `globals: { backgrounds: { value: 'dark' } }`.
+Milo builds a page's global navigation and footer from the content its `gnav-source` and `footer-source` metadata name. `renderGlobalNavigation(source)` and `renderGlobalFooter(source)` set that metadata and build them before and after the story's empty `main` element, where they are on a page. Pass other page metadata the navigation reads as `{ metadata: { 'gnav-dark-font': 'true' } }`. Pass authored block markup for `main` as `{ html }` for a block that shows in the navigation, such as Brand Concierge Global, which moves its prompts and input into the navigation when `gnav-brand-concierge` is `on`. Without `gnav-dark-font`, the redesigned navigation has light text for a dark page top, so those stories set Storybook's dark background with `globals: { backgrounds: { value: 'dark' } }`.
 
 A link to a fragment with a hash, such as `/federal/footer/fragments/regions#langnav`, opens the fragment in a modal. Milo keeps only the link's path and loads it from the current site, apart from paths under `/federal/`, which load from Federal. So a modal in a story shows a Federal fragment or one that Storybook serves from `fragments/`. The Modal story opens `fragments/modal`, a Tour block with placeholder content, with a link whose path is `new URL('fragments/modal', window.location.href).pathname`, which works under the published site's subpath. A fragment's `./media_` images load from `fragments/`.
 
@@ -175,6 +175,7 @@ git merge upstream/stage
 - Globe Gallery fetches its card fragment itself and loads the card images from the current site, so the cards show without images
 - The global navigation's universal navigation, such as sign-in and the app switcher, loads from a CDN that only allows adobe.com origins, so the Global Navigation stories leave it out
 - Some C2 blocks have no story:
+  - Brand Concierge Global shows only in the navigation, so the Global Navigation's Brand Concierge story shows it
   - Card Metadata, Martech Metadata, Modal Metadata, Section Metadata and Visually Hidden show nothing of their own
   - Floating CTA shows only once the page scrolls past an earlier section
   - Email Collection C2, Firefly Globe and Pill Group are on no public page

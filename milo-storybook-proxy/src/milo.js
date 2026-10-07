@@ -299,12 +299,18 @@ export function renderLibraryExample(pageUrl, index, { foundation = 'c1' } = {})
 
 // Renders Milo's global navigation from the gnav content at `source`, the way Milo builds a page's
 // header from its `gnav-source` metadata. `metadata` sets other page metadata the navigation
-// reads, such as `universal-nav`. The header goes before the story's empty main element, where
-// it is on a page.
-export function renderGlobalNavigation(source, { metadata = {}, foundation = 'c1' } = {}) {
-  return render(async () => [], foundation, {
+// reads, such as `universal-nav`. The header goes before the story's main element, where it is on
+// a page. `html` is authored block markup for main, for a block that shows in the navigation,
+// such as Brand Concierge Global.
+export function renderGlobalNavigation(source, { metadata = {}, foundation = 'c1', html = '' } = {}) {
+  return render(async () => {
+    if (!html) return [];
+    const div = section();
+    div.innerHTML = html;
+    return [div];
+  }, foundation, {
     metadata: { 'gnav-source': source, ...metadata },
-    load: async ({ getConfig, isLocalNav, loadBlock }, main) => {
+    load: async ({ getConfig, isLocalNav, loadArea, loadBlock }, main) => {
       const header = document.createElement('header');
       header.className = 'global-navigation';
       main.before(header);
@@ -316,6 +322,7 @@ export function renderGlobalNavigation(source, { metadata = {}, foundation = 'c1
       }
       await loadBlock(header);
       await getConfig().federal?.fedsGlobalNavigation;
+      if (html) await loadArea(main);
     },
   });
 }

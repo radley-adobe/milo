@@ -24,8 +24,8 @@ const BUILDS = { stage: '', main: 'main/' };
 const NO_STORY = ['Section Metadata'];
 
 // Folders in libs/c2/blocks/ with no story. README › Known limits says why.
-const NO_C2_STORY = ['card-metadata', 'email-collection-c2', 'firefly-globe', 'floating-cta',
-  'martech-metadata', 'modal-metadata', 'pill-group', 'section-metadata', 'visually-hidden'];
+const NO_C2_STORY = ['brand-concierge-global', 'card-metadata', 'email-collection-c2', 'firefly-globe',
+  'floating-cta', 'martech-metadata', 'modal-metadata', 'pill-group', 'section-metadata', 'visually-hidden'];
 
 // Stories that never finish rendering in a headless browser, so the check skips them. README ›
 // Known limits says why.
