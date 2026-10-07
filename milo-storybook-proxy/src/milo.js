@@ -1,6 +1,11 @@
 // Resolves next to iframe.html, so it works on localhost and under a hosted subpath.
 export const LIBS = new URL('libs', window.location.href).pathname;
 
+// The images and icons that authored stories show, from media/ in this folder. A full URL,
+// because Milo turns an icon link into an image only when the link's text is a URL. Resolves
+// next to iframe.html, like LIBS.
+export const MEDIA = new URL('media', window.location.href).href;
+
 // Milo's block library: one example page per block, the source authors copy blocks from.
 export const LIBRARY = 'https://main--milo--adobecom.aem.page/docs/library/blocks';
 
@@ -157,6 +162,23 @@ function section(...children) {
   return div;
 }
 
+// Gives a section whose metadata sets a white background Milo's default background color
+// instead, which is white in the light theme and dark gray in the dark one, so the section
+// follows the Theme menu the way the story's body does. A section with the `dark` style keeps
+// its background, because its own `dark` class sets the dark colors in either theme.
+function followTheme(main) {
+  main.querySelectorAll('.section-metadata').forEach((metadata) => {
+    const rows = Object.fromEntries([...metadata.children]
+      .map((row) => [row.firstElementChild?.textContent.trim().toLowerCase(), row]));
+    if (/\bdark\b/i.test(rows.style?.textContent ?? '')) return;
+    [...(rows.background?.children ?? [])].slice(1).forEach((cell) => {
+      if (/^(#fff|#ffffff|white)$/i.test(cell.textContent.trim())) {
+        cell.textContent = 'var(--s2a-color-background-default)';
+      }
+    });
+  });
+}
+
 const sameClasses = (a, b) => Array.isArray(a) && Array.isArray(b)
   && a.length === b.length && a.every((name) => b.includes(name));
 
@@ -195,6 +217,7 @@ function render(getSections, foundation, { metadata = {}, load = (milo, main) =>
       setFoundation(foundation);
       setPageMetadata(metadata);
       main.append(...await getSections());
+      if (foundation === 'c2') followTheme(main);
       if (argTypes.variants?.options.length) {
         entry.shown = applyVariants(main, argTypes.variants, args.variants);
       }

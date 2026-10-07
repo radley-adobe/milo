@@ -19,7 +19,12 @@ export default {
     'storybook-branch-switcher',
   ],
   // Milo's libs/ is served as-is, never bundled or modified. fragments/ holds example fragments
-  // that stories open, which Milo loads from the story's own site.
-  staticDirs: [{ from: LIBS, to: '/libs' }, { from: '../fragments', to: '/fragments' }],
+  // that stories open, which Milo loads from the story's own site. media/ holds the images and
+  // icons that authored stories show.
+  staticDirs: [
+    { from: LIBS, to: '/libs' },
+    { from: '../fragments', to: '/fragments' },
+    { from: '../media', to: '/media' },
+  ],
   viteFinal: (config) => mergeConfig(config, { plugins: [cssprops(), variants(), designTokens(), foundations()] }),
 };

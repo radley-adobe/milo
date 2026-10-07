@@ -1,4 +1,4 @@
-import { HOMEPAGE_FRAGMENTS, LIBRARY, renderBlock } from '../../src/milo.js';
+import { MEDIA, renderBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/base-card';
 import variants from 'virtual:variants/c2/base-card';
 
@@ -15,7 +15,7 @@ A card with an image above its text. It's authored as one row with two cells: th
 - Milo has no block that holds base cards. Base cards in the same section form a grid when the section's style sets its columns, such as \`three-up\` for three columns from 768px. \`two-up\`, \`four-up\` and \`six-up\` work the same way.
 `;
 
-const icon = (name) => `https://main--federal--adobecom.aem.page/federal/assets/svgs/${name}.svg`;
+const icon = (name) => `${MEDIA}/icons/${name}.svg`;
 
 // An arg as an attribute value.
 const attr = (value = '') => String(value).replaceAll('&', '&amp;').replaceAll('"', '&quot;');
@@ -68,7 +68,7 @@ export const Default = {
     variants: [],
     icon: icon('acrobat-pro'),
     showIcon: true,
-    image: `${HOMEPAGE_FRAGMENTS}/explore-whats-new/media_11baea9af9d1d1306f14797ab9e4566c1620ecc11.png?width=2000&format=webply&optimize=medium`,
+    image: `${MEDIA}/base-card/acrobat-pdf-space.webp`,
     imageAlt: 'An Adobe Acrobat PDF Space, with presentation slides being collected and an AI prompt field that reads, "Generate presentation"',
     heading: 'Work smarter than ever with documents.',
     body: 'Trusted PDF tools, now with AI for editing, insights, and content creation.',
@@ -84,7 +84,7 @@ export const Featured = {
     variants: ['featured'],
     icon: icon('premiere-pro-64'),
     showIcon: true,
-    image: `${LIBRARY}/c2/media_1240ea9838a6b2823276406377ef7c85c4f4e2381.png?width=2000&format=webply&optimize=medium`,
+    image: `${MEDIA}/base-card/premiere-color-mode.webp`,
     imageAlt: '',
     heading: 'Featured base card.',
     body: 'Colour grading purpose-built for editors. Now in Premiere (beta).',

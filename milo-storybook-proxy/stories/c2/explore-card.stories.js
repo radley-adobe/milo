@@ -1,4 +1,4 @@
-import { HOMEPAGE_FRAGMENTS, renderBlock } from '../../src/milo.js';
+import { MEDIA, renderBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/explore-card';
 import variants from 'virtual:variants/c2/explore-card';
 
@@ -19,8 +19,7 @@ A card with an icon and text over an image that shows on hover. It's authored as
 - In a section whose layout is \`bento\`, section metadata restyles the cards: the image shows without hovering, with no gradient, and grows slightly on hover
 `;
 
-const fragment = `${HOMEPAGE_FRAGMENTS}/all-products-card`;
-const icon = (name) => `https://main--federal--adobecom.aem.page/federal/assets/svgs/${name}.svg`;
+const icon = (name) => `${MEDIA}/icons/${name}.svg`;
 
 // An arg as an attribute value.
 const attr = (value = '') => String(value).replaceAll('&', '&amp;').replaceAll('"', '&quot;');
@@ -73,7 +72,7 @@ export const Default = {
     variants: [],
     icon: icon('firefly-appicon-256'),
     showIcon: true,
-    image: `${fragment}/media_177ad1e4e1f2ff11992428f533093c4766d7e730a.png?width=2000&format=webply&optimize=medium`,
+    image: `${MEDIA}/explore-card/firefly.webp`,
     imageAlt: '',
     heading: 'Firefly',
     body: 'Create and enhance images, video, and audio with AI-powered tools.',

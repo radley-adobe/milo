@@ -88,19 +88,24 @@ so Show code gives the markup. `cardStory(style)` in the reference does both.
   `libs/c2/styles/styles.css`.
 - Take the args from the page the story rendered before, usually the library page. When that
   page's image is a small thumbnail, use a larger image of the same content from an adobe.com
-  page, such as the homepage fragments in `src/milo.js`, and say so in a comment.
+  page, such as the homepage fragments in `src/milo.js`, and say so in a comment. Save each
+  image the args use in `milo-storybook-proxy/media/<block>/` and each icon in `media/icons/`,
+  and point the args at them through `MEDIA`, as the README describes.
 - Put the plain block first, as Default with `variants: []`. Then one story per variant, with its
   class in `variants`, such as Featured with `variants: ['featured']`.
 
 **Section stories.** These go in the sidebar's Sections group, not the block's file. Give each
 its own file in `stories/c2/sections/`, titled `Sections/<name>`, with one story of the same name
 so the sidebar shows it as one entry. Ask for the name: Base Card's are Base Card (3 up) and Base
-Card (Featured), Explore Card's is Product Grid. `stories/c2/sections/base-card-3-up.stories.js`
-is the reference. Each renders a live section:
+Card (Featured), Explore Card's are Product Grid and the Bento sections.
+`stories/c2/sections/base-card-3-up.stories.js` is the reference. Most render a live section:
 `renderPageSections(page, name, { index })` for blocks that the section lays out together, or
-`renderPageBlock(page, name, { metadata: true })` for one block with its section's metadata. Tag
-the file `!autodocs` and set `parameters: { cssprops, controls: { disable: true } }`: it renders
-published content, and the Variants control would change only the first block.
+`renderPageBlock(page, name, { metadata: true })` for one block with its section's metadata. A
+section story is an example of how the section works, not a copy of a page. When the published
+section's background or images suit only one theme, author the section in the story instead, with
+no background color and an image for each theme, as `stories/c2/sections/bento.js` does for the
+Bento sections. Tag the file `!autodocs` and set `parameters: { cssprops, controls: { disable: true } }`: the
+Variants control would change only the first block.
 
 **Remove** stories that render a whole page or fragment without showing anything the other
 stories don't.
@@ -117,6 +122,8 @@ modal opens over the story.
 - Open each story at `/iframe.html?viewMode=story&id=<id>`. Its `main` has
   `data-milo-status="loaded"`, the block has the expected classes, and a single-block story fits a
   1280 × 720 window.
+- Open each section story again with `&globals=theme:dark`. Its text reads on its background and
+  images in both themes.
 - On the Docs page (`/iframe.html?viewMode=docs&id=blocks-<block>--docs`): the description shows, the
   Controls table belongs to the first story, editing a control there updates that story, each
   frame fits its story, and Show code gives the authored markup.
