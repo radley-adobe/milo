@@ -2,7 +2,7 @@ import { renderBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/brand-concierge-global';
 import variants from 'virtual:variants/c2/brand-concierge-global';
 
-export default { title: 'Brand Concierge Global', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Blocks/Brand Concierge Global', parameters: { cssprops }, argTypes: { variants } };
 
 export const Default = {
   render: () => renderBlock(`
