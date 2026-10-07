@@ -1,4 +1,4 @@
-import { LIBS, renderStyles } from '../../../src/milo.js';
+import { LIBS, LIVE, renderStyles } from '../../../src/milo.js';
 import './demo.css';
 
 const VARIANTS = ['outline', 'blue', 'fill', 'transparent'];
@@ -7,6 +7,7 @@ const SIZES = ['default', 'button-xs'];
 export default {
   title: 'Components/Button',
   parameters: {
+    liveExamples: [LIVE.home, LIVE.acrobat, LIVE.acrobatStudio],
     docs: {
       description: {
         component: `The button classes in Milo's \`libs/c2/styles/styles.css\`. Milo adds \`con-button\` to an authored link in bold or italics: bold makes a \`blue\` button and italics an \`outline\` one. \`#_button-<class>\` at the end of the link's URL adds that class, such as \`#_button-fill\` or \`#_button-button-xs\`. The paragraph that holds the buttons gets \`action-area\`, which sets them in a row.`,

@@ -1,11 +1,11 @@
-import { FEDERAL, renderGlobalNavigation } from '../../src/milo.js';
+import { FEDERAL, LIVE, renderGlobalNavigation } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/global-navigation';
 
 // No Variants control: the classes the block's CSS lists are ones Milo sets itself. The Docs
 // iframes leave room for an open menu.
 export default {
   title: 'Navigation/Global Navigation',
-  parameters: { cssprops, docs: { story: { iframeHeight: '700px' } } },
+  parameters: { cssprops, liveExamples: [LIVE.home, LIVE.acrobat, LIVE.acrobatPlans], docs: { story: { iframeHeight: '700px' } } },
 };
 
 // Without gnav-dark-font metadata, the navigation has light text for the dark top of its page.

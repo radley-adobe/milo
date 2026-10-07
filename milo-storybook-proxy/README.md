@@ -88,6 +88,8 @@ Storybook merges a file's parameters and argTypes into each of its stories, so i
 
 To give a block's stories controls for its content, write the block's authored markup from the story's args and render it with `renderBlock()`. Give each arg a `control` and a `description`, and set its values in `args`, taken from a live page. Milo's test mocks in `test/blocks/<name>/mocks/` show the markup. A `docs.source.transform` that returns the same markup makes Show code give it. A block's Docs page shows the Controls table of its file's first story. Base Card's stories work this way. The `/block-stories` Claude Code skill (`.claude/skills/block-stories/` at the repo root) upgrades one block's stories to Base Card's pattern and stops for review. Set `parameters.docs.description.component` on the file's default export to put a Markdown description at the top of its Docs page.
 
+A Docs page shows Live Examples after its description: one to three links to published adobe.com pages that use the block, from `parameters.liveExamples` on the file's default export. `LIVE` in `src/milo.js` lists the pages built from C2 blocks: the homepage and four Acrobat pages. Each link's text is the page's breadcrumbs without Home, or Home for the homepage. `.storybook/docs-page.jsx` is Storybook's own Docs page with the section added, and its links open in a new tab. A file with no `liveExamples` has no section.
+
 A play function runs after Storybook renders the story, before Milo has decorated it. Start it with `await waitForMilo(context)` from `src/milo.js`.
 
 Placeholders and other site content Milo looks up resolve against https://milo.adobe.com.

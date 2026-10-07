@@ -1,5 +1,5 @@
 import { expect, waitFor } from 'storybook/test';
-import { renderBlock, waitForMilo } from '../../src/milo.js';
+import { LIVE, renderBlock, waitForMilo } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/modal';
 import variants from 'virtual:variants/c2/modal';
 
@@ -10,7 +10,7 @@ const fragment = new URL('fragments/modal', window.location.href).pathname;
 
 export default {
   title: 'Components/Modal',
-  parameters: { cssprops },
+  parameters: { cssprops, liveExamples: [LIVE.pdfEssentials] },
   argTypes: { variants },
   // Opens the modal. Milo adds it to the end of the page's body.
   play: async (context) => {

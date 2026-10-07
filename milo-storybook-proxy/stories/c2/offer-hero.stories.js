@@ -1,8 +1,8 @@
-import { ACROBAT, CC_PRO_TEST_FRAGMENTS, renderPageBlock } from '../../src/milo.js';
+import { ACROBAT, CC_PRO_TEST_FRAGMENTS, LIVE, renderPageBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/offer-hero';
 import variants from 'virtual:variants/c2/offer-hero';
 
-export default { title: 'Blocks/Offer Hero', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Blocks/Offer Hero', parameters: { cssprops, liveExamples: [LIVE.acrobatStudio] }, argTypes: { variants } };
 
 export const AcrobatStudio = {
   name: 'adobe.com: Acrobat Studio',

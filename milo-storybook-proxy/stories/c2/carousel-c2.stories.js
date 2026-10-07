@@ -1,11 +1,11 @@
 import { expect, waitFor } from 'storybook/test';
-import { HOMEPAGE_FRAGMENTS, renderPage, waitForMilo } from '../../src/milo.js';
+import { HOMEPAGE_FRAGMENTS, LIVE, renderPage, waitForMilo } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/carousel-c2';
 import variants from 'virtual:variants/c2/carousel-c2';
 
 export default {
   title: 'Blocks/Carousel C2',
-  parameters: { cssprops },
+  parameters: { cssprops, liveExamples: [LIVE.home] },
   argTypes: { variants },
   // Moves to the next slide. The carousel clones slides at each end, so this follows the slide
   // indicators instead.

@@ -28,6 +28,17 @@ export const NALA = 'https://main--milo--adobecom.aem.page/drafts/nala/blocks';
 // adobe.com site.
 export const FEDERAL = 'https://main--federal--adobecom.aem.page/federal';
 
+// The published adobe.com pages built from C2 blocks, which a block's Docs page links to as Live
+// Examples. `path` is the page's breadcrumbs without Home, or Home for the homepage. Acrobat plans
+// has no breadcrumbs, so its path follows the Acrobat page's.
+export const LIVE = {
+  home: { path: 'Home', url: 'https://www.adobe.com/' },
+  acrobat: { path: 'PDF & Document Essentials / Acrobat', url: 'https://www.adobe.com/acrobat.html' },
+  acrobatPlans: { path: 'PDF & Document Essentials / Acrobat / Plans & Pricing', url: 'https://www.adobe.com/acrobat/plans.html' },
+  pdfEssentials: { path: 'PDF & Document Essentials', url: 'https://www.adobe.com/acrobat/pdf-and-document-essentials.html' },
+  acrobatStudio: { path: 'PDF & Document Essentials / Acrobat Studio', url: 'https://www.adobe.com/acrobat/acrobat-studio.html' },
+};
+
 let utils;
 
 // The story being rendered, set by the beforeEach hook in .storybook/preview.js. The render

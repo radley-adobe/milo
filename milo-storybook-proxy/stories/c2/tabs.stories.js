@@ -1,8 +1,8 @@
-import { ACROBAT, CC_PRO_TEST_FRAGMENTS, renderPageSections } from '../../src/milo.js';
+import { ACROBAT, CC_PRO_TEST_FRAGMENTS, LIVE, renderPageSections } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/tabs';
 import variants from 'virtual:variants/c2/tabs';
 
-export default { title: 'Blocks/Tabs', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Blocks/Tabs', parameters: { cssprops, liveExamples: [LIVE.acrobat, LIVE.acrobatPlans, LIVE.pdfEssentials] }, argTypes: { variants } };
 
 // The tabs and their panels, which are the sections after them. Each panel of the first tabs
 // holds a second tabs block and its panels.

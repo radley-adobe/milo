@@ -6,6 +6,7 @@ import { format } from 'prettier/standalone';
 import htmlPlugin from 'prettier/plugins/html';
 import { values as tokenValues } from 'virtual:design-tokens';
 import { setStory, shownVariants, waitForMilo } from '../src/milo.js';
+import DocsPage from './docs-page.jsx';
 
 // The HTML addon reads the story's markup right after Storybook renders it, before Milo
 // decorates it. Sends the decorated markup to its panel, formatted the same way the addon does.
@@ -75,11 +76,12 @@ function syncVariants({ id, args }) {
 // Storybook's preview page sets `<base target="_parent">`, so a link left to navigate would load
 // in the window that holds the story: Storybook's manager, or the Docs page. Listens on the
 // document, where it runs after Milo's own click handlers and sees modals, which Milo opens
-// outside the story's root.
+// outside the story's root. Docs pages render in this window too, and their Live Examples links
+// open in a new tab.
 const samePageHash = (a) => a.hash && a.href.split('#')[0] === window.location.href.split('#')[0];
 document.addEventListener('click', (e) => {
   const el = e.target.closest('a, button');
-  if (!el) return;
+  if (!el || (el.target === '_blank' && el.closest('.sbdocs'))) return;
   action('click')({
     element: el.nodeName.toLowerCase(),
     text: el.textContent.trim(),
@@ -228,8 +230,9 @@ export default {
     // Each story on a Docs page gets its own iframe, so Milo's page styles don't apply to the
     // Docs page itself. `iframeHeight` is the iframe's least height; fitDocsFrame() grows it to
     // fit the story. The table of contents lists a page's h3 headings. Docs pages are light or
-    // dark as the browser prefers, like the rest of Storybook.
-    docs: { theme: themes.normal, story: { inline: false, iframeHeight: '600px' }, toc: true },
+    // dark as the browser prefers, like the rest of Storybook. Each block's Docs page shows its
+    // Live Examples after its description.
+    docs: { theme: themes.normal, page: DocsPage, story: { inline: false, iframeHeight: '600px' }, toc: true },
     // The CSS Custom Properties tab lists the tokens each block reads, and the Design Tokens Docs
     // pages list every token, so the Design Tokens tab is hidden.
     designToken: { disable: true },

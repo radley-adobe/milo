@@ -1,8 +1,8 @@
-import { ACROBAT, renderPageBlock } from '../../src/milo.js';
+import { ACROBAT, LIVE, renderPageBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/social-proof';
 import variants from 'virtual:variants/c2/social-proof';
 
-export default { title: 'Blocks/Social Proof', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Blocks/Social Proof', parameters: { cssprops, liveExamples: [LIVE.acrobat, LIVE.acrobatStudio] }, argTypes: { variants } };
 
 export const Acrobat = {
   name: 'adobe.com: Acrobat',
