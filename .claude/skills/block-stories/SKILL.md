@@ -98,10 +98,11 @@ so the sidebar shows it as one entry. Ask for the name: Base Card's are Base Car
 Card (Featured), Explore Card's are Product Grid and the Bento sections.
 `stories/c2/sections/base-card-3-up.stories.js` is the reference. Each renders a live section:
 `renderPageSections(page, name, { index })` for blocks that the section lays out together, or
-`renderPageBlock(page, name, { metadata: true })` for one block with its section's metadata. Add
-`count` and `masonry` to `renderPageBlock` to show one row of a section that lays its blocks out
-in several rows. Tag
-the file `!autodocs` and set `parameters: { cssprops, controls: { disable: true } }`: it renders
+`renderPageBlock(page, name, { metadata: true })` for one block with its section's metadata. A
+section story is an example of how the section works, not a copy of a page: when the published
+section's background or content doesn't suit both themes, give `renderPageBlock` a `count` and a
+`metadata` object, such as `{ layout: 'bento', masonry: 'span 6, span 6' }`, and pick blocks that
+read well on a light and a dark background, as the Bento sections do. Tag the file `!autodocs` and set `parameters: { cssprops, controls: { disable: true } }`: it renders
 published content, and the Variants control would change only the first block.
 
 **Remove** stories that render a whole page or fragment without showing anything the other

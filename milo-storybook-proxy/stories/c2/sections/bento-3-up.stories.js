@@ -1,18 +1,22 @@
-import { ACROBAT_TEST_FRAGMENTS, renderPageBlock } from '../../../src/milo.js';
+import { CC_PRO_TEST_FRAGMENTS, renderPageBlock } from '../../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/explore-card';
 
-// Renders cards from a live fragment, so it has no controls or Docs page.
+// An example section built from a live fragment's cards, so it has no controls or Docs page.
 export default {
   title: 'Sections/Bento (3 Up)',
   tags: ['!autodocs'],
   parameters: { cssprops, controls: { disable: true } },
 };
 
-// The three explore cards that sit side by side in the Acrobat product test's bento section,
-// alone in that section, whose layout is bento. Below 768px each card takes the full width.
+// Three dark explore cards from the Creative Cloud Pro offer, side by side from 768px, in a
+// bento section with no background color, so the section follows the Theme menu. Below 768px
+// each card takes the full width.
 export const Bento3Up = {
   name: 'Bento (3 Up)',
-  render: () => renderPageBlock(`${ACROBAT_TEST_FRAGMENTS}/ace1205-product`, 'explore-card', {
-    index: 2, count: 3, metadata: true, masonry: 'span 4, span 4, span 4', foundation: 'c2',
+  render: () => renderPageBlock(`${CC_PRO_TEST_FRAGMENTS}/cpro-offer`, 'explore-card', {
+    index: 3,
+    count: 3,
+    metadata: { style: 'container, fixed', layout: 'bento', masonry: 'span 4, span 4, span 4' },
+    foundation: 'c2',
   }),
 };
