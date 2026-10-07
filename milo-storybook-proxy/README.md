@@ -53,6 +53,8 @@ Milo builds a page's global navigation and footer from the content its `gnav-sou
 
 A link to a fragment with a hash, such as `/federal/footer/fragments/regions#langnav`, opens the fragment in a modal. Milo keeps only the link's path and loads it from the current site, apart from paths under `/federal/`, which load from Federal. So a modal in a story shows a Federal fragment or one that Storybook serves from `fragments/`. The Modal story opens `fragments/modal`, a Tour block with placeholder content, with a link whose path is `new URL('fragments/modal', window.location.href).pathname`, which works under the published site's subpath. A fragment's `./media_` images load from `fragments/`.
 
+Authored stories show images and icons from `media/`, which Storybook serves next to `iframe.html`: icons in `media/icons/`, and each block's or section's images in a folder named after it, such as `media/base-card/` or `media/bento/`. `MEDIA` in `src/milo.js` is the folder's full URL, because Milo turns an icon link into an image only when the link's text is a URL. The files are copies of images on adobe.com pages, saved as WebP at the size the pages serve, so authored stories don't depend on pages that change or go away. Stories that render a live page load its images from its site.
+
 Most C2 blocks have no library page. Their stories use pages from the adobe.com redesign:
 
 - `HOMEPAGE` is the redesigned homepage, and `HOMEPAGE_FRAGMENTS` is the folder of fragments it is built from

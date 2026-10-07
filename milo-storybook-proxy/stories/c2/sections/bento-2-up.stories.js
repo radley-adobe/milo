@@ -1,4 +1,4 @@
-import { ACROBAT, CC_PRO_TEST_FRAGMENTS } from '../../../src/milo.js';
+import { MEDIA } from '../../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/explore-card';
 import { bentoStory } from './bento.js';
 
@@ -16,12 +16,12 @@ export const Bento2Up = {
   ...bentoStory([{
     heading: 'Partner with AI to understand your PDFs better.',
     body: 'Use an AI Assistant to analyze your documents, giving you reliable answers and summaries with verifiable citations, all within Acrobat.',
-    light: { src: `${ACROBAT}/media_1ea05225076304f2337a1a9e5fa7088661ddbbb4a.png`, color: '#f6f6f6' },
-    dark: { src: `${CC_PRO_TEST_FRAGMENTS}/media_16b14f19c4155e82a47519d75eb6fda4a6414ac0f.jpg` },
+    light: { src: `${MEDIA}/bento/acrobat-ai-assistant.webp`, color: '#f6f6f6' },
+    dark: { src: `${MEDIA}/bento/indesign-layouts.webp` },
   }, {
     heading: 'Rely on trusted technology.',
     body: 'Work with confidence in the trusted and secure Acrobat platform, with its responsible AI practices and accountability.',
-    light: { src: `${ACROBAT}/media_1d0a484dbdd56eaea38ae5ce93a0845ee61d1486e.png`, color: '#f6f6f6' },
-    dark: { src: `${CC_PRO_TEST_FRAGMENTS}/media_1700c7de83af64b4072f3288bb62c7c2851bb2f3e.png` },
+    light: { src: `${MEDIA}/bento/acrobat-trusted-technology.webp`, color: '#f6f6f6' },
+    dark: { src: `${MEDIA}/bento/express-brand-assets.webp` },
   }], { masonry: 'span 6, span 6' }),
 };

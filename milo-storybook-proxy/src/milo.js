@@ -1,6 +1,11 @@
 // Resolves next to iframe.html, so it works on localhost and under a hosted subpath.
 export const LIBS = new URL('libs', window.location.href).pathname;
 
+// The images and icons that authored stories show, from media/ in this folder. A full URL,
+// because Milo turns an icon link into an image only when the link's text is a URL. Resolves
+// next to iframe.html, like LIBS.
+export const MEDIA = new URL('media', window.location.href).href;
+
 // Milo's block library: one example page per block, the source authors copy blocks from.
 export const LIBRARY = 'https://main--milo--adobecom.aem.page/docs/library/blocks';
 

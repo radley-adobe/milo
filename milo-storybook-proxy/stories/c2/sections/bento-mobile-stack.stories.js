@@ -1,4 +1,4 @@
-import { ACROBAT, CC_PRO_TEST_FRAGMENTS } from '../../../src/milo.js';
+import { MEDIA } from '../../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/explore-card';
 import { bentoStory } from './bento.js';
 
@@ -18,17 +18,17 @@ export const BentoMobileStack = {
   ...bentoStory([{
     heading: 'Get to a shared understanding.',
     body: 'Create a PDF Space for your team or clients, where everyone can analyze docs on their own, share insights, and iterate together.',
-    light: { src: `${ACROBAT}/media_16634711a835523086f054067bfe05a0e49a02ce6.png`, color: '#f6f6f6' },
-    dark: { src: `${CC_PRO_TEST_FRAGMENTS}/media_18a2ceeffbafb54b3480cbfd63fa705a30beb3e7e.png` },
+    light: { src: `${MEDIA}/bento/acrobat-shared-understanding.webp`, color: '#f6f6f6' },
+    dark: { src: `${MEDIA}/bento/firefly-boards-shoot.webp` },
   }, {
     heading: 'Use an AI that gets it.',
     body: 'Work more effectively with AI that understands your business and has been personalized to your priorities.',
-    light: { src: `${ACROBAT}/media_184dc44ceb6c96fc3723c5d1af605f4b6b6a94c11.png`, color: '#f6f6f6' },
-    dark: { src: `${CC_PRO_TEST_FRAGMENTS}/media_1469200f49f03204438b17807ef9af4538ba56af9.png` },
+    light: { src: `${MEDIA}/bento/acrobat-personalized-ai.webp`, color: '#f6f6f6' },
+    dark: { src: `${MEDIA}/bento/lightroom-edit.webp` },
   }, {
     heading: 'Analyze documents in a single workspace.',
     body: 'Pull multiple documents into a PDF Space, then turn them into audio experiences, interactive visuals, polished presentations, and more.',
-    light: { src: `${ACROBAT}/media_1747f3a8b09a282397e15122e6c8708a8db7fd65c.png` },
-    dark: { src: `${CC_PRO_TEST_FRAGMENTS}/media_1ddc7d2c700f488e21230419e9d223b37eb6fd73b.jpg` },
+    light: { src: `${MEDIA}/bento/acrobat-pdf-space-workspace.webp` },
+    dark: { src: `${MEDIA}/bento/photoshop-remix.webp` },
   }], { masonry: 'span 6, span 6\nfull width', layout: 'bento, stack-mobile' }),
 };

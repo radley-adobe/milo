@@ -6,7 +6,7 @@ import { renderBlock } from '../../../src/milo.js';
 // body stay the same in both themes and take the theme's text colors.
 function card({ heading, body, light, dark }, theme) {
   const { src, color } = theme === 'dark' ? dark : light;
-  const picture = `<picture><img src="${src}?width=2000&amp;format=webply&amp;optimize=medium" alt=""></picture>`;
+  const picture = `<picture><img src="${src}" alt=""></picture>`;
   const text = `<div><h3>${heading}</h3><p>${body}</p></div>`;
   const rows = color
     ? `<div>${text}<div>${color}</div></div><div><div>${picture}</div></div>`

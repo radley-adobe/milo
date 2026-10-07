@@ -1,4 +1,4 @@
-import { ACROBAT, CC_PRO_TEST_FRAGMENTS } from '../../../src/milo.js';
+import { MEDIA } from '../../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/explore-card';
 import { bentoStory } from './bento.js';
 
@@ -16,7 +16,7 @@ export const BentoFeatured = {
   ...bentoStory([{
     heading: 'Analyze documents in a single workspace.',
     body: 'Pull multiple documents into a PDF Space, then turn them into audio experiences, interactive visuals, polished presentations, and more.',
-    light: { src: `${ACROBAT}/media_1747f3a8b09a282397e15122e6c8708a8db7fd65c.png` },
-    dark: { src: `${CC_PRO_TEST_FRAGMENTS}/media_11165b31fa22b7a1326324cad08d01647f0dc626f.png` },
+    light: { src: `${MEDIA}/bento/acrobat-pdf-space-workspace.webp` },
+    dark: { src: `${MEDIA}/bento/photoshop-comps.webp` },
   }], { masonry: 'full width' }),
 };

@@ -88,7 +88,9 @@ so Show code gives the markup. `cardStory(style)` in the reference does both.
   `libs/c2/styles/styles.css`.
 - Take the args from the page the story rendered before, usually the library page. When that
   page's image is a small thumbnail, use a larger image of the same content from an adobe.com
-  page, such as the homepage fragments in `src/milo.js`, and say so in a comment.
+  page, such as the homepage fragments in `src/milo.js`, and say so in a comment. Save each
+  image the args use in `milo-storybook-proxy/media/<block>/` and each icon in `media/icons/`,
+  and point the args at them through `MEDIA`, as the README describes.
 - Put the plain block first, as Default with `variants: []`. Then one story per variant, with its
   class in `variants`, such as Featured with `variants: ['featured']`.
 
