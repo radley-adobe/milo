@@ -1,8 +1,8 @@
-import { ACROBAT_TEST_FRAGMENTS, CC_PRO_TEST_FRAGMENTS, renderPageBlock } from '../../src/milo.js';
+import { ACROBAT_TEST_FRAGMENTS, CC_PRO_TEST_FRAGMENTS, LIVE, renderPageBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/tour';
 import variants from 'virtual:variants/c2/tour';
 
-export default { title: 'Blocks/Tour', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Blocks/Tour', parameters: { cssprops, liveExamples: [LIVE.pdfEssentials] }, argTypes: { variants } };
 
 export const AcrobatLegal = {
   name: 'adobe.com: Acrobat legal',

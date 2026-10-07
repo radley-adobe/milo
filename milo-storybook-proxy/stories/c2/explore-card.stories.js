@@ -1,4 +1,4 @@
-import { MEDIA, renderBlock } from '../../src/milo.js';
+import { LIVE, MEDIA, renderBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/explore-card';
 import variants from 'virtual:variants/c2/explore-card';
 
@@ -51,7 +51,7 @@ const cardStory = (style) => ({
 
 export default {
   title: 'Blocks/Explore Card',
-  parameters: { cssprops, docs: { description: { component: description } } },
+  parameters: { cssprops, liveExamples: [LIVE.home, LIVE.acrobat, LIVE.acrobatStudio], docs: { description: { component: description } } },
   argTypes: {
     variants,
     icon: { control: 'text', description: 'URL of the SVG icon' },
