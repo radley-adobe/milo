@@ -96,7 +96,7 @@ so Show code gives the markup. `cardStory(style)` in the reference does both.
 its own file in `stories/c2/sections/`, titled `Sections/<name>`, with one story of the same name
 so the sidebar shows it as one entry. Ask for the name: Base Card's are Base Card (3 up) and Base
 Card (Featured), Explore Card's are Product Grid and the Bento sections.
-`stories/c2/sections/base-card-3-up.stories.js` is the reference. Each renders a live section:
+`stories/c2/sections/base-card-3-up.stories.js` is the reference. Most render a live section:
 `renderPageSections(page, name, { index })` for blocks that the section lays out together, or
 `renderPageBlock(page, name, { metadata: true })` for one block with its section's metadata. A
 section story is an example of how the section works, not a copy of a page. When the published
@@ -120,6 +120,8 @@ modal opens over the story.
 - Open each story at `/iframe.html?viewMode=story&id=<id>`. Its `main` has
   `data-milo-status="loaded"`, the block has the expected classes, and a single-block story fits a
   1280 × 720 window.
+- Open each section story again with `&globals=theme:dark`. Its text reads on its background and
+  images in both themes.
 - On the Docs page (`/iframe.html?viewMode=docs&id=blocks-<block>--docs`): the description shows, the
   Controls table belongs to the first story, editing a control there updates that story, each
   frame fits its story, and Show code gives the authored markup.
