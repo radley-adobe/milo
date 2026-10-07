@@ -5,7 +5,7 @@ const VARIANTS = ['outline', 'blue', 'fill', 'transparent'];
 const SIZES = ['default', 'button-xs'];
 
 export default {
-  title: 'Button',
+  title: 'Components/Button',
   parameters: {
     docs: {
       description: {

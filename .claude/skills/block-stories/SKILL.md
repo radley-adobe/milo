@@ -92,10 +92,14 @@ so Show code gives the markup. `cardStory(style)` in the reference does both.
 - Put the plain block first, as Default with `variants: []`. Then one story per variant, with its
   class in `variants`, such as Featured with `variants: ['featured']`.
 
-**Section stories.** Name them `Section: <name>`, after the single-block stories, plain before
-variants. Each renders a live section: `renderPageSections(page, name, { index })` for blocks that
-the section lays out together, or `renderPageBlock(page, name, { metadata: true })` for one block
-with its section's metadata. Set `parameters: { controls: { disable: true } }`: they render
+**Section stories.** These go in the sidebar's Sections group, not the block's file. Give each
+its own file in `stories/c2/sections/`, titled `Sections/<name>`, with one story of the same name
+so the sidebar shows it as one entry. Ask for the name: Base Card's are Base Card (3 up) and Base
+Card (Featured), Explore Card's is Product Grid. `stories/c2/sections/base-card-3-up.stories.js`
+is the reference. Each renders a live section:
+`renderPageSections(page, name, { index })` for blocks that the section lays out together, or
+`renderPageBlock(page, name, { metadata: true })` for one block with its section's metadata. Tag
+the file `!autodocs` and set `parameters: { cssprops, controls: { disable: true } }`: it renders
 published content, and the Variants control would change only the first block.
 
 **Remove** stories that render a whole page or fragment without showing anything the other
@@ -113,7 +117,7 @@ modal opens over the story.
 - Open each story at `/iframe.html?viewMode=story&id=<id>`. Its `main` has
   `data-milo-status="loaded"`, the block has the expected classes, and a single-block story fits a
   1280 × 720 window.
-- On the Docs page (`/iframe.html?viewMode=docs&id=<block>--docs`): the description shows, the
+- On the Docs page (`/iframe.html?viewMode=docs&id=blocks-<block>--docs`): the description shows, the
   Controls table belongs to the first story, editing a control there updates that story, each
   frame fits its story, and Show code gives the authored markup.
 - Run `npm run build`, then `npm run check`, which renders every story in the stage and main

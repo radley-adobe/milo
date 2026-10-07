@@ -21,12 +21,21 @@ A story names a live page and a block on it. `renderPageBlock()` fetches the pag
 ```js
 import { LIBRARY, renderPageBlock } from '../../src/milo.js';
 
-export default { title: 'Base Card' };
+export default { title: 'Blocks/Base Card' };
 
 export const Default = {
   render: () => renderPageBlock(`${LIBRARY}/c2/base-card`, 'base-card', { index: 1, foundation: 'c2' }),
 };
 ```
+
+The first part of a title is the story's group in the sidebar:
+
+- Blocks: one C2 block, titled with the block's name
+- Sections: a block's whole section from a live page, such as Base Card (3 up) or Product Grid. Each has its own file in `stories/c2/sections/` with one story of the same name, so the sidebar shows it as one entry, and no Docs page.
+- Components: Button, from global classes, and Modal
+- Navigation: Global Navigation, Global Footer and Region Nav
+
+`storySort` in `.storybook/preview.js` lists the groups after Foundations and Design Tokens.
 
 `LIBRARY` is Milo's block library, which has one example page per block. https://milo.adobe.com/docs/library/library.json lists the pages for C2 blocks under `c2-blocks`. Library stories have one story per example on the page, named by the heading above it.
 
@@ -34,7 +43,7 @@ Some library examples hold several blocks or span several sections. `renderLibra
 
 `renderPage(url)` renders every section of a page or fragment. Use it when a block depends on the sections around it, such as a C2 carousel whose slides are the sections that follow it.
 
-`renderPageSections(page, name, { index, count })` renders the section holding the block at `index` and the `count - 1` sections after it. C2 tabs use it, because their panels are the sections after them, and Base Card's Section: 3 up story, because the section's `three-up` style lays its cards out in a grid. It leaves out the `library-metadata` block that tags examples on library pages.
+`renderPageSections(page, name, { index, count })` renders the section holding the block at `index` and the `count - 1` sections after it. C2 tabs use it, because their panels are the sections after them, and the Base Card (3 up) section, because the section's `three-up` style lays its cards out in a grid. It leaves out the `library-metadata` block that tags examples on library pages.
 
 C2 sections often set a dark style or a background in their section metadata, and the block's colors depend on it. Pass `{ metadata: true }` to `renderPageBlock()` to keep the block's section metadata.
 
@@ -68,12 +77,12 @@ To fill the CSS Custom Properties and Controls tabs, import the block's variable
 import cssprops from 'virtual:cssprops/c2/base-card';
 import variants from 'virtual:variants/c2/base-card';
 
-export default { title: 'Base Card', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Blocks/Base Card', parameters: { cssprops }, argTypes: { variants } };
 ```
 
 Storybook merges a file's parameters and argTypes into each of its stories, so in a file whose stories render different blocks, set `cssprops` and `variants` on each story instead.
 
-To give a block's stories controls for its content, write the block's authored markup from the story's args and render it with `renderBlock()`. Give each arg a `control` and a `description`, and set its values in `args`, taken from a live page. Milo's test mocks in `test/blocks/<name>/mocks/` show the markup. A `docs.source.transform` that returns the same markup makes Show code give it. A block's Docs page shows the Controls table of its file's first story. Base Card's Featured and Default stories work this way. The `/block-stories` Claude Code skill (`.claude/skills/block-stories/` at the repo root) upgrades one block's stories to Base Card's pattern and stops for review. Set `parameters.docs.description.component` on the file's default export to put a Markdown description at the top of its Docs page.
+To give a block's stories controls for its content, write the block's authored markup from the story's args and render it with `renderBlock()`. Give each arg a `control` and a `description`, and set its values in `args`, taken from a live page. Milo's test mocks in `test/blocks/<name>/mocks/` show the markup. A `docs.source.transform` that returns the same markup makes Show code give it. A block's Docs page shows the Controls table of its file's first story. Base Card's stories work this way. The `/block-stories` Claude Code skill (`.claude/skills/block-stories/` at the repo root) upgrades one block's stories to Base Card's pattern and stops for review. Set `parameters.docs.description.component` on the file's default export to put a Markdown description at the top of its Docs page.
 
 A play function runs after Storybook renders the story, before Milo has decorated it. Start it with `await waitForMilo(context)` from `src/milo.js`.
 
@@ -121,7 +130,7 @@ Milo's code and its library pages change independently of this folder. `npm run 
 
 - C2 library blocks in https://milo.adobe.com/docs/library/library.json with no story, apart from the blocks listed in Known limits
 - C2 blocks in `libs/c2/blocks/` with no `stories/c2/<block>.stories.js`, apart from the blocks listed in Known limits
-- Story files for blocks the library no longer lists. A C2 story file stays while its block's folder is in `libs/c2/blocks/`. Story files in `stories/c2/styles/` show global styles, not blocks, so this skips them.
+- Story files for blocks the library no longer lists. A C2 story file stays while its block's folder is in `libs/c2/blocks/`. Story files in `stories/c2/styles/` and `stories/c2/sections/` show global styles and sections, not one block, so this skips them.
 - Library pages whose examples changed since `stories/library-examples.json` was written. `npm run check -- --update` rewrites that file once the stories match the pages again.
 - Stories that fail, for the `stage` and `main` builds separately: their `main` element doesn't reach `data-milo-status="loaded"` within 30 seconds, or their play function fails. Storybook reports a failed play function only on its event channel, so the check listens there. The check runs at 1280 × 720, where some mobile-only controls are hidden. C2 Tabs stories never finish loading in a headless browser, so the check skips them.
 

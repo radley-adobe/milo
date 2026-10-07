@@ -2,7 +2,7 @@ import { FEDERAL, renderGlobalFooter } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/global-footer';
 
 // No Variants control: the class the block's CSS lists is one Milo sets itself.
-export default { title: 'Global Footer', parameters: { cssprops } };
+export default { title: 'Navigation/Global Footer', parameters: { cssprops } };
 
 export const Homepage = {
   name: 'adobe.com: Homepage',

@@ -2,7 +2,7 @@ import { renderBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/comparison-table-c2';
 import variants from 'virtual:variants/c2/comparison-table-c2';
 
-export default { title: 'Comparison Table C2', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Blocks/Comparison Table C2', parameters: { cssprops }, argTypes: { variants } };
 
 // No published page uses this block yet. The markup is Milo's test mock,
 // test/blocks/comparison-table-c2/mocks/default.html.

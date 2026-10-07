@@ -29,10 +29,15 @@ const NO_C2_STORY = ['card-metadata', 'email-collection-c2', 'firefly-globe', 'f
 
 // Stories that never finish rendering in a headless browser, so the check skips them. README ›
 // Known limits says why.
-const NO_RENDER = ['Tabs'];
+const NO_RENDER = ['Blocks/Tabs'];
 
-// The folder of stories for Milo's global styles, such as Button and the Foundations examples.
-const STYLE_STORIES = 'stories/c2/styles/';
+// Folders of stories that show something other than one block: Milo's global styles, such as
+// Button and the Foundations examples, and sections of blocks.
+const NOT_BLOCK_STORIES = ['stories/c2/styles/', 'stories/c2/sections/'];
+
+// A title without its sidebar group, such as Base Card for Blocks/Base Card. The library names
+// blocks this way.
+const blockName = (title) => title.split('/').pop();
 
 const TYPES = {
   '.html': 'text/html',
@@ -213,7 +218,7 @@ const library = await (await fetch(LIBRARY_JSON)).json();
 const libraryTitles = library['c2-blocks'].data
   .filter(({ name }) => !NO_STORY.includes(name))
   .map(({ name }) => name);
-const storyTitles = new Set(stories.map((s) => s.title));
+const storyTitles = new Set(stories.map((s) => blockName(s.title)));
 // C2 stories are named after their block's folder: stories/c2/<block>.stories.js.
 const c2Blocks = (await readdir(new URL('libs/c2/blocks/', DIST), { withFileTypes: true }))
   .filter((d) => d.isDirectory()).map((d) => d.name);
@@ -238,11 +243,11 @@ try {
     c2Blocks.filter((b) => !NO_C2_STORY.includes(b) && !storyFiles.some((f) => f.file === c2Story(b))),
   );
   // A C2 story for a block in libs/c2/blocks/ stays, whether or not the library lists the block.
-  // Stories in stories/c2/styles/ show Milo's global styles, not a block.
   found += report(
     'Stories for blocks the library no longer lists',
-    storyFiles.filter((f) => !libraryTitles.includes(f.title) && !c2Blocks.some((b) => f.file === c2Story(b))
-      && !f.file.startsWith(STYLE_STORIES))
+    storyFiles.filter((f) => !libraryTitles.includes(blockName(f.title))
+      && !c2Blocks.some((b) => f.file === c2Story(b))
+      && !NOT_BLOCK_STORIES.some((dir) => f.file.startsWith(dir)))
       .map((f) => `${f.title} (${f.file})`),
   );
 

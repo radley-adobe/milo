@@ -2,7 +2,7 @@ import { HOMEPAGE, HOMEPAGE_FRAGMENTS, renderPageBlock } from '../../src/milo.js
 import cssprops from 'virtual:cssprops/c2/rich-content';
 import variants from 'virtual:variants/c2/rich-content';
 
-export default { title: 'Rich Content', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Blocks/Rich Content', parameters: { cssprops }, argTypes: { variants } };
 
 export const HomepageHero = {
   name: 'adobe.com: Homepage hero',

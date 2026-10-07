@@ -2,7 +2,7 @@ import { ACROBAT, CC_PRO_TEST_FRAGMENTS, renderPageBlock } from '../../src/milo.
 import cssprops from 'virtual:cssprops/c2/hover-list';
 import variants from 'virtual:variants/c2/hover-list';
 
-export default { title: 'Hover List', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Blocks/Hover List', parameters: { cssprops }, argTypes: { variants } };
 
 export const Acrobat = {
   name: 'adobe.com: Acrobat',

@@ -2,7 +2,7 @@ import { ACROBAT, CC_PRO_TEST_FRAGMENTS, renderPageBlock } from '../../src/milo.
 import cssprops from 'virtual:cssprops/c2/faq';
 import variants from 'virtual:variants/c2/faq';
 
-export default { title: 'FAQ', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Blocks/FAQ', parameters: { cssprops }, argTypes: { variants } };
 
 export const Acrobat = {
   name: 'adobe.com: Acrobat',

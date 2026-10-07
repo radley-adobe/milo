@@ -2,7 +2,7 @@ import { ACROBAT_TEST_FRAGMENTS, CC_PRO_TEST_FRAGMENTS, renderPageBlock } from '
 import cssprops from 'virtual:cssprops/c2/tour';
 import variants from 'virtual:variants/c2/tour';
 
-export default { title: 'Tour', parameters: { cssprops }, argTypes: { variants } };
+export default { title: 'Blocks/Tour', parameters: { cssprops }, argTypes: { variants } };
 
 export const AcrobatLegal = {
   name: 'adobe.com: Acrobat legal',
