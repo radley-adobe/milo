@@ -1,17 +1,18 @@
-import { CC_PRO_TEST_FRAGMENTS, renderPageSections } from '../../../src/milo.js';
+import { ACROBAT, renderPageBlock } from '../../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/explore-card';
 
-// Renders the fragment as published, so it has no controls or Docs page.
+// Renders cards from a live page, so it has no controls or Docs page.
 export default {
   title: 'Sections/Bento (2 Up)',
   tags: ['!autodocs'],
   parameters: { cssprops, controls: { disable: true } },
 };
 
-// The Creative Cloud Pro hub's bento section: four explore cards with show-link, two to a row
-// from 768px. Its layout is bento and stack-mobile, so below 768px the cards stack as the page
-// scrolls.
+// The two explore cards that sit side by side in Acrobat Studio's first bento section, alone in
+// that section, whose layout is bento. Below 768px each card takes the full width.
 export const Bento2Up = {
   name: 'Bento (2 Up)',
-  render: () => renderPageSections(`${CC_PRO_TEST_FRAGMENTS}/cpro-hub`, 'explore-card', { foundation: 'c2' }),
+  render: () => renderPageBlock(`${ACROBAT}/acrobat-studio`, 'explore-card', {
+    count: 2, metadata: true, masonry: 'span 6, span 6', foundation: 'c2',
+  }),
 };

@@ -95,10 +95,12 @@ so Show code gives the markup. `cardStory(style)` in the reference does both.
 **Section stories.** These go in the sidebar's Sections group, not the block's file. Give each
 its own file in `stories/c2/sections/`, titled `Sections/<name>`, with one story of the same name
 so the sidebar shows it as one entry. Ask for the name: Base Card's are Base Card (3 up) and Base
-Card (Featured), Explore Card's is Product Grid. `stories/c2/sections/base-card-3-up.stories.js`
-is the reference. Each renders a live section:
+Card (Featured), Explore Card's are Product Grid and the Bento sections.
+`stories/c2/sections/base-card-3-up.stories.js` is the reference. Each renders a live section:
 `renderPageSections(page, name, { index })` for blocks that the section lays out together, or
-`renderPageBlock(page, name, { metadata: true })` for one block with its section's metadata. Tag
+`renderPageBlock(page, name, { metadata: true })` for one block with its section's metadata. Add
+`count` and `masonry` to `renderPageBlock` to show one row of a section that lays its blocks out
+in several rows. Tag
 the file `!autodocs` and set `parameters: { cssprops, controls: { disable: true } }`: it renders
 published content, and the Variants control would change only the first block.
 
