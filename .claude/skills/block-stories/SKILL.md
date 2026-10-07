@@ -99,11 +99,11 @@ Card (Featured), Explore Card's are Product Grid and the Bento sections.
 `stories/c2/sections/base-card-3-up.stories.js` is the reference. Each renders a live section:
 `renderPageSections(page, name, { index })` for blocks that the section lays out together, or
 `renderPageBlock(page, name, { metadata: true })` for one block with its section's metadata. A
-section story is an example of how the section works, not a copy of a page: when the published
-section's background or content doesn't suit both themes, give `renderPageBlock` a `count` and a
-`metadata` object, such as `{ layout: 'bento', masonry: 'span 6, span 6' }`, and pick blocks that
-read well on a light and a dark background, as the Bento sections do. Tag the file `!autodocs` and set `parameters: { cssprops, controls: { disable: true } }`: it renders
-published content, and the Variants control would change only the first block.
+section story is an example of how the section works, not a copy of a page. When the published
+section's background or images suit only one theme, author the section in the story instead, with
+no background color and an image for each theme, as `stories/c2/sections/bento.js` does for the
+Bento sections. Tag the file `!autodocs` and set `parameters: { cssprops, controls: { disable: true } }`: the
+Variants control would change only the first block.
 
 **Remove** stories that render a whole page or fragment without showing anything the other
 stories don't.

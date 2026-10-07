@@ -229,36 +229,14 @@ function render(getSections, foundation, { metadata = {}, load = (milo, main) =>
   return main;
 }
 
-// A section-metadata block with a row for each entry of `metadata`, such as
-// `{ layout: 'bento' }`. Masonry takes one line per row, such as `'span 6, span 6\nfull width'`.
-function sectionMetadataBlock(metadata) {
-  const block = document.createElement('div');
-  block.className = 'section-metadata';
-  Object.entries(metadata).forEach(([key, value]) => {
-    const cells = [key, value].map((text) => {
-      const cell = document.createElement('div');
-      cell.textContent = text;
-      return cell;
-    });
-    block.append(section(...cells));
-  });
-  return block;
-}
-
-// Renders the block at `index` among blocks named `name` on a live page, and the `count - 1`
-// blocks after it, in one section. With `metadata: true`, they keep the first block's section
-// metadata, such as a background the block's colors depend on. An object sets the section's
-// metadata instead, such as `{ layout: 'bento', masonry: 'span 6, span 6' }`, for an example
-// section built from a page's blocks.
-export function renderPageBlock(pageUrl, name, {
-  index = 0, count = 1, metadata = false, foundation = 'c1',
-} = {}) {
+// Renders the block at `index` among blocks named `name` on a live page. With `metadata`, the
+// block keeps its section's metadata, such as a background the block's colors depend on.
+export function renderPageBlock(pageUrl, name, { index = 0, metadata = false, foundation = 'c1' } = {}) {
   return render(async () => {
-    const blocks = [...(await fetchPage(pageUrl)).querySelectorAll(`div.${name}`)].slice(index, index + count);
-    if (!blocks.length) throw new Error(`No .${name} block at index ${index} on ${pageUrl}`);
-    const sectionMetadata = typeof metadata === 'object' ? sectionMetadataBlock(metadata)
-      : metadata && blocks[0].parentElement.querySelector(':scope > .section-metadata');
-    return [sectionMetadata ? section(...blocks, sectionMetadata) : section(...blocks)];
+    const block = (await fetchPage(pageUrl)).querySelectorAll(`div.${name}`)[index];
+    if (!block) throw new Error(`No .${name} block at index ${index} on ${pageUrl}`);
+    const sectionMetadata = metadata && block.parentElement.querySelector(':scope > .section-metadata');
+    return [sectionMetadata ? section(block, sectionMetadata) : section(block)];
   }, foundation);
 }
 

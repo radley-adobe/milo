@@ -31,7 +31,7 @@ export const Default = {
 The first part of a title is the story's group in the sidebar:
 
 - Blocks: one C2 block, titled with the block's name
-- Sections: a block's whole section from a live page, such as Base Card (3 up) or Product Grid, or an example section built from a live page's blocks, such as the Bento sections. Each has its own file in `stories/c2/sections/` with one story of the same name, so the sidebar shows it as one entry, and no Docs page.
+- Sections: a block's whole section from a live page, such as Base Card (3 up) or Product Grid, or an example section authored in the story, such as the Bento sections. Each has its own file in `stories/c2/sections/` with one story of the same name, so the sidebar shows it as one entry, and no Docs page.
 - Components: Button, from global classes, and Modal
 - Navigation: Global Navigation, Global Footer and Region Nav
 
@@ -47,7 +47,7 @@ Some library examples hold several blocks or span several sections. `renderLibra
 
 C2 sections often set a dark style or a background in their section metadata, and the block's colors depend on it. Pass `{ metadata: true }` to `renderPageBlock()` to keep the block's section metadata.
 
-`renderPageBlock(page, name, { index, count, metadata })` renders the block at `index` and the `count - 1` blocks after it in one section. `metadata` can also be an object, such as `{ layout: 'bento', masonry: 'span 6, span 6' }`, which sets the section's metadata in place of the page's. The Bento sections use it to build example sections from live explore cards, with no background color, so they follow the Theme menu.
+The Bento sections are examples of how a bento section works, not copies of a page. `bentoStory(cards, { masonry, layout })` in `stories/c2/sections/bento.js` renders authored explore cards in a section with no background color, so the section follows the Theme menu. Each card has one heading and body, and an image for each theme: a light Acrobat image in the light theme and a dark Creative Cloud image in the dark one. The text takes the theme's colors.
 
 Milo builds a page's global navigation and footer from the content its `gnav-source` and `footer-source` metadata name. `renderGlobalNavigation(source)` and `renderGlobalFooter(source)` set that metadata and build them before and after the story's empty `main` element, where they are on a page. Pass other page metadata the navigation reads as `{ metadata: { 'gnav-dark-font': 'true' } }`. Without `gnav-dark-font`, the redesigned navigation has light text for a dark page top, so those stories set Storybook's dark background with `globals: { backgrounds: { value: 'dark' } }`.
 
