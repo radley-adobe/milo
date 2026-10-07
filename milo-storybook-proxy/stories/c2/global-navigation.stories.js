@@ -30,3 +30,27 @@ export const Acrobat = {
     foundation: 'c2',
   }),
 };
+
+// The homepage navigation with a Brand Concierge Global block, which shows its prompts and input
+// in the navigation when the page's gnav-brand-concierge metadata is on. The block is authored in
+// the page, as on the Milo test page that added it.
+export const BrandConcierge = {
+  name: 'Brand Concierge',
+  globals: dark,
+  render: () => renderGlobalNavigation(`${FEDERAL}/site-redesign/gnav`, {
+    metadata: { 'gnav-brand-concierge': 'on' },
+    foundation: 'c2',
+    html: `
+      <div class="brand-concierge-global">
+        <div>
+          <div>Which apps can help me combine and retouch my photos?</div>
+          <div>How can I generate and edit videos for social?</div>
+          <div>How can I create and edit PDFs?</div>
+          <div>What are Adobe's solutions for businesses?</div>
+        </div>
+        <div>
+          <div>Ask a question</div>
+        </div>
+      </div>`,
+  }),
+};
