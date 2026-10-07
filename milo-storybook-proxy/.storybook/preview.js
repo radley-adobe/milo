@@ -230,8 +230,8 @@ export default {
     // Each story on a Docs page gets its own iframe, so Milo's page styles don't apply to the
     // Docs page itself. `iframeHeight` is the iframe's least height; fitDocsFrame() grows it to
     // fit the story. The table of contents lists a page's h3 headings. Docs pages are light or
-    // dark as the browser prefers, like the rest of Storybook. Each block's Docs page ends with
-    // its Live Examples.
+    // dark as the browser prefers, like the rest of Storybook. Each block's Docs page shows its
+    // Live Examples after its description.
     docs: { theme: themes.normal, page: DocsPage, story: { inline: false, iframeHeight: '600px' }, toc: true },
     // The CSS Custom Properties tab lists the tokens each block reads, and the Design Tokens Docs
     // pages list every token, so the Design Tokens tab is hidden.

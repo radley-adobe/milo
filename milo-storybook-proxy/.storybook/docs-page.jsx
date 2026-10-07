@@ -1,13 +1,18 @@
-import { DocsPage, Subheading, useOf } from '@storybook/addon-docs/blocks';
+import { Controls, Description, Primary, Stories, Subheading, Subtitle, Title, useOf } from '@storybook/addon-docs/blocks';
 
-// Storybook's Docs page, followed by Live Examples: links to the adobe.com pages in the file's
-// `liveExamples` parameter, each named by its breadcrumbs. The links open in a new tab.
+// Storybook's Docs page with Live Examples after the description: links to the adobe.com pages
+// in the file's `liveExamples` parameter, each named by its breadcrumbs. The links open in a new
+// tab.
 export default function Page() {
-  const { preparedMeta } = useOf('meta', ['meta']);
+  const { csfFile, preparedMeta } = useOf('meta', ['meta']);
+  const isSingleStory = Object.keys(csfFile.stories).length === 1;
   const links = preparedMeta.parameters.liveExamples ?? [];
   return (
     <>
-      <DocsPage />
+      <Title />
+      <Subtitle />
+      <Description of="meta" />
+      {isSingleStory && <Description of="story" />}
       {links.length > 0 && (
         <>
           <Subheading>Live Examples</Subheading>
@@ -18,6 +23,9 @@ export default function Page() {
           </ul>
         </>
       )}
+      <Primary />
+      <Controls />
+      {!isSingleStory && <Stories />}
     </>
   );
 }
