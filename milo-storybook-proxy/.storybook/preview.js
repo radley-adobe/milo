@@ -93,14 +93,17 @@ document.addEventListener('click', (e) => {
 
 // The manager shows Docs pages and stories in the same preview window. A Docs page's table of
 // contents leaves its click, scroll and hashchange listeners on the window, and they throw on a
-// link to a #, such as a Milo modal link, which fails the story's play function. A story that
-// renders after a Docs page loads the window again first. A modal that a story opened sits
-// outside the story's root, so it would stay over a Docs page that replaces the story. Milo
-// closes it when the hash changes.
+// link to a #, such as a Milo modal link, which fails the story's play function. A story leaves
+// Milo's styles in the window, and their heading styles apply to a Docs page's headings. So a
+// story that renders after a Docs page, and a Docs page that renders after a story, load the
+// window again first. The hash of a modal that a story opened is cleared before that, so the
+// modal doesn't open again.
 let docsShown = false;
+let storyShown = false;
 addons.getChannel().on(DOCS_PREPARED, () => {
   docsShown = true;
   if (window.location.hash) window.location.hash = '';
+  if (storyShown) window.location.reload();
 });
 
 // Events Milo blocks dispatch on window that a story can trigger.
@@ -254,6 +257,7 @@ export default {
   },
   beforeEach: (context) => {
     if (docsShown) window.location.reload();
+    storyShown = true;
     setStory(context);
     cssprops = context.parameters.cssprops ?? {};
     dropStaleCssprops(context.id);
