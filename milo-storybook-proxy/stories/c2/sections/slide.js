@@ -1,10 +1,8 @@
 import { MEDIA } from '../../../src/milo.js';
+import { attr } from '../authored.js';
 
 // The name that links the carousel to its slide sections.
 const NAME = 'customer-testimonials';
-
-// An arg as an attribute value.
-const attr = (value = '') => String(value).replaceAll('&', '&amp;').replaceAll('"', '&quot;');
 
 const picture = (src, alt) => `
       <div><picture><img src="${attr(src)}" alt="${attr(alt)}"></picture></div>`;

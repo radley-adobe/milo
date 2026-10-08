@@ -1,5 +1,5 @@
 import { expect, waitFor } from 'storybook/test';
-import { LIVE, renderSections, waitForMilo } from '../../src/milo.js';
+import { HOMEPAGE_FRAGMENTS, LIVE, renderPage, renderSections, waitForMilo } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/carousel-c2';
 import variants from 'virtual:variants/c2/carousel-c2';
 import { carousel, slide, TESTIMONIALS } from './sections/slide.js';
@@ -48,4 +48,11 @@ export const Default = {
   render: (args) => renderSections(authored(args), { foundation: 'c2' }),
   parameters: { docs: { source: { language: 'html', transform: (code, { args }) => authored(args) } } },
   args: { variants: [], label: 'Customer testimonials', slides: TESTIMONIALS },
+};
+
+// The homepage fragment, as published.
+export const HomepageCustomerTestimonials = {
+  name: 'adobe.com: Homepage customer testimonials',
+  render: () => renderPage(`${HOMEPAGE_FRAGMENTS}/customer-testimonials/customer-testimonials`, { foundation: 'c2' }),
+  parameters: { controls: { include: ['variants'] } },
 };

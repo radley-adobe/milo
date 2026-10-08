@@ -31,7 +31,7 @@ export const Default = {
 The first part of a title is the story's group in the sidebar:
 
 - Blocks: one C2 block, titled with the block's name
-- Sections: a block's whole section from a live page, such as Base Card (3 up) or Product Grid, or an example section authored in the story, such as the Bento sections. Each has its own file in `stories/c2/sections/` with one story of the same name, so the sidebar shows it as one entry, and no Docs page. Slide, a section that shows only in a Carousel C2 block, is the exception: it has controls for its content and a Docs page, as a block does.
+- Sections: a section and the blocks it lays out, such as Base Card (3 up), Product Grid and the Bento sections, and Slide, a section that shows only in a Carousel C2 block. Each has its own file in `stories/c2/sections/` and a Docs page, as a block does. Its Default story renders the section from its args, with controls for its blocks' content and its section metadata settings, and images from `media/`. A section with a published source also has a story that renders it as published, named after its source, such as `adobe.com: Homepage` or `Milo library`, with its controls disabled.
 - Components: Button, from global classes, and Modal
 - Navigation: Global Navigation, Global Footer and Region Nav
 
@@ -47,7 +47,7 @@ Some library examples hold several blocks or span several sections. `renderLibra
 
 C2 sections often set a dark style or a background in their section metadata, and the block's colors depend on it. Pass `{ metadata: true }` to `renderPageBlock()` to keep the block's section metadata.
 
-The Bento sections are examples of how a bento section works, not copies of a page. `bentoStory(cards, { masonry, layout })` in `stories/c2/sections/bento.js` renders authored explore cards in a section with no background color, so the section follows the Theme menu. Each card has one heading and body, and an image for each theme: a light Acrobat image in the light theme and a dark Creative Cloud image in the dark one. The text takes the theme's colors.
+The Bento sections are examples of how a bento section works, not copies of a page. `bentoStory` in `stories/c2/sections/bento.js` renders the explore cards in a story's `cards` arg in a section with its `style`, `layout` and `masonry` args, and no background color, so the section follows the Theme menu. Each card has one heading and body, and an image for each theme: a light Acrobat image in the light theme and a dark Creative Cloud image in the dark one. The text takes the theme's colors.
 
 Milo builds a page's global navigation and footer from the content its `gnav-source` and `footer-source` metadata name. `renderGlobalNavigation(source)` and `renderGlobalFooter(source)` set that metadata and build them before and after the story's empty `main` element, where they are on a page. Pass other page metadata the navigation reads as `{ metadata: { 'gnav-dark-font': 'true' } }`. Pass authored block markup for `main` as `{ html }` for a block that shows in the navigation, such as Brand Concierge Global, which moves its prompts and input into the navigation when `gnav-brand-concierge` is `on`. Without `gnav-dark-font`, the redesigned navigation has light text for a dark page top, so those stories set Storybook's dark background with `globals: { backgrounds: { value: 'dark' } }`.
 
@@ -73,7 +73,7 @@ Every story passes `{ foundation: 'c2' }`. This sets the `foundation` metadata s
 
 For a block with no usable live page, `renderBlock(html)` decorates inline authored markup instead: a `div` whose first class is the block name, one `div` per row and one `div` per cell. Milo's test mocks in `test/blocks/<name>/mocks/` show this markup for most blocks.
 
-`renderSections(html)` decorates inline authored markup of several sections, each a top-level `div`, for a block that reads the sections after it. Carousel C2's story authors the block's section and one section per slide, each with a `carousel` row in its section metadata. `carousel(args)` and `slide(args)` in `stories/c2/sections/slide.js` give that markup, and the Slide story shows one slide section from its args in a carousel with two other slides.
+`renderSections(html)` decorates inline authored markup of several sections, each a top-level `div`, for a block that reads the sections after it. Carousel C2's story authors the block's section and one section per slide, each with a `carousel` row in its section metadata. `carousel(args)` and `slide(args)` in `stories/c2/sections/slide.js` give that markup, and the Slide story shows one slide section from its args in a carousel with two other slides. Section stories use `renderSections()` too. `stories/c2/authored.js` gives the markup that block and section stories build from their args: base and explore cards, section metadata, and `section(...parts)`, which wraps markup in a section's `div`.
 
 `renderStyles(html)` renders markup as it is, with Milo's C2 styles and fonts, and decorates nothing. Stories of global classes, such as `heading-1` or `con-button`, use it. Milo hides a section until it decorates it, so each top-level `div` in the markup needs the `section` class. `html` can also be a function that returns the markup or a promise of it.
 

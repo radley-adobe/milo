@@ -3,7 +3,7 @@ import cssprops from 'virtual:cssprops/c2/carousel-c2';
 import { carousel, slide, TESTIMONIALS } from './slide.js';
 
 const description = `
-A section that shows as one slide of a [Carousel C2](?path=/docs/blocks-carousel-c2--docs) block, and only there. It's authored as a section with a Rich Content block, and section metadata with a \`background\` row for its image and a \`carousel\` row with the carousel's name.
+A single slide in a [Carousel C2](?path=/docs/blocks-carousel-c2--docs). A Slide is a section and shows only inside a carousel. It's authored as a section with a Rich Content block, and section metadata with a \`background\` row for its image and a \`carousel\` row with the carousel's name.
 
 - The carousel moves in every section on the page, or in its fragment, whose \`carousel\` row matches its name. It adds \`carousel-slide\` to the section and gives it the \`group\` role and the \`slide\` role description. The slide's styles apply only inside the carousel.
 - A slide is the width of the carousel less the grid margin on each side. It's 542px high below 768px and at least 542px high from 768px. From 1280px it keeps a 1600:890 ratio, up to 1920 × 890px.

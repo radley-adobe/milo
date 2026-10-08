@@ -1,6 +1,7 @@
 import { LIVE, MEDIA, renderBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/explore-card';
 import variants from 'virtual:variants/c2/explore-card';
+import { exploreCard, icon, sectionMetadata } from './authored.js';
 
 const description = `
 A card with an icon and text over an image that shows on hover. It's authored as one row with two cells: the text, then the image.
@@ -19,29 +20,9 @@ A card with an icon and text over an image that shows on hover. It's authored as
 - In a section whose layout is \`bento\`, section metadata restyles the cards: the image shows without hovering, with no gradient, and grows slightly on hover
 `;
 
-const icon = (name) => `${MEDIA}/icons/${name}.svg`;
-
-// An arg as an attribute value.
-const attr = (value = '') => String(value).replaceAll('&', '&amp;').replaceAll('"', '&quot;');
-
 // Authored markup for one card from a story's args, followed by section metadata when `style`
-// sets the section's style. The image cell stays when it's empty, because the block takes the
-// row's last cell as its image cell.
-const authored = ({ variants: classes = [], icon: iconUrl, showIcon, heading, body, ctaLabel, ctaHref, image, imageAlt }, style) => `
-<div class="${['explore-card', ...classes].join(' ')}">
-  <div>
-    <div>
-      ${showIcon && iconUrl ? `<p><a href="${attr(iconUrl)}">${iconUrl}</a></p>` : ''}
-      ${heading ? `<h3>${heading}</h3>` : ''}
-      ${body ? `<p>${body}</p>` : ''}
-      ${ctaLabel ? `<p><a href="${attr(ctaHref)}">${ctaLabel}</a></p>` : ''}
-    </div>
-    <div>${image ? `<picture><img src="${attr(image)}" alt="${attr(imageAlt)}"></picture>` : ''}</div>
-  </div>
-</div>
-${style ? `<div class="section-metadata">
-  <div><div>style</div><div>${style}</div></div>
-</div>` : ''}`.trim();
+// sets the section's style.
+const authored = (args, style) => [exploreCard(args), sectionMetadata({ style })].filter(Boolean).join('\n');
 
 // A story that renders one card from its args. Show code gives the authored markup.
 const cardStory = (style) => ({
