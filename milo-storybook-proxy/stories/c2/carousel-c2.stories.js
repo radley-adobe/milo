@@ -9,6 +9,9 @@ A horizontal carousel built with [Slides](?path=/docs/sections-slide--docs). It'
 
 - The block finds its Slide sections on the page, or in its fragment, and moves them into itself in page order. With fewer than two, it shows nothing.
 - The first slide shows in the middle, with parts of the slides before and after it at each side. The slides loop.
+- A slide is the width of the carousel less the grid margin on each side. It's 542px high below 768px and at least 542px high from 768px. From 1280px it keeps a 1600:890 ratio, up to 1920 × 890px.
+- A slide's section background fills the slide, with rounded corners and a gradient that darkens the start side. A background with two images shows the first below 768px and the second from 768px.
+- A slide's Rich Content text sits over the background, at the bottom of the slide below 768px and in the middle from 768px. Only the active slide shows its text.
 - From 768px, previous and next buttons sit at the sides, and a dot for each slide marks the active one. At any width, a drag of more than 100px moves the slides, and so do the left and right arrow keys when focus is in the carousel.
 - As the carousel scrolls into view, the slides move in from the sides and the buttons slide in. With reduced motion, nothing animates.
 - The block has the \`group\` role, the \`carousel\` role description and its label as its accessible name. A live region announces each new slide's number and text, and the hidden slides' links leave the tab order.
