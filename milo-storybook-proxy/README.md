@@ -31,7 +31,7 @@ export const Default = {
 The first part of a title is the story's group in the sidebar:
 
 - Blocks: one C2 block, titled with the block's name
-- Sections: a block's whole section from a live page, such as Base Card (3 up) or Product Grid, or an example section authored in the story, such as the Bento sections. Each has its own file in `stories/c2/sections/` with one story of the same name, so the sidebar shows it as one entry, and no Docs page.
+- Sections: a block's whole section from a live page, such as Base Card (3 up) or Product Grid, or an example section authored in the story, such as the Bento sections. Each has its own file in `stories/c2/sections/` with one story of the same name, so the sidebar shows it as one entry, and no Docs page. Slide, a section that shows only in a Carousel C2 block, is the exception: it has controls for its content and a Docs page, as a block does.
 - Components: Button, from global classes, and Modal
 - Navigation: Global Navigation, Global Footer and Region Nav
 
@@ -73,7 +73,7 @@ Every story passes `{ foundation: 'c2' }`. This sets the `foundation` metadata s
 
 For a block with no usable live page, `renderBlock(html)` decorates inline authored markup instead: a `div` whose first class is the block name, one `div` per row and one `div` per cell. Milo's test mocks in `test/blocks/<name>/mocks/` show this markup for most blocks.
 
-`renderSections(html)` decorates inline authored markup of several sections, each a top-level `div`, for a block that reads the sections after it. Carousel C2's story authors the block's section and one section per slide, each with a `carousel` row in its section metadata.
+`renderSections(html)` decorates inline authored markup of several sections, each a top-level `div`, for a block that reads the sections after it. Carousel C2's story authors the block's section and one section per slide, each with a `carousel` row in its section metadata. `carousel(args)` and `slide(args)` in `stories/c2/sections/slide.js` give that markup, and the Slide story shows one slide section from its args in a carousel with two other slides.
 
 `renderStyles(html)` renders markup as it is, with Milo's C2 styles and fonts, and decorates nothing. Stories of global classes, such as `heading-1` or `con-button`, use it. Milo hides a section until it decorates it, so each top-level `div` in the markup needs the `section` class. `html` can also be a function that returns the markup or a promise of it.
 
