@@ -5,7 +5,7 @@ import variants from 'virtual:variants/c2/carousel-c2';
 import { carousel, slide, TESTIMONIALS } from './sections/slide.js';
 
 const description = `
-A carousel built from [Slide](?path=/docs/sections-slide--docs) sections. It's authored as one row with two cells: the carousel's name, then its accessible label. A Slide section joins the carousel when its section metadata has a \`carousel\` row with that name.
+A horizontal carousel built with [Slides](?path=/docs/sections-slide--docs). It's authored as one row with two cells: the carousel's name, then its accessible label. A Slide section joins the carousel when its section metadata has a \`carousel\` row with that name.
 
 - The block finds its Slide sections on the page, or in its fragment, and moves them into itself in page order. With fewer than two, it shows nothing.
 - The first slide shows in the middle, with parts of the slides before and after it at each side. The slides loop.
