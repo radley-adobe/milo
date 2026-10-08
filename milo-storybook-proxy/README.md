@@ -41,7 +41,7 @@ The first part of a title is the story's group in the sidebar:
 
 Some library examples hold several blocks or span several sections. `renderLibraryExample(page, index)` renders the example at `index` as Milo's library lists it, using the library's own parser, with each section break as a new section.
 
-`renderPage(url)` renders every section of a page or fragment. Use it when a block depends on the sections around it, such as a C2 carousel whose slides are the sections that follow it.
+`renderPage(url)` renders every section of a page or fragment.
 
 `renderPageSections(page, name, { index, count })` renders the section holding the block at `index` and the `count - 1` sections after it. C2 tabs use it, because their panels are the sections after them, and the Base Card (3 up) section, because the section's `three-up` style lays its cards out in a grid. It leaves out the `library-metadata` block that tags examples on library pages.
 
@@ -72,6 +72,8 @@ Milo loads its fonts only for a whole page, so every render helper loads them wi
 Every story passes `{ foundation: 'c2' }`. This sets the `foundation` metadata so Milo loads the block and its styles from `libs/c2/`.
 
 For a block with no usable live page, `renderBlock(html)` decorates inline authored markup instead: a `div` whose first class is the block name, one `div` per row and one `div` per cell. Milo's test mocks in `test/blocks/<name>/mocks/` show this markup for most blocks.
+
+`renderSections(html)` decorates inline authored markup of several sections, each a top-level `div`, for a block that reads the sections after it. Carousel C2's story authors the block's section and one section per slide, each with a `carousel` row in its section metadata.
 
 `renderStyles(html)` renders markup as it is, with Milo's C2 styles and fonts, and decorates nothing. Stories of global classes, such as `heading-1` or `con-button`, use it. Milo hides a section until it decorates it, so each top-level `div` in the markup needs the `section` class. `html` can also be a function that returns the markup or a promise of it.
 
