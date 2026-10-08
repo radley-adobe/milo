@@ -5,9 +5,9 @@ import variants from 'virtual:variants/c2/carousel-c2';
 import { carousel, slide, TESTIMONIALS } from './sections/slide.js';
 
 const description = `
-A carousel whose slides are [Slide](?path=/docs/sections-slide--docs) sections. It's authored as one row with two cells: the carousel's name, then its accessible label. Each slide is a section after it whose section metadata has a \`carousel\` row with the same name.
+A carousel built from [Slide](?path=/docs/sections-slide--docs) sections. It's authored as one row with two cells: the carousel's name, then its accessible label. A Slide section joins the carousel when its section metadata has a \`carousel\` row with that name.
 
-- The block takes every section on the page, or in its fragment, whose \`carousel\` metadata matches its name, and moves them into itself in page order. With fewer than two, it shows nothing.
+- The block finds its Slide sections on the page, or in its fragment, and moves them into itself in page order. With fewer than two, it shows nothing.
 - The first slide shows in the middle, with parts of the slides before and after it at each side. The slides loop.
 - From 768px, previous and next buttons sit at the sides, and a dot for each slide marks the active one. At any width, a drag of more than 100px moves the slides, and so do the left and right arrow keys when focus is in the carousel.
 - As the carousel scrolls into view, the slides move in from the sides and the buttons slide in. With reduced motion, nothing animates.
