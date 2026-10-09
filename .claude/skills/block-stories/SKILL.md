@@ -4,8 +4,8 @@ description: >
   Upgrades the Storybook stories of one Milo C2 block in milo-storybook-proxy to the pattern Base
   Card uses: a Docs description taken from the block's code, stories that render the block from
   args with controls and Show code, blocks sized the way Milo lays them out, and Section stories
-  that render a live page. Compares the block with its S2A Design System counterpart. Works on one
-  block per run and stops for review.
+  with their own Docs page and controls. Compares the block with its S2A Design System
+  counterpart. Works on one block per run and stops for review.
 disable-model-invocation: true
 ---
 
@@ -31,10 +31,12 @@ The pattern fits a block that is one authored table of text, links and media, su
 a quote. It doesn't fit a block whose content comes from elsewhere:
 
 - Global Navigation and Global Footer, which Milo builds from page metadata
-- Tabs and the carousels, whose content is the sections after the block
 - Modal, which opens from a link
 
-For a block that doesn't fit, change nothing and say why.
+For a block that doesn't fit, say what doesn't fit and how its stories can still show the block's
+content and settings, then work on that. A block whose content is the sections after it, such as
+Tabs and the carousels, fits when its story authors those sections too, as Carousel C2's does with
+`renderSections()` and its Slide sections.
 
 ## 2. Read the block
 
@@ -66,7 +68,8 @@ examples or content. List the features you add and the ones that don't fit Milo.
 on what the block is and how it's authored, then bullets. State only facts from the block's code:
 what each cell holds, what each variant changes and from which width, viewport rows, what the
 block does to its section, and how its section lays out several of them. A bullet of one sentence
-has no period.
+has no period. Each Docs page holds everything its reader needs: repeat facts from related pages,
+such as a section's blocks, rather than sending the reader to them.
 
 **Template.** Write `authored(args, style)`, which returns the block's authored markup from a
 story's args, followed by a `section-metadata` block when `style` is set. Follow the structure the
@@ -95,20 +98,28 @@ so Show code gives the markup. `cardStory(style)` in the reference does both.
   class in `variants`, such as Featured with `variants: ['featured']`.
 
 **Section stories.** These go in the sidebar's Sections group, not the block's file. Give each
-its own file in `stories/c2/sections/`, titled `Sections/<name>`, with one story of the same name
-so the sidebar shows it as one entry. Ask for the name: Base Card's are Base Card (3 up) and Base
-Card (Featured), Explore Card's are Product Grid and the Bento sections.
-`stories/c2/sections/base-card-3-up.stories.js` is the reference. Most render a live section:
-`renderPageSections(page, name, { index })` for blocks that the section lays out together, or
-`renderPageBlock(page, name, { metadata: true })` for one block with its section's metadata. A
-section story is an example of how the section works, not a copy of a page. When the published
-section's background or images suit only one theme, author the section in the story instead, with
-no background color and an image for each theme, as `stories/c2/sections/bento.js` does for the
-Bento sections. Tag the file `!autodocs` and set `parameters: { cssprops, controls: { disable: true } }`: the
-Variants control would change only the first block.
+its own file in `stories/c2/sections/`, titled `Sections/<name>`. Ask for the name: Base Card's
+are Base Card (3 up) and Base Card (Featured), Explore Card's are Product Grid and the Bento
+sections, Carousel C2's is Slide. `stories/c2/sections/base-card-3-up.stories.js` is the
+reference. Like a block's file, each has a Docs description, `argTypes` with controls, and a
+Default story that renders the section from its args with `renderSections(authored(args), { foundation: 'c2' })`
+and gives the markup in Show code. Its args hold the content of the section's blocks, as a list
+such as `cards` when it holds several, and one arg per section metadata setting the section uses,
+such as `style`, `background`, `layout` or `masonry`. `stories/c2/authored.js` gives the markup
+of cards, section metadata and the section. The description says what each setting does to the
+section and its blocks. A section story is an example of how the section works, not a copy of a
+page: take its content from a live page and save its images in `media/`. When the published
+section's background or images suit only one theme, author it with no background color and an
+image for each theme, as `stories/c2/sections/bento.js` does for the Bento sections.
 
-**Remove** stories that render a whole page or fragment without showing anything the other
-stories don't.
+**Live stories.** Keep stories that render a live page or fragment, after the authored ones, and
+add one for a section that has a published source. They show the block or section as it's
+published. Name each after its source, such as `adobe.com: Homepage` or `Milo library`. Use
+`renderPageSections(page, name, { index })` for blocks that a section lays out together, or
+`renderPageBlock(page, name, { metadata: true })` for one block with its section's metadata. In a
+block's file, set `parameters: { controls: { include: ['variants'] } }` on them, and in a
+section's file, `parameters: { controls: { disable: true } }`, because the content controls don't
+apply to them.
 
 Story frames on Docs pages grow to fit their story, so don't set `iframeHeight` unless a menu or
 modal opens over the story.
@@ -124,7 +135,8 @@ modal opens over the story.
   1280 × 720 window.
 - Open each section story again with `&globals=theme:dark`. Its text reads on its background and
   images in both themes.
-- On the Docs page (`/iframe.html?viewMode=docs&id=blocks-<block>--docs`): the description shows, the
+- On each Docs page (`/iframe.html?viewMode=docs&id=blocks-<block>--docs`, and
+  `sections-<name>--docs` for a section): the description shows, the
   Controls table belongs to the first story, editing a control there updates that story, each
   frame fits its story, and Show code gives the authored markup.
 - Run `npm run build`, then `npm run check`, which renders every story in the stage and main

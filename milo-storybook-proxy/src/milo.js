@@ -353,6 +353,16 @@ export function renderBlock(html, { foundation = 'c1' } = {}) {
   }, foundation);
 }
 
+// Renders inline authored markup of several sections, each a top-level `div`, for a block that
+// reads the sections after it, such as a C2 carousel, whose slides are those sections.
+export function renderSections(html, { foundation = 'c1' } = {}) {
+  return render(() => {
+    const template = document.createElement('template');
+    template.innerHTML = html;
+    return [...template.content.children];
+  }, foundation);
+}
+
 // Renders markup as it is, with Milo's C2 styles and fonts, for stories of global classes such as
 // `heading-1` or `con-button`. `html` is the markup, or a function that returns it or a promise of
 // it. Milo hides a section until it decorates it, so each top-level `div` has the `section`

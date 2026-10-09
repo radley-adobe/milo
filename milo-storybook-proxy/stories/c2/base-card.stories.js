@@ -1,6 +1,7 @@
 import { LIVE, MEDIA, renderBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/base-card';
 import variants from 'virtual:variants/c2/base-card';
+import { baseCard, icon, sectionMetadata } from './authored.js';
 
 const description = `
 A card with an image above its text. It's authored as one row with two cells: the text, then the image.
@@ -15,28 +16,9 @@ A card with an image above its text. It's authored as one row with two cells: th
 - Milo has no block that holds base cards. Base cards in the same section form a grid when the section's style sets its columns, such as \`three-up\` for three columns from 768px. \`two-up\`, \`four-up\` and \`six-up\` work the same way.
 `;
 
-const icon = (name) => `${MEDIA}/icons/${name}.svg`;
-
-// An arg as an attribute value.
-const attr = (value = '') => String(value).replaceAll('&', '&amp;').replaceAll('"', '&quot;');
-
 // Authored markup for one card from a story's args, followed by section metadata when `style`
 // sets the section's style.
-const authored = ({ variants: classes = [], icon: iconUrl, showIcon, heading, body, ctaLabel, ctaHref, image, imageAlt }, style) => `
-<div class="${['base-card', ...classes].join(' ')}">
-  <div>
-    <div>
-      ${showIcon && iconUrl ? `<p><a href="${attr(iconUrl)}">${iconUrl}</a></p>` : ''}
-      ${heading ? `<h3>${heading}</h3>` : ''}
-      ${body ? `<p>${body}</p>` : ''}
-      ${ctaLabel ? `<p><a href="${attr(ctaHref)}">${ctaLabel}</a></p>` : ''}
-    </div>
-    ${image ? `<div><picture><img src="${attr(image)}" alt="${attr(imageAlt)}"></picture></div>` : ''}
-  </div>
-</div>
-${style ? `<div class="section-metadata">
-  <div><div>style</div><div>${style}</div></div>
-</div>` : ''}`.trim();
+const authored = (args, style) => [baseCard(args), sectionMetadata({ style })].filter(Boolean).join('\n');
 
 // A story that renders one card from its args. Show code gives the authored markup.
 const cardStory = (style) => ({
