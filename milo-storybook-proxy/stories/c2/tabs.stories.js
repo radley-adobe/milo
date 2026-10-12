@@ -9,7 +9,7 @@ A row of tabs that each show a [Tab Panel](?path=/docs/sections-tab-panel--docs)
 - Each panel holds the sections whose section metadata has a \`tab\` row naming its tab: the label, or, when the block has an \`id\`, the id and the tab's number, such as \`compare-plans, 2\`
 - With an \`id\`, \`?tab=<id>-<number>\` in the URL selects that tab
 - \`active tab\` sets the tab shown first: its number with an \`id\`, or its label without one
-- \`pretext\` is the tab list's accessible name. With \`radio\`, a paragraph above the list takes its place.
+- \`pretext\` is the tab list's accessible name
 - \`remember\` set to \`on\` keeps the selected tab across reloads in the same browser tab
 - By default, the selected tab is a pill that slides to the next tab selected
 - \`quiet\` shows the tabs as \`heading-4\` text, underlining the selected tab
