@@ -8,7 +8,9 @@ const value = (v) => {
 
 // A plan's column in the header row. Paragraphs holding only `-` split it into three parts: the
 // label and name, the price and its terms, and the link, authored in bold as a filled button.
-const plan = ({ label, title, price, priceNote, ctaLabel, ctaHref }) => `
+const plan = ({
+  label, title, price, priceNote, ctaLabel, ctaHref,
+}) => `
     <div>
       ${label ? `<p>${label}</p>` : ''}
       ${title ? `<h3>${title}</h3>` : ''}
