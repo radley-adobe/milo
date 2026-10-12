@@ -12,7 +12,7 @@ A list of items beside a stack of their images. It's authored as one row per ite
 - \`container\` gives the block side padding, except at its end from 768px
 - Below 768px, the media form a stack of cards above previous and next buttons, a dot for each item and the active item's text
 - Below 768px, dragging the front card or clicking the buttons moves between items, and the items loop. With reduced motion, the cards, the carousel and the text change without animating.
-- From 768px, clicking an item opens it, showing its body copy, links and media, and clicking the open item closes it
+- From 768px, clicking an item shows its media and opens it, and clicking the open item closes it
 - A video plays while its item is active and in view, and pauses otherwise
 - Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different items at each viewport. An empty cell keeps the content of the viewport below it.
 `;

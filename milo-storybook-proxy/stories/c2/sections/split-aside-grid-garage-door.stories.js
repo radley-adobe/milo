@@ -7,7 +7,7 @@ A [Split Aside Grid](?path=/docs/blocks-split-aside-grid--docs) below a Rich Con
 
 - The Rich Content block's \`dark\` gives it light text, \`container\` side padding and \`spacing-xs-bottom\` padding below, and \`narrow\` narrows its heading and body copy from 768px
 - A \`Tablet-viewport (center)\` row centers the Rich Content block's text from 768px, and its empty cell keeps the \`Mobile-viewport\` text
-- The grid's \`dark\` gives it light text, and its \`container\` side padding except at its end from 768px
+- \`dark\` gives the grid light text, and \`container\` gives it side padding except at its end from 768px
 - \`background\` sets the section's background color or image
 - \`parallax-double-garage-door\` moves the section down into place as it scrolls into view, and down again as it scrolls out. With reduced motion, nothing moves.
 - \`spacing-4xl-top\` adds padding above the section
