@@ -28,7 +28,7 @@ Two cards side by side: an overlay card, with its text over its image, and a sta
 - Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` each start a media row and a text row for one viewport: below 768px, from 768px and from 1280px. Without a \`Tablet-viewport\` row, the \`Mobile-viewport\` rows show below 1280px. An empty cell keeps the content of the viewport below it.
 - A viewport row can name classes in parentheses, such as \`Mobile-viewport (first-card-dark)\`, which the block takes at that viewport. \`reverse\`, \`equal\` and \`featured\` there change only the block's styles, not which cards are overlay or stacked.
 - One viewport row alone shows its rows at every width. A block with \`Tablet-viewport\` and \`Desktop-viewport\` rows and no \`Mobile-viewport\` row shows nothing.
-- \`parallax-stagger-ltr\` on the block moves the cards up into place as the block scrolls into view, from 768px: the first card from 24px below its place and the second from 72px. With reduced motion, or in browsers without CSS scroll-driven animations, nothing moves.
+- \`parallax-stagger-ltr\` on the block moves the cards up into place as the block scrolls into view, from 768px: the first card from 24px below its place and the second from 72px. With reduced motion, nothing moves.
 - The block adds nothing to its section. Several Side by Side blocks in a section stack one below another, and \`spacing-\` classes on a block add space above or below it.
 `;
 

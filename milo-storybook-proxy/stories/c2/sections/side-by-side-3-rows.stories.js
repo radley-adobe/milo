@@ -23,7 +23,7 @@ Three [Side by Side](?path=/docs/blocks-side-by-side--docs) blocks, one below an
 - A viewport row can name classes in parentheses, such as \`Mobile-viewport (first-card-dark)\`, which the block takes at that viewport. \`reverse\`, \`equal\` and \`featured\` there change only the block's styles, not which cards are overlay or stacked.
 - One viewport row alone shows its rows at every width. A block with \`Tablet-viewport\` and \`Desktop-viewport\` rows and no \`Mobile-viewport\` row shows nothing.
 - The blocks stack with no space between them. \`spacing-xs-top\` adds 24px above a block, 32px from 1280px. \`spacing-3xl-bottom\` adds 40px below it, 64px from 1024px and 128px from 1280px. \`spacing-2xs-bottom\` adds 8px below it, 24px from 1024px.
-- \`parallax-stagger-ltr\` on a block moves its cards up into place as the block scrolls into view, from 768px: the first card from 24px below its place and the second from 72px. With reduced motion, or in browsers without CSS scroll-driven animations, nothing moves.
+- \`parallax-stagger-ltr\` on a block moves its cards up into place as the block scrolls into view, from 768px: the first card from 24px below its place and the second from 72px. With reduced motion, nothing moves.
 - \`container, fixed\` gives the section 24px of side padding at every width, with its content up to 1920px wide
 - \`background\` sets the section's background color. Storybook shows a white background in the theme's default background color, so it follows the Theme menu.
 - Style values are separated by a comma and a space
