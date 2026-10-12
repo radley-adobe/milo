@@ -7,27 +7,23 @@ const description = `
 A row of tabs that each show a [Tab Panel](?path=/docs/sections-tab-panel--docs). It's authored as a first row with a list of the tab labels, then one row per setting, and each panel is a section whose section metadata names its tab.
 
 - Each setting's row holds its name and its value: \`id\`, \`active tab\`, \`pretext\` or \`remember\`
-- The block finds the sections on the page, or in its fragment, whose \`tab\` row names one of its tabs, and moves each into that tab's panel, in page order. Sections with the same \`tab\` row share a panel. A section whose \`tab\` row names no tab stays where it is.
-- Without an \`id\`, a section's \`tab\` row holds its tab's label. Labels match in lowercase, with spaces as hyphens and other punctuation removed.
-- With an \`id\`, a section's \`tab\` row holds the id and the tab's number, such as \`compare-plans, 2\`. A panel can hold another Tabs block with its own \`id\` and panels, as on the Acrobat plans page.
-- \`active tab\` is the tab that shows first: its number with an \`id\`, or its label without one. Otherwise the first tab shows.
-- \`pretext\` is the tab list's accessible name
-- \`remember\` set to \`on\` shows the tab last selected on the page again when the page reloads in the same browser tab. Without an \`id\`, this works only for a tab whose label has no spaces or hyphens.
-- With an \`id\`, \`?tab=<id>-<number>\` in the page's URL selects that tab, and \`?<id>=<value>\` selects the tab whose panel section has a \`deeplink\` row with that value
-- By default, the tabs are 32px high, at the start of a rounded track at least 300px wide and tinted black at 4% opacity, and the selected tab is a black pill that slides to the next tab selected. The block adds \`pill\` for this style.
-- \`quiet\` shows the tabs as text at \`heading-4\` size, 24px apart, with a blue line under the selected tab
-- \`radio\` shows a radio button for each tab, 16px apart, in a rounded light gray bar. A paragraph above the list shows at the start of the bar and names the group. Without one, \`pretext\` names it.
-- \`dark\` gives the block Milo's dark colors, for a black section: a dark gray track or bar, and a white selected pill or radio button
-- \`center\` centers the tab list and \`right\` aligns it to the right, both from 768px. With \`quiet\`, \`center\` centers it below 768px too.
-- Below 768px, the tab list sits in a strip as wide as the viewport, 24px in from each edge, and the block clips the strip at its own edges. With \`quiet\`, the strip is as wide as the block, and the list 24px in from each side.
-- A pill tab list scrolls sideways when its tabs don't fit. \`quiet\` and \`radio\` lists scroll only below 768px. Selecting or focusing a tab scrolls it into view.
-- The block has a white background, apart from \`quiet\`, \`radio\` and \`dark\` pills. \`background-transparent\` removes it.
-- A section with the \`tabs-background-transparent\` style removes the white background of the Tabs blocks in it, and the track of pills without \`dark\`
-- \`staggered-intro-merch-cards\` fades the merch cards in the shown panel in and moves them up into place when the page loads and when a tab is selected: the first eight 0.1s apart, and later ones with the first. With reduced motion, nothing moves.
-- The tab list has the \`tablist\` role, and each panel the \`tabpanel\` role, named by its tab. The left and right arrow keys move focus between the tabs, in reverse on a right-to-left page, and Enter or Space selects one. With \`radio\`, the list is a \`radiogroup\`, its panels have no role, and the arrow keys select the next or previous tab.
-- Selecting a tab sends a \`milo:tab:changed\` event, which the Actions tab logs
-- The block adds \`tablist-<id>-section\` to its section, where \`<id>\` is its \`id\`, or its number among the page's Tabs blocks
+- The block finds the sections on the page, or in its fragment, whose \`tab\` row names one of its tabs, and moves each into that tab's panel, in page order. Sections with the same \`tab\` row share a panel.
+- Without an \`id\`, a section's \`tab\` row holds its tab's label
+- With an \`id\`, a section's \`tab\` row holds the id and the tab's number, such as \`compare-plans, 2\`. A panel can hold another Tabs block with its own \`id\` and panels.
 - A panel section's \`tab-background\` row gives its tab that background color when a reader selects it. A \`link\` row makes the tab open that page instead.
+- \`active tab\` is the tab that shows first: its number with an \`id\`, or its label without one. Otherwise the first tab shows.
+- \`remember\` set to \`on\` shows the tab last selected on the page again when the page reloads in the same browser tab
+- With an \`id\`, \`?tab=<id>-<number>\` in the page's URL selects that tab, and \`?<id>=<value>\` selects the tab whose panel section has a \`deeplink\` row with that value
+- By default, the tabs sit at the start of a rounded track, and the selected tab is a pill that slides to the next tab selected. The block adds \`pill\` for this style.
+- \`quiet\` shows the tabs as text at \`heading-4\` size, with a line under the selected tab
+- \`radio\` shows a radio button for each tab, in a rounded bar. A paragraph above the list shows at the start of the bar.
+- \`dark\` gives the block Milo's dark colors, for a dark section
+- \`center\` centers the tab list and \`right\` aligns it to the right, both from 768px. With \`quiet\`, \`center\` centers it below 768px too.
+- A pill tab list scrolls sideways when its tabs don't fit. \`quiet\` and \`radio\` lists scroll only below 768px. Selecting or focusing a tab scrolls it into view.
+- The block has a background, apart from \`quiet\`, \`radio\` and \`dark\` pills. \`background-transparent\` removes it.
+- \`staggered-intro-merch-cards\` fades the merch cards in the shown panel in and moves them up into place when the page loads and when a tab is selected. With reduced motion, nothing moves.
+- The block adds \`tablist-<id>-section\` to its section, where \`<id>\` is its \`id\`, or its number among the page's Tabs blocks
+- A section with the \`tabs-background-transparent\` style removes the background of the Tabs blocks in it, and the track of pills without \`dark\`
 `;
 
 // Authored markup for the block's section, with the section metadata settings in `metadata`, and
@@ -57,7 +53,7 @@ export default {
     variants: { ...variants, options: variants.options.filter((name) => name !== 'pill') },
     tabs: {
       control: 'object',
-      description: 'One tab each, in order: its `label`, and the `heading` and `body` of the Rich Content block in its panel section. Leave `heading` and `body` empty for an empty panel. An empty `label` gives a tab with no text, and without an `id` its panel stays below the block. An empty list gives an empty tab list and no panels.',
+      description: 'One tab each, in order: its `label`, and the `heading` and `body` of the Rich Content block in its panel section. Leave `heading` and `body` empty for an empty panel.',
     },
     radioLabel: { control: 'text', description: 'Label before the radio buttons, authored as a paragraph above the list. Only `radio` shows it. Leave empty for none.' },
     id: { control: 'text', description: 'Authored in an `id` row. Each panel section\'s `tab` row then holds the id and the tab\'s number. Leave empty to match each panel to its tab by label.' },
