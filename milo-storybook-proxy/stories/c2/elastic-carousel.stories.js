@@ -137,6 +137,6 @@ export const Default = {
 // The homepage fragment's block, as published.
 export const HomepageEverythingYouNeed = {
   name: 'adobe.com: Homepage everything you need',
-  render: () => renderPageBlock(`${HOMEPAGE_FRAGMENTS}/everything-you-need/everything-you-need`, 'elastic-carousel', { foundation: 'c2' }),
+  render: () => renderPageBlock(`${HOMEPAGE_FRAGMENTS}/everything-you-need/everything-you-need`, 'elastic-carousel', { metadata: true, foundation: 'c2' }),
   parameters: { controls: { include: ['variants'] } },
 };
