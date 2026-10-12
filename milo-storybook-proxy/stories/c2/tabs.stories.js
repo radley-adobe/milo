@@ -19,9 +19,10 @@ A row of tabs that each show a [Tab Panel](?path=/docs/sections-tab-panel--docs)
 - \`radio\` shows a radio button for each tab, in a rounded bar. A paragraph above the list shows at the start of the bar.
 - \`dark\` gives the block Milo's dark colors, for a dark section
 - \`center\` centers the tab list and \`right\` aligns it to the right, both from 768px. With \`quiet\`, \`center\` centers it below 768px too.
+- Below 768px, the tab list sits in a strip as wide as the viewport, inset from each edge, and the block clips the strip at its own edges. With \`quiet\`, the strip is as wide as the block.
 - A pill tab list scrolls sideways when its tabs don't fit. \`quiet\` and \`radio\` lists scroll only below 768px. Selecting or focusing a tab scrolls it into view.
 - The block has a background, apart from \`quiet\`, \`radio\` and \`dark\` pills. \`background-transparent\` removes it.
-- \`staggered-intro-merch-cards\` fades the merch cards in the shown panel in and moves them up into place when the page loads and when a tab is selected. With reduced motion, nothing moves.
+- \`staggered-intro-merch-cards\` fades the merch cards in the shown panel in and moves them up into place, the first eight one after another, when the page loads and when a tab is selected. With reduced motion, nothing moves.
 - The block adds \`tablist-<id>-section\` to its section, where \`<id>\` is its \`id\`, or its number among the page's Tabs blocks
 - A section with the \`tabs-background-transparent\` style removes the background of the Tabs blocks in it, and the track of pills without \`dark\`
 `;
