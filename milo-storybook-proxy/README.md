@@ -55,6 +55,8 @@ A link to a fragment with a hash, such as `/federal/footer/fragments/regions#lan
 
 Authored stories show images and icons from `media/`, which Storybook serves next to `iframe.html`: icons in `media/icons/`, and each block's or section's images in a folder named after it, such as `media/base-card/` or `media/bento/`. `MEDIA` in `src/milo.js` is the folder's full URL, because Milo turns an icon link into an image only when the link's text is a URL. The files are copies of images on adobe.com pages, saved as WebP at the size the pages serve, or as SVG for a vector section background such as Hover List's, so authored stories don't depend on pages that change or go away. Stories that render a live page load its images from its site.
 
+An icon authored as `:name:`, such as a Logo Ticker logo, is a `span` that Milo fills with the SVG of that name from Federal's `/federal/assets/icons/svgs/` folder. Milo has no way to load it from elsewhere, so authored stories name Federal icons rather than copying them to `media/`.
+
 Most C2 blocks have no library page. Their stories use pages from the adobe.com redesign:
 
 - `HOMEPAGE` is the redesigned homepage, and `HOMEPAGE_FRAGMENTS` is the folder of fragments it is built from
