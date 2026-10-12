@@ -13,12 +13,13 @@ A row of linked video slides that widen on hover. It's authored as one row per s
 - The video cell holds an image whose alt text is the URL of an MP4 video, a \`|\` and a description. Milo turns it into a muted video with the image as its poster, and the block crops the video to the slide's width. The cell can hold an image with plain alt text instead, which the block doesn't crop.
 - The block's CSS is written for five slides
 - From 768px, the slides sit side by side in a row centered on the window, and the block clips the row at its sides
+- Between 768px and 1700px, hovering or focusing one of the first three slides moves the row to the block's left edge, and hovering or focusing the fifth moves it to the window's right edge
 - From 768px, hovering or focusing a slide widens it, turns it dark with light text, shows an arrow and plays its video. Moving the pointer off the slide rewinds its video.
-- From 768px, the block adds \`disable-hover\` to itself while the mouse wheel scrolls the page, which stops the slides responding to hover
+- While the mouse wheel scrolls the page, the block adds \`disable-hover\` to itself, which from 768px stops the slides responding to hover
 - As the block scrolls into view from 768px, the row slides in from the right and fades in, and the gaps between the slides close
-- Below 768px, the slides stack in a column, dark with light text and an arrow. Each sticks near the top of the window as the page scrolls and the next one covers it, while the ones beneath narrow and fade. A slide's video plays when the slide is in view.
+- Below 768px, the slides stack in a column, dark with light text and an arrow. Each sticks near the top of the window as the page scrolls and the next one covers it, while the ones beneath narrow and fade. A slide's video plays when the slide is in view and rewinds when the next slide covers it.
 - The scroll animations run with reduced motion too, unless the block or an element around it has a \`parallax-\` class
-- In a right-to-left page, the row keeps the slides' left-to-right order, the column below 768px shows them last first, and the arrows point left
+- In a right-to-left page, the row keeps the slides' left-to-right order, the column below 768px shows them last first, the arrows point left and the hover shift is mirrored
 `;
 
 // Authored markup for one slide. Every element of the text cell stays when it's empty, because
