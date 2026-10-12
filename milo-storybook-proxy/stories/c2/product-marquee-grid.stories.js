@@ -89,9 +89,9 @@ export default {
     description: { control: 'text', description: 'Description, a `description` field, which can hold HTML. Leave empty for none.' },
     legal: { control: 'text', description: 'Legal text, a `shortDescription` field. Leave empty for none.' },
     primaryCtaLabel: { control: 'text', description: 'Text of the blue button, a bold link. Leave empty for none.' },
-    primaryCtaHref: { control: 'text', description: 'URL of the blue button' },
+    primaryCtaHref: { control: 'text', description: 'URL of the blue button. Leave empty to link to the current page.' },
     secondaryCtaLabel: { control: 'text', description: 'Text of the outline button, an italic link. Leave empty for none.' },
-    secondaryCtaHref: { control: 'text', description: 'URL of the outline button' },
+    secondaryCtaHref: { control: 'text', description: 'URL of the outline button. Leave empty to link to the current page.' },
   },
 };
 
@@ -133,9 +133,9 @@ export const CtaPill = {
   },
 };
 
-// The block in the Creative Cloud Pro product fragment, with `dark` added. Its fields and Free
-// trial button load from MAS too, so the story gives their published text and links the button to
-// the Photoshop free trial page.
+// The block in the Creative Cloud Pro product fragment, with `dark` added. Its fields and both
+// buttons load from MAS too, so the story gives their published text and links, with Free trial
+// linked to the Photoshop free trial page.
 export const Dark = {
   ...blockStory({ style: STYLE }),
   args: {
@@ -163,7 +163,7 @@ export const Dark = {
 export const TransparentBackground = {
   ...blockStory({
     style: STYLE,
-    background: `<picture><img src="${MEDIA}/product-marquee-grid/photoshop-collage.webp" alt=""></picture>`,
+    background: `<picture><img src="${attr(`${MEDIA}/product-marquee-grid/photoshop-collage.webp`)}" alt=""></picture>`,
   }),
   name: 'Transparent Background',
   args: { ...Dark.args, variants: ['transparent-bg'] },
