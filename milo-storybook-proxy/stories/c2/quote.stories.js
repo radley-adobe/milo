@@ -6,19 +6,14 @@ import { quote, sectionMetadata } from './authored.js';
 const description = `
 A quote with the name and role of the person quoted, framed by thin lines. It's authored as one row with one cell that holds the quote, then the name, then the role.
 
-- The block reads the cell's headings and paragraphs in order: the first is the quote, the second the name and the third the role. It removes the rest of the block's content.
-- Each heading in the cell shows at \`heading-1\` size and each paragraph at \`body-md\` size
-- The quote is up to 1312px wide
-- The block puts the quote in a \`blockquote\` and the name and role in a \`figcaption\`, inside a \`figure\`. It gives the quote's heading the \`paragraph\` role, so screen readers don't list it as a heading.
-- An opening quote mark at the start of the quote, such as “, hangs outside the text's left edge, or its right edge on a right-to-left page. The block then keeps only the quote's text, without links or formatting. A straight quote mark (") doesn't hang.
-- The text takes its section's colors: black in a light section and white in a \`dark\` one, with the role at 64% opacity
-- Thin lines frame the text: one above and one below it across the block's full width, one at each side from the block's top to its bottom, and a dashed line down the middle. A dot marks each corner of the text, where the lines cross. The lines are dark gray (#292929) and the dots white in both themes, so the dots show only on a dark background.
-- The block has 24px of padding, 48px from 768px and 64px from 1280px
-- Below 768px, the block is at least 600px tall, with the quote at the top and the name and role at the bottom, at least 128px below it. From 768px, the name and role sit 160px below the quote, or 240px from 1280px.
+- The block reads the cell's headings and paragraphs in order as the quote, the name and the role. Each heading shows at \`heading-1\` size and each paragraph at \`body-md\` size.
+- An opening quote mark at the start of the quote, such as “, hangs outside the text's left edge, or its right edge on a right-to-left page
+- The text takes its section's colors, in a light or a \`dark\` section
+- Below 768px, the block has a minimum height, with the quote at the top and the name and role at the bottom. From 768px, the name and role sit below the quote.
 - \`center-footer\` centers the name and role. \`right-footer\` aligns them to the right, or to the left on a right-to-left page.
 - A \`heading-\` class on the block, such as \`heading-3\`, replaces the quote's \`heading-1\` size, and a \`body-\` class, such as \`body-lg\`, replaces the \`body-md\` size
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the quote different content at each viewport. A Mobile-viewport row applies from the smallest width, a Tablet-viewport row from 768px and a Desktop-viewport row from 1280px, each up to the next row's width. A Tablet-viewport or Desktop-viewport row on its own applies at every width. Tablet-viewport and Desktop-viewport rows without a Mobile-viewport row are removed, and the block shows no quote. With only Mobile-viewport and Desktop-viewport rows, the Mobile-viewport row applies below 1280px. An empty cell keeps the content of the viewport below it. Classes in parentheses after a row's name, such as \`Desktop-viewport (right-footer)\`, apply only at that viewport.
-- The block's side margins pull it out over its section's side padding. In a \`container, fixed\` section up to 1968px wide, the block and its lines span the section's full width. In a \`container\` section from 768px, the padding is 8.333% of the section's width and the margins 8.333% of the content's width, so the lines stop short of the section's edges.
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the quote different content at each viewport. A Mobile-viewport row applies from the smallest width, a Tablet-viewport row from 768px and a Desktop-viewport row from 1280px, each up to the next row's width. An empty cell keeps the content of the viewport below it. Classes in parentheses after a row's name, such as \`Desktop-viewport (right-footer)\`, apply only at that viewport.
+- The block's side margins pull it out over its section's side padding. In a \`container, fixed\` section, the block and its lines span the section's full width. In a \`container\` section from 768px, the lines stop short of the section's edges.
 - Milo has no block that holds quotes. Quotes in the same section stack in one column, each in its own frame. With a section style that sets columns, such as \`two-up\`, they sit side by side from 768px and their frames overlap.
 `;
 
@@ -37,8 +32,8 @@ export default {
   parameters: { cssprops, docs: { description: { component: description } } },
   argTypes: {
     variants,
-    quote: { control: 'text', description: 'The quote, authored as an `h2`. Leave empty and the name shows as the quote, at `body-md` size, and the role as the name.' },
-    name: { control: 'text', description: 'Name of the person quoted. Leave empty and the role shows in its place.' },
+    quote: { control: 'text', description: 'The quote, authored as an `h2`' },
+    name: { control: 'text', description: 'Name of the person quoted' },
     role: { control: 'text', description: 'Role of the person quoted, below the name. Leave empty for none.' },
     showAttribution: { control: 'boolean', description: 'Show the name and role' },
   },
