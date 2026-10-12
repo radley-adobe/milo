@@ -10,11 +10,11 @@ A hero with an eyebrow, a heading and body copy over an image. It's authored as 
 - A link in bold or italics shows as a button
 - \`dark\` gives the block Milo's dark colors. With \`dark\` on the block or an element around it, such as its section, the eyebrow is light.
 - The image covers the whole block, behind the text. A gradient over it darkens the left side, or the right side on a right-to-left page.
-- Text after the image in its cell sets the image's focal point as \`x, y\`, such as \`right, top\` or \`70%, 50%\`: the part that stays in view when the block crops it
-- The block adds \`container\` to itself. The image spans the block's full width, and the text has side padding. In a section with \`container\`, the block has no side padding of its own.
+- Text after the image in its cell sets the image's focal point as \`x, y\`, such as \`right, top\` or \`70%, 50%\`. It picks the part of the image that stays in view when the block crops it.
+- The block adds \`container\` to itself. The image spans the block's full width, and the text has side padding and a maximum width. In a section with \`container\`, the block has no side padding of its own.
 - The text is at most 4 of 6 columns wide below 768px, 6 of 12 from 768px and 5 of 12 from 1024px
-- From 768px, the block's height follows the window's width, up to a maximum, and grows to fit its text. The text is centered vertically, and from 1440px it sits at the top.
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content at each viewport: Mobile below 768px, Tablet from 768px and Desktop from 1280px. With no Tablet row, Mobile shows below 1280px. Classes in parentheses after a row's name, such as \`Mobile-viewport (dark)\`, apply to the block only at that viewport. An empty cell keeps the content of the viewport below it.
+- Below 768px, the block has a minimum height and grows to fit its text. From 768px, its height follows the window's width, up to a maximum, and grows to fit its text. The text is centered vertically, and from 1440px it sits at the top.
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content at each viewport: Mobile below 768px, Tablet from 768px and Desktop from 1280px. With no Tablet row, Mobile shows below 1280px. A viewport row on its own shows at every width. Classes in parentheses after a row's name, such as \`Mobile-viewport (dark)\`, apply to the block only at that viewport. An empty cell keeps the content of the viewport below it.
 - When the next section has \`rounded-corners\` or \`rounded-corners-top\`, the image extends below the block, so it shows behind that section's rounded corners. When the section before has \`rounded-corners\` or \`rounded-corners-bottom\`, the image extends above the block the same way.
 `;
 

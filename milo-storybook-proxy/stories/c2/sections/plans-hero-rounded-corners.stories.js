@@ -16,11 +16,11 @@ A [Plans Hero](?path=/docs/blocks-plans-hero--docs) in its own section, followed
 - A link in bold or italics in the hero's text shows as a button
 - \`dark\` gives the hero Milo's dark colors. With \`dark\` on the hero or an element around it, such as its section, the eyebrow is light.
 - The image covers the whole hero, behind the text. A gradient over it darkens the left side, or the right side on a right-to-left page.
-- Text after the image in its cell sets the image's focal point as \`x, y\`, such as \`right, top\` or \`70%, 50%\`: the part that stays in view when the hero crops it
-- The hero adds \`container\` to itself. The image spans the hero's full width, and the text has side padding. The text lines up with the content of a section with \`container\`, such as the next section. In a section with \`container\`, the hero has no side padding of its own.
+- Text after the image in its cell sets the image's focal point as \`x, y\`, such as \`right, top\` or \`70%, 50%\`. It picks the part of the image that stays in view when the hero crops it.
+- The hero adds \`container\` to itself. The image spans the hero's full width, and the text has side padding and a maximum width. The text lines up with the content of a section with \`container\`, such as the next section. In a section with \`container\`, the hero has no side padding of its own.
 - The hero's text is at most 4 of 6 columns wide below 768px, 6 of 12 from 768px and 5 of 12 from 1024px
-- From 768px, the hero's height follows the window's width, up to a maximum, and grows to fit its text. The text is centered vertically, and from 1440px it sits at the top.
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the hero different content at each viewport: Mobile below 768px, Tablet from 768px and Desktop from 1280px. With no Tablet row, Mobile shows below 1280px. Classes in parentheses after a row's name, such as \`Mobile-viewport (dark)\`, apply to the hero only at that viewport. An empty cell keeps the content of the viewport below it.
+- Below 768px, the hero has a minimum height and grows to fit its text. From 768px, its height follows the window's width, up to a maximum, and grows to fit its text. The text is centered vertically, and from 1440px it sits at the top.
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the hero different content at each viewport: Mobile below 768px, Tablet from 768px and Desktop from 1280px. With no Tablet row, Mobile shows below 1280px. A viewport row on its own shows at every width. Classes in parentheses after a row's name, such as \`Mobile-viewport (dark)\`, apply to the hero only at that viewport. An empty cell keeps the content of the viewport below it.
 `;
 
 // The sections' authored markup from a story's args: the hero's section, then the next section,
