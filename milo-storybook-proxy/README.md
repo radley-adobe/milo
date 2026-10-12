@@ -176,7 +176,7 @@ git merge upstream/stage
 
 - Stories render live content, so they change when the source page changes and break if it moves or the block is removed
 - Acrobat pages on `main--dc--adobecom` send an invalid `Access-Control-Allow-Origin` header, so browsers block them. The redesigned Acrobat pages on `main--da-dc--adobecom` don't.
-- The router marquee's product cards and the prices in C2 blocks such as Offer Hero, Product Marquee Grid, FAQ and Tabs load from www.adobe.com, so they stay hidden or show a load error in headless browsers. C2 Tabs panels hold merch cards, which also load from there, so those stories never finish loading.
+- The router marquee's product cards and the prices in C2 blocks such as Offer Hero, Product Marquee Grid, FAQ and Tabs load from www.adobe.com, which allows only adobe.com origins, so they stay hidden or show a load error in Storybook. Product Marquee Grid's authored stories give its fields' content instead. C2 Tabs panels hold merch cards, which also load from there, so those stories never finish loading.
 - Milo loads a video authored as a `media_*.mp4` link from `libs/` on the current site, which only serves it on the site itself, so those videos are missing
 - Globe Gallery fetches its card fragment itself and loads the card images from the current site, so the cards show without images
 - The global navigation's universal navigation, such as sign-in and the app switcher, loads from a CDN that only allows adobe.com origins, so the Global Navigation stories leave it out
