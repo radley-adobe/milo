@@ -10,10 +10,9 @@ A row of linked video slides that widen on hover, authored as one row per slide 
 - From 768px, \`disable-hover\` stops the slides responding to hover
 - The block's CSS is written for five slides, which sit in a row from 768px and stack in a column below it
 - From 768px, hovering a slide widens it, shows an arrow and plays its video
-- From 768px, the row slides and fades in as the block scrolls into view
+- From 768px, the row slides and fades in as the block scrolls into view, with reduced motion too, unless the block or an element around it has a \`parallax-\` class
 - Below 768px, each slide sticks near the top of the window as the page scrolls and the next one covers it
 - Below 768px, each video plays when its slide is in view
-- The scroll animations run with reduced motion too, unless the block or an element around it has a \`parallax-\` class
 `;
 
 // Authored markup for one slide. Every element of the text cell stays when it's empty, because
