@@ -4,19 +4,15 @@ import variants from 'virtual:variants/c2/quick-actions';
 import { attr, sectionMetadata } from './authored.js';
 
 const description = `
-A heading and a grid of linked tiles, each an image with a label. It's authored as a header row, then one row per tile with two cells: the label, then the image.
+A heading and a grid of linked tiles, each an image with a label. It's authored as an optional header row, then one row per tile with two cells: the label, then the image.
 
-- The header row is optional. The block makes the first row the header when its first cell holds a heading. The heading shows at \`heading-4\` size, a paragraph before it as an eyebrow, and a paragraph after it at \`body-md\` size. A link in italics shows as an outline button, and a link in bold as a blue button.
-- The header sets its content in one row, in the authored order: any eyebrow, then the heading, taking the free width, then any paragraph, then the button at the end. \`center-mobile\` stacks the content and centers it below 768px.
-- A tile row's first cell holds a link, whose text is the tile's label, and the whole tile links to it
-- A tile row's second cell holds an image, which fills the tile. The label sits over the tile's bottom, at \`heading-6\` size, with a chevron. Below 768px, a tile with an image and a label is a square with the label below it, and the image fills the tile from its top.
-- On hover, a tile darkens slightly, its image grows slightly and its chevron moves to the right
+- In the header, the heading shows at \`heading-4\` size, an italic link as an outline button and a bold one as a blue button. A tile's label is a link at \`heading-6\` size, and the whole tile links to it.
+- \`center-mobile\` stacks the header's content and centers it below 768px
+- \`blur-background\` gives the block a dark background below 768px, so it needs a \`dark\` section. From 768px, it blurs what's behind the block and darkens it toward the bottom, starting clear at the top.
 - The tiles sit in two columns below 768px, three from 768px and six from 1280px
-- The tiles move up into place as the block scrolls into view, and in each row a tile starts lower than the one before it. With reduced motion, they don't move.
-- \`blur-background\` gives the block a dark background below 768px, so the block needs a \`dark\` section for its header to show. From 768px, it blurs what's behind the block and darkens it toward the bottom.
-- With \`blur-background\`, when the next section has \`rounded-corners\` or \`rounded-corners-top\`, the background extends behind that section's rounded corners
+- On hover, a tile darkens slightly, its image grows slightly and its chevron moves right
+- The tiles move up into place as the block scrolls into view. With reduced motion, they don't move.
 - Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content at each viewport. An empty cell keeps the content of the viewport below it.
-- The block lays out its own tiles and adds nothing to its section
 `;
 
 const image = (name) => `${MEDIA}/quick-actions/${name}.webp`;
@@ -61,13 +57,13 @@ export default {
   argTypes: {
     variants,
     showHeader: { control: 'boolean', description: 'Show the header row' },
-    heading: { control: 'text', description: 'Heading, authored as an `h2`. Leave empty for no header row.' },
-    body: { control: 'text', description: 'Paragraph in the header row, between the heading and the button. Leave empty for none.' },
-    ctaLabel: { control: 'text', description: 'Header link text, authored in italics, so it shows as an outline button. Leave empty for no link.' },
+    heading: { control: 'text', description: 'Heading, authored as an `h2`' },
+    body: { control: 'text', description: 'Paragraph in the header row, after the heading. Leave empty for none.' },
+    ctaLabel: { control: 'text', description: 'Header link text, authored in italics, so it shows as an outline button. Leave empty for none.' },
     ctaHref: { control: 'text', description: 'Header link URL' },
     tiles: {
       control: 'object',
-      description: 'One tile row each, in order: a `label` linked to `href`, and an `image` with its `imageAlt`. Leave `label` empty for a tile with no link or label, or `image` empty for a tile with no image. Leave `imageAlt` empty when the image is decorative.',
+      description: 'One tile row each, in order: a `label` linked to `href`, and an `image` with its `imageAlt`',
     },
   },
 };
