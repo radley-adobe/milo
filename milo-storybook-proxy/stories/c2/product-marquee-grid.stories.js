@@ -6,19 +6,13 @@ import { attr, icon, sectionMetadata } from './authored.js';
 const description = `
 A product page's hero: the product's icon and name, a subheading, and a card with the product's price and buttons. It's authored as one row with two cells: the product, then the card.
 
-- The product cell holds an optional icon, a heading and a subheading. An icon is a link to an SVG, alone in its paragraph. The block sets it beside the heading.
-- The first heading is the product's name and keeps its level, such as \`h1\`. The block shows every other heading and paragraph in the product cell as a subheading below it. A heading becomes a paragraph with its level's class, such as \`heading-5\` for an \`h5\`.
-- The card cell holds Merch at Scale (MAS) fields, a commitment and links. Each field is a link to a card's field in MAS Studio, which Milo replaces with a \`mas-field\` element holding the field's content. A block with no card cell, or an empty one, shows only the product.
-- A \`prices\` field shows at \`heading-5\` size and a \`description\` field as body copy. A paragraph of plain text right after the price, such as "Annual, billed monthly", moves into the price's paragraph as its commitment, at body size. Other fields and paragraphs show in their authored order.
-- A bold link shows as a blue button and an italic link as an outline button. The block moves the buttons, and MAS checkout links, into a row below the card's text.
-- From 768px, the card has a background, rounded corners and padding. Below 768px, it has no background or padding.
-- Below 900px, the card sits below the subheading. From 900px, the heading sits at the top left, the subheading at the bottom left, and the card at the bottom right.
-- \`dark\` gives the block a dark background and light text. From 768px, the card is dark too.
-- \`transparent-bg\` makes the block's background translucent and blurs what's behind it, such as an image set as the section's background. With \`dark\`, the background and, from 768px, the card are dark and translucent.
-- \`cta-pill\` shows the card as a pill from 768px, with its text and buttons in one row, and sets the card at the bottom right of the block, beside the product. Below 768px, the card's text is centered. The card's text other than the price, description and commitment is bold at every width. The pill is as wide as its content.
-- \`special-promo\` gives the card the opposite colors of the block from 768px: dark in a light block, and light in a \`dark\` block. Below 768px, the card's text keeps the block's colors.
-- Inside an element with the \`firefly\` class, the block's bottom corners are rounded
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content at each viewport. An empty cell keeps the content of the viewport below it. Classes in parentheses after a row's name, such as \`mobile-viewport(dark)\`, apply to the block at that viewport.
+- The icon is a link to an SVG, alone in its paragraph. The card cell holds Merch at Scale (MAS) fields, each a link to a card's field in MAS Studio, and links. A bold link shows as a blue button and an italic link as an outline button.
+- \`dark\` gives the block a dark background and light text
+- \`transparent-bg\` makes the block's background translucent and blurs what's behind it, such as the section's background image
+- \`cta-pill\` shows the card from 768px as a pill at the bottom right, with its text and buttons in one row
+- \`special-promo\` gives the card the block's opposite colors from 768px: dark in a light block and light in a \`dark\` block
+- Below 900px, the card sits below the subheading. From 900px, it sits at the bottom right.
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content at each viewport. An empty cell keeps the content of the viewport below it.
 `;
 
 // One MAS field in its own paragraph, or nothing when the field is empty.
@@ -81,7 +75,7 @@ export default {
     subheading: { control: 'text', description: 'Subheading, authored as an `h5`. Leave empty for none.' },
     planName: { control: 'text', description: 'The card\'s first line, a `subtitle` field. Leave empty for none.' },
     showPrice: { control: 'boolean', description: 'Show the price and commitment' },
-    price: { control: 'text', description: 'Price, a `prices` field. Leave empty for no price or commitment.' },
+    price: { control: 'text', description: 'Price, a `prices` field. Leave empty for none.' },
     commitment: { control: 'text', description: 'Commitment, a paragraph after the price. Leave empty for none.' },
     description: { control: 'text', description: 'Description, a `description` field, which can hold HTML. Leave empty for none.' },
     legal: { control: 'text', description: 'Legal text, a `shortDescription` field. Leave empty for none.' },
