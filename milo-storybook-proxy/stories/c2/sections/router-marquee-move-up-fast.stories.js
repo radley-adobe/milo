@@ -1,4 +1,4 @@
-import { HOMEPAGE, LIVE, renderPageSections, renderSections } from '../../../src/milo.js';
+import { HOMEPAGE, HOMEPAGE_FRAGMENTS, LIVE, renderPageSections, renderSections } from '../../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/router-marquee';
 import { section, sectionMetadata } from '../authored.js';
 import { routerMarquee, SLIDES, SLIDES_DESCRIPTION } from './router-marquee.js';
@@ -11,7 +11,8 @@ A [Router Marquee](?path=/docs/blocks-router-marquee--docs) pinned to the top of
 - Focusing a link or button in a \`parallax-move-up-fast\` section scrolls the page back to the top
 - \`starting-marquee\` gives the number of the slide to show first. The block moves that slide and its card to the front.
 - The slides stop when the next section is 30% of the way up the window and start again when the page scrolls back above it, unless they were stopped by hand
-- The next section here is the homepage's Rich Content section after the marquee. Its \`rounded-corners-top\` style rounds its top corners and moves it up over the marquee by 22px, or 32px from 1280px. Its metadata sets a white background, which Storybook shows in the theme's default background color, so it follows the Theme menu.
+- The next section here links to the fragment after the marquee on the homepage, which Milo loads into it: a Rich Content section and an Elastic Carousel section. The Rich Content section's \`rounded-corners-top\` style rounds its top corners and moves it up over the marquee by 22px, or 32px from 1280px. Both sections' metadata sets a white background, which Storybook shows in the theme's default background color, so they follow the Theme menu.
+- When the section right after this one has \`rounded-corners-top\`, the darkening covers only the top 22px of this section, or 32px from 1280px. Here, as on the homepage, the \`rounded-corners-top\` section is inside a fragment in the next section, so the darkening covers the whole section.
 - On this page, each story is taller than its frame, because the block grows with the frame. The next section shows when the story scrolls inside the frame.
 - Style values are separated by a comma and a space. A space inside a value becomes a hyphen, and capitals don't matter.
 - The block is the height of the window, or taller when its content needs it, and shows one slide at a time with a card for each slide along the bottom. The slides change every 5 seconds and loop.
@@ -27,16 +28,13 @@ A [Router Marquee](?path=/docs/blocks-router-marquee--docs) pinned to the top of
 - A \`promo-placeholder-slide-<n>\` class on the block hides slide \`n\` and its card until the slide's Merch at Scale field resolves to a promotion. Storybook can't show it, because that content loads from www.adobe.com.
 `;
 
-// The homepage's Rich Content section after the marquee, which scrolls up over it.
-const NEXT = section(`
-<div class="rich-content center container wide body-lg parallax-line-height">
-  <div>
-    <div>
-      <h2>Everything you need to make anything.</h2>
-      <p>Whether you're a student, social influencer, creative professional, performance marketer, or global brand, Adobe has the apps you need to make it happen.</p>
-    </div>
-  </div>
-</div>`.trim(), sectionMetadata({ style: 'rounded-corners-top, spacing-xl-top, spacing-xs-bottom', background: '#fff' }));
+// The section after the homepage's marquee, which scrolls up over it: a link to the fragment that
+// holds the homepage's Rich Content and Elastic Carousel sections. Milo puts the fragment's
+// sections inside this one. A `rounded-corners-top` section right after the marquee's section
+// would give the marquee's section a short `::after` from section-metadata.css, which replaces
+// its darkening overlay with a strip at its top.
+const NEXT_FRAGMENT = `${HOMEPAGE_FRAGMENTS}/everything-you-need/everything-you-need`;
+const NEXT = section(`<p><a href="${NEXT_FRAGMENT}">${NEXT_FRAGMENT}</a></p>`);
 
 // The section's authored markup from a story's args.
 const authored = ({ slides, startingSlide, style }) => section(
