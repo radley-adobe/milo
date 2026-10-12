@@ -73,3 +73,17 @@ export const plansHero = ({
   ${rows.join('\n  ')}
 </div>`.trim();
 };
+
+// One quote: the quote as an `h2`, then the name and role. `showAttribution` is true unless set.
+export const quote = ({
+  variants: classes = [], quote: text, name, role, showAttribution = true,
+}) => `
+<div class="${['quote', ...classes].join(' ')}">
+  <div>
+    <div>
+      ${text ? `<h2>${text}</h2>` : ''}
+      ${showAttribution && name ? `<p>${name}</p>` : ''}
+      ${showAttribution && role ? `<p>${role}</p>` : ''}
+    </div>
+  </div>
+</div>`.trim();
