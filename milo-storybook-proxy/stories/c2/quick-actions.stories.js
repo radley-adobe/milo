@@ -6,8 +6,8 @@ import { attr, sectionMetadata } from './authored.js';
 const description = `
 A heading and a grid of linked tiles, each an image with a label. It's authored as a header row, then one row per tile with two cells: the label, then the image.
 
-- The header row is optional. The block makes the first row the header when its first cell holds a heading. The heading shows at \`heading-4\` size and a paragraph at \`body-md\` size. A link in italics shows as an outline button, and a link in bold as a blue button.
-- The header sets its content in one row, 24px apart, with 32px below it: the heading at the start, taking the free width, then any paragraph, then the button at the end. \`center-mobile\` stacks the content and centers it below 768px.
+- The header row is optional. The block makes the first row the header when its first cell holds a heading. The heading shows at \`heading-4\` size, a paragraph before it as an eyebrow, and a paragraph after it at \`body-md\` size. A link in italics shows as an outline button, and a link in bold as a blue button.
+- The header sets its content in one row, in the authored order, 24px apart, with 32px below it: any eyebrow, then the heading, taking the free width, then any paragraph, then the button at the end. \`center-mobile\` stacks the content and centers it below 768px.
 - A tile row's first cell holds a link, whose text is the tile's label. The whole tile links to it. A tile with no link has no label.
 - A tile row's second cell holds an image. The image fills the tile, which is at least 180px tall, and the label sits over its bottom, at \`heading-6\` size, with a chevron at the right edge. Below 768px, a tile with an image and a label is a square with the label below it, and the image fills the tile from its top.
 - A row with one cell isn't a tile, and the block leaves it out
