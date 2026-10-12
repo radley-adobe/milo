@@ -12,7 +12,7 @@ A product page's hero: the product's icon and name, a subheading, and a card wit
 - A \`prices\` field shows at \`heading-5\` size and a \`description\` field as body copy. A paragraph of plain text right after the price, such as "Annual, billed monthly", moves into the price's paragraph as its commitment, at body size, in the card's text color at 64% opacity. Other fields and paragraphs show in their authored order.
 - A bold link shows as a blue button and an italic link as an outline button. The block moves the buttons, and MAS checkout links, into a row below the card's text.
 - From 768px, the card has a light gray background, 12px rounded corners and 24px of padding. Below 768px, it has no background or padding.
-- Below 900px, the card sits below the subheading. From 900px, the heading sits at the top left, the subheading at the bottom left, and the card at the bottom right, at most 370px and 45% of the block wide.
+- Below 900px, the card sits below the subheading. From 900px, the heading sits at the top left, the subheading at the bottom left, and the card at the bottom right, at most 370px and 45% of the block's content width, inside its side padding.
 - The block's content sits in a container, with at least 24px of side padding below 768px and 48px from 768px. The block has 48px of padding at the top, with another 48px above the product, and 24px at the bottom, or 48px from 768px.
 - The block is at least 350px tall plus the global navigation's height, and the breadcrumbs' or local navigation's height when the page has them. With breadcrumbs, the block's top padding is the height of the navigation and breadcrumbs.
 - \`dark\` gives the block a black background and white text. From 768px, the card is dark gray, #131313.
@@ -78,7 +78,7 @@ export default {
   argTypes: {
     variants,
     specialPromo: { control: 'boolean', description: 'Give the card the opposite colors of the block from 768px (`special-promo`)' },
-    icon: { control: 'text', description: 'URL of the SVG icon' },
+    icon: { control: 'text', description: 'URL of the SVG icon. Leave empty for no icon.' },
     showIcon: { control: 'boolean', description: 'Show the icon' },
     heading: { control: 'text', description: 'Product name, authored as an `h1`. Leave empty and the subheading takes its place beside the icon.' },
     subheading: { control: 'text', description: 'Subheading, authored as an `h5`. Leave empty for none.' },
@@ -133,9 +133,9 @@ export const CtaPill = {
   },
 };
 
-// The block in the Creative Cloud Pro product fragment, with `dark`. Its fields and Free trial
-// button load from MAS too, so the story gives their published text and links the button to the
-// Photoshop free trial page.
+// The block in the Creative Cloud Pro product fragment, with `dark` added. Its fields and Free
+// trial button load from MAS too, so the story gives their published text and links the button to
+// the Photoshop free trial page.
 export const Dark = {
   ...blockStory({ style: STYLE }),
   args: {
