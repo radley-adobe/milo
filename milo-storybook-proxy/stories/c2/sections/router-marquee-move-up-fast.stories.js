@@ -10,7 +10,7 @@ A [Router Marquee](?path=/docs/blocks-router-marquee--docs) pinned to the top of
 - \`starting-marquee\` moves the slide with that number to the front
 - The block is a full-window hero showing one slide at a time. It's authored as one row per slide with two cells: the text, then a background image or video.
 - Rows named \`mobile\`, \`tablet\` and \`desktop\` start each viewport's slides, and \`mobile\` is required. A missing viewport copies the one below, and an empty cell keeps the same slide's cell from the viewport below.
-- Below 1280px, only the primary button shows
+- Below 1280px, only the primary (bold) button shows
 - The slides change on their own and loop, or only by hand with reduced motion
 - Hovering or focusing a link or button in the block, a swipe, or the pause button stops the slides until the play button starts them
 - The slides stop when the next section scrolls part way up the window, and start again when it scrolls back unless they were stopped by hand
