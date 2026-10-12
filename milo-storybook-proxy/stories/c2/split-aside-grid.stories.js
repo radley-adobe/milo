@@ -6,22 +6,16 @@ import { attr, sectionMetadata, splitAsideGrid } from './authored.js';
 const description = `
 A list of items beside a stack of their images. It's authored as one row per item with two cells: the item's text, then its image or video.
 
-- The text cell holds a heading, body copy and links. The heading shows at \`heading-5\` size. With no heading, the item's button reads Slide 1, Slide 2 and so on from 768px.
-- A link alone in its paragraph shows as a bold label with an arrow
-- The block takes each row's second cell as the item's media. An empty cell shows an empty frame.
-- Below 768px, the media form a stack of 245 × 465px cards with the active item's card in front. Each card behind it sits 10px further toward the end edge, 4% shorter and gray, with its image hidden. Previous and next buttons and a dot for each item sit below the stack, then the active item's text.
-- Below 768px, dragging the front card 20px or more toward the start edge moves to the next item, and toward the end edge to the previous one. The previous and next buttons do the same, and so do the left and right arrow keys when focus is in the block. The front card flies off toward the start edge as the next one comes forward, and the items loop. A live region announces each new item's number and text.
-- \`mobile-carousel\` lines the media up side by side below 768px instead of stacking them. Each is \`1.2 × (100vw − 48px)\` wide, at the first media's aspect ratio and up to 600px high, so it runs past the window's edge. Dragging, the buttons and the arrow keys slide the media and the text by one item, and the items loop.
-- From 768px, the block is a 12-column grid. The items take the first 4 columns, at least 300px, and the active item's media sits in columns 6 to 12. From 1280px, the items take 3 columns, at least 340px, and the media sits in columns 5 to 12.
-- From 768px to 1599px, the media moves toward the block's end edge by the grid's side margin, and the block's end edge cuts it off
-- From 768px, each item's heading is a button with a chevron, and other items' headings show at 48% opacity. Clicking an item opens it, showing its body copy and links, and shows its media. Clicking the open item closes or reopens it.
-- From 768px, the media area takes the first media's aspect ratio, or 4:3, and is at least 480px high. Each media is cropped to fill it, keeping its start edge, inside a translucent frame with rounded corners.
+- The text cell holds a heading at \`heading-5\` size, body copy and links. A link alone in its paragraph shows as a bold label with an arrow.
+- Below 768px, the media form a stack of cards with the active item's card in front, then previous and next buttons and a dot for each item, then the active item's text. Dragging the front card, the buttons and the left and right arrow keys move between items, and the items loop.
+- \`mobile-carousel\` lines the media up side by side below 768px instead of stacking them, each running past the window's edge. Dragging, the buttons and the arrow keys slide the media and the text by one item.
+- From 768px, the items take the first 4 of 12 columns, or 3 from 1280px. Each item's heading is a button with a chevron, dimmed unless its item is open. Clicking an item opens it, showing its body copy and links, and shows its media in columns 6 to 12, or 5 to 12 from 1280px. Clicking the open item closes it.
+- From 768px, the media area takes the first media's aspect ratio, and each media is cropped to fill it, keeping its start edge. Below 1600px, the block's end edge cuts off the media.
+- A video plays while its item is active and in view, and pauses otherwise
 - With reduced motion, the cards, the carousel and the items' text change without animating
-- A video plays while its item is active and at least 40% of it is in view, and pauses otherwise. A video that doesn't loop stops at its end, and one authored with \`#autoplay1#viewportplay\` doesn't play again on its own.
-- \`dark\` gives the block's text light colors and leaves its background transparent, so the section's background shows through
-- The previous and next buttons, the dots and the chevron boxes are white or translucent white in both themes, so the block suits a dark section background
-- \`container\` gives the block 24px of side padding below 768px, and 8.333% of its width from 768px, where the block removes the padding at its end
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different items at each viewport. Mobile-viewport applies below 768px, Tablet-viewport from 768px (to 1279px when there's a Desktop-viewport row) and Desktop-viewport from 1280px. With only Mobile and Desktop rows, Mobile applies below 1280px. A block with only one viewport row shows it at every width. Tablet-viewport and Desktop-viewport rows with no Mobile-viewport row leave the block empty. An empty cell keeps the content of the viewport below it. Classes in parentheses after the name, such as \`Mobile-viewport (spacing-sm)\`, apply to the block at that viewport.
+- \`dark\` gives the block's text light colors and leaves its background transparent. The block's buttons, dots and chevron boxes are light in both themes, so it suits a dark section background.
+- \`container\` gives the block side padding, except at its end from 768px
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different items at each viewport. Mobile-viewport applies below 768px, Tablet-viewport from 768px and Desktop-viewport from 1280px. An empty cell keeps the content of the viewport below it. Classes in parentheses after the name, such as \`Mobile-viewport (spacing-sm)\`, apply to the block at that viewport.
 `;
 
 // Section metadata whose background is the image at `url`, authored as a link whose text is
@@ -50,7 +44,7 @@ export default {
     variants,
     items: {
       control: 'object',
-      description: 'One row each, in order: `heading`, `body`, a link from `ctaLabel` and `ctaHref`, and an `image` with its `imageAlt`. `mobileImage` replaces `image` below 768px, through `Mobile-viewport` and `Tablet-viewport` rows. Leave a value empty to leave it out. An empty `image` leaves an empty frame, or shows `mobileImage` from 768px when that\'s set. With no `heading`, the item\'s button reads Slide 1, Slide 2 and so on from 768px. With no items, the block shows nothing.',
+      description: 'One row each, in order: `heading`, `body`, a link from `ctaLabel` and `ctaHref`, and an `image` with its `imageAlt`. `mobileImage` replaces `image` below 768px, through `Mobile-viewport` and `Tablet-viewport` rows. Leave a value empty to leave it out.',
     },
   },
 };
