@@ -7,10 +7,9 @@ const description = `
 A row of logos that scrolls sideways in a loop, with a button that pauses it. It's authored as one or two rows: the logos, then an optional row of labels.
 
 - The first row holds the logos as icons, such as \`:sr-amazon-logo:\`. Milo loads each icon by its name from Federal's \`/federal/assets/icons/svgs/\` folder, or from Milo's own icons when Federal has none.
-- The second row holds up to three labels separated by \`||\`: the logos' accessible name, the button's name while the logos are paused, and its name while they play
+- The second row holds up to three labels separated by \`||\`: the logos' accessible name, the button's name while the logos are paused, and its name while they play. The button's names are \`Play logos\` and \`Pause logos\` when the row leaves them out.
 - When the logos don't fit in the block with room to spare at each side, they move toward the start of the line: to the left, or to the right on a right-to-left page. They fade out at the end of the row, where the button sits.
 - When the logos fit with room to spare, they're centered and still, with no button
-- The button pauses and plays the logos
 - While the logos play and the block is in view, scrolling the page down moves them further along and scrolling up moves them back
 - With reduced motion, the logos start paused, and the button plays them
 - The block spans the width of its section
@@ -57,7 +56,7 @@ export default {
     variants,
     logos: { control: 'object', description: 'Icon names of the logos, in order. Leave empty and the block does nothing.' },
     label: { control: 'text', description: 'Accessible name of the logos. Leave empty for none.' },
-    playLabel: { control: 'text', description: 'The button\'s name while the logos are paused. Leave empty for `Play logos`.' },
+    playLabel: { control: 'text', description: 'The button\'s name while the logos are paused. Leave this and `pauseLabel` empty for `Play logos`.' },
     pauseLabel: { control: 'text', description: 'The button\'s name while the logos play. Leave empty for `Pause logos`.' },
   },
 };
