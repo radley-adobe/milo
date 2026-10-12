@@ -16,7 +16,7 @@ A hero with an eyebrow, a heading and body copy over an image. It's authored as 
 - The text is at most 4 of 6 columns wide below 768px, 6 of 12 from 768px and 5 of 12 from 1024px
 - Below 768px, the block is at least 400px tall. From 768px, it's 35% of the window's width tall, up to 600px, and grows to fit its text. The text is centered vertically, and from 1440px it sits at the top, 128px down.
 - Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content at each viewport: Mobile below 768px, Tablet from 768px and Desktop from 1280px. With no Tablet row, Mobile shows below 1280px. A row on its own shows at every width, and Tablet and Desktop rows with no Mobile row leave the block empty. Classes in parentheses after a row's name, such as \`Mobile-viewport (dark)\`, apply to the block only at that viewport. An empty cell keeps the content of the viewport below it.
-- When the next section has \`rounded-corners\` or \`rounded-corners-top\`, the image extends 32px below the block, so it shows behind that section's rounded corners. When the section before has \`rounded-corners\` or \`rounded-corners-bottom\`, the image extends 32px above the block the same way.
+- When the next section has \`rounded-corners\` or \`rounded-corners-top\`, the image extends 32px below the block, so it shows behind that section's rounded corners. That section starts at the block's bottom edge, so when it's under 32px tall, the rest of the image shows below it. When the section before has \`rounded-corners\` or \`rounded-corners-bottom\`, the image extends 32px above the block the same way.
 `;
 
 // A story that renders the block from its args. Show code gives the authored markup.
