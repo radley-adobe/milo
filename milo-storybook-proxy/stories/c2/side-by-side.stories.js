@@ -5,29 +5,23 @@ import { sectionMetadata, sideBySide } from './authored.js';
 import { PRODUCT } from './sections/side-by-side.js';
 
 const description = `
-Two cards side by side: an overlay card, with its text over its image, and a stacked card, with its text below its image. It's authored as two rows: a media row, then a text row, each with one cell per card.
+Two cards side by side: an overlay card, with its text over its image, and a stacked card, with its text below its image. It's authored as a media row, then a text row, one cell per card.
 
-- A media cell holds an image or a video. A text cell holds a heading, body copy and links.
-- Headings show at \`heading-6\` size and body copy at \`body-md\`. The paragraph right before the heading shows as an eyebrow.
-- A link alone in its paragraph shows as a label. A link in italics or bold shows as a button.
-- Below 768px the cards stack in one column. From 768px they sit side by side, the overlay card first, in the wider column.
-- An overlay card's image fills the card, and its light text sits over a gradient that darkens the image behind it: at the bottom below 768px, and at the top left from 768px, where the card is 1:1.1
-- A stacked card's image is cropped to 4:5, with the text below it. Below 768px the card leaves empty space on its left.
-- In a stacked card, a media cell with two images or videos, each in its own paragraph, shows the first as an icon over the top-left corner of the second. An icon can be a link to an SVG.
-- A video starts playing when it scrolls into view and pauses when it leaves the view. A video that doesn't loop plays once, and one the visitor paused stays paused.
-- \`reverse\` puts the stacked card first. From 768px the wider column is the second.
-- \`equal\` makes both cards stacked. From 768px they take the second and third of three columns, and the first stays empty.
-- \`featured\` makes one overlay card across the block. From 768px it's 16:9, with its text at the bottom left.
-- \`dark\` gives both cards light text, for a dark section
-- \`scrim-off\` removes the overlay card's gradient
-- \`content-subtle\` shows both cards' body copy in the subtle content color
-- \`small-left\` moves a stacked card's empty space to its right, below 768px
-- \`first-card-<class>\` and \`second-card-<class>\` add a class to the first or second card: \`content-subtle\` for subtle body copy, \`content-solid\` for body copy in the text color in a \`content-subtle\` block, \`dark\` for light text, or \`light\`, which makes the card take its section's colors and gives an overlay card no gradient
-- A \`heading-\`, \`body-\` or \`button-\` class on the block, such as \`heading-5\`, sets the size of every heading, body paragraph or button
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` each start a media row and a text row for one viewport: below 768px, from 768px and from 1280px. Without a \`Tablet-viewport\` row, the \`Mobile-viewport\` rows show below 1280px. One viewport row alone shows its rows, and its classes, at every width. An empty cell keeps the content of the viewport below it.
-- A viewport row can name classes in parentheses, such as \`Mobile-viewport (first-card-dark)\`, which the block takes at that viewport. \`reverse\`, \`equal\` and \`featured\` go on the block itself, because a viewport row's classes don't change which cards are overlay or stacked.
-- \`parallax-stagger-ltr\` on the block moves the cards up into place as the block scrolls into view, from 768px. The second card starts further below than the first. With reduced motion, nothing moves.
-- The block adds nothing to its section. Several Side by Side blocks in a section stack one below another, and \`spacing-\` classes on a block add space above or below it. A \`featured\` block followed by an \`equal\` block has the same gap below it as between cards.
+- A text cell holds a heading at \`heading-6\` size, body copy at \`body-md\` and links
+- A stacked card shows the first of two images, each in its own paragraph, as an icon over the second
+- \`reverse\` puts the stacked card first
+- \`equal\` makes both cards stacked
+- \`featured\` makes one overlay card across the block
+- \`dark\` gives both cards light text
+- \`scrim-off\` removes the gradient behind the overlay card's text
+- \`content-subtle\` gives the body copy the subtle content color
+- \`small-left\` moves a stacked card's empty space from its left to its right, below 768px
+- \`first-card-<class>\` and \`second-card-<class>\` add a class, such as \`dark\`, to the first or second card
+- A \`heading-\`, \`body-\` or \`button-\` class sets the size of every heading, body paragraph or button
+- Below 768px the cards stack in one column
+- A media cell can hold a video, which starts playing when it scrolls into view and pauses when it leaves
+- From 768px, \`parallax-stagger-ltr\` moves the cards up into place as the block scrolls into view. With reduced motion, nothing moves.
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content at each viewport. An empty cell keeps the content of the viewport below it.
 `;
 
 // Authored markup for the block from a story's args, followed by section metadata when `style`
@@ -47,7 +41,7 @@ export default {
     variants,
     cards: {
       control: 'object',
-      description: 'Two cards, or one with `featured`, in order: each with an `image` and its `imageAlt`, an `icon` URL, a `heading`, `body`, and a link from `ctaLabel` and `ctaHref`. Leave a value empty to leave it out.',
+      description: 'Two cards in order, or one with `featured`, each with an image, icon, heading, body copy and link. Leave a value empty for none.',
     },
     showIcon: { control: 'boolean', description: 'Show the icons' },
   },

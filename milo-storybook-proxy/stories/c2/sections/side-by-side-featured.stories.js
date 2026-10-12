@@ -4,24 +4,21 @@ import { section, sectionMetadata, sideBySide } from '../authored.js';
 import { PRODUCT } from './side-by-side.js';
 
 const description = `
-A featured [Side by Side](?path=/docs/blocks-side-by-side--docs) block above an \`equal\` one, in a section with a dark background. Each block's classes set its layout and colors, and the section's metadata sets its width, spacing and background.
+A featured [Side by Side](?path=/docs/blocks-side-by-side--docs) block above an \`equal\` one, in a section with a dark background. Each block is authored as a media row, then a text row, one cell per card.
 
-- \`featured\` makes one overlay card across the block: its image fills the card, and its light text sits at the bottom over a gradient that darkens the image behind it. From 768px the card is 16:9, with its text at the bottom left.
-- A \`featured\` block followed by an \`equal\` block has the same gap below it as between cards
-- \`equal\` makes two stacked cards: each image is cropped to 4:5, with the text below it. From 768px the cards take the second and third of three columns, and the first stays empty.
-- Below 768px the stacked cards stack in one column, and each leaves empty space on its left. \`small-left\` moves that space to its right.
-- \`dark\` gives the \`equal\` block's cards light text. The featured card's text is light without it.
-- Each card has a heading at \`heading-6\` size and body copy at \`body-md\`. The paragraph right before a card's heading shows as an eyebrow.
-- A link alone in its paragraph shows as a label. A link in italics or bold shows as a button.
-- An icon shows over the top-left corner of a stacked card's image. The icon and the image each need their own paragraph in the card's media cell, and an icon can be a link to an SVG.
-- A card's media cell can hold a video instead of an image. A video starts playing when it scrolls into view and pauses when it leaves the view. A video that doesn't loop plays once, and one the visitor paused stays paused.
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` in a block each start a media row and a text row for one viewport: below 768px, from 768px and from 1280px. Without a \`Tablet-viewport\` row, the \`Mobile-viewport\` rows show below 1280px. One viewport row alone shows its rows, and its classes, at every width. An empty cell keeps the content of the viewport below it.
-- A viewport row can name classes in parentheses, such as \`Mobile-viewport (first-card-dark)\`, which the block takes at that viewport. \`reverse\`, \`equal\` and \`featured\` go on the block itself, because a viewport row's classes don't change which cards are overlay or stacked.
+- A text cell holds a heading at \`heading-6\` size, body copy at \`body-md\` and links
+- \`featured\` makes one overlay card across the block, with its light text over its image
+- \`equal\` makes two stacked cards, each with its text below its image
+- \`dark\` gives the \`equal\` block's cards light text
+- \`small-left\` moves a stacked card's empty space from its left to its right, below 768px
 - \`spacing-xs-top\` on the featured block adds space above it
-- \`container, fixed\` gives the section side padding at every width and a maximum content width
+- \`container, fixed\` gives the section side padding and a maximum content width
 - \`spacing-xl-top\` adds padding above the section's content, and \`spacing-2xl-bottom\` adds padding below it
 - \`background\` sets the section's background color
-- Style values are separated by a comma and a space
+- Below 768px the stacked cards stack in one column
+- A video in a media cell starts playing when it scrolls into view and pauses when it leaves
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give a block different content at each viewport. An empty cell keeps the content of the viewport below it.
+- The featured block has the same gap below it as between cards
 `;
 
 // The section's authored markup from a story's args.
@@ -36,7 +33,7 @@ export default {
   argTypes: {
     blocks: {
       control: 'object',
-      description: 'One Side by Side block each, in order: its `classes` and its `cards`, each with an `image` and its `imageAlt`, an `icon` URL, a `heading`, `body`, and a link from `ctaLabel` and `ctaHref`. Leave a value empty to leave it out.',
+      description: 'The Side by Side blocks in order, each with its classes and cards. Leave a value empty for none.',
     },
     style: { control: 'text', description: 'The section\'s style: classes separated by a comma and a space. Leave empty for none.' },
     background: { control: 'text', description: 'The section\'s background color. Leave empty for none.' },
