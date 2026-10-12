@@ -9,21 +9,20 @@ const description = `
 A heading beside a numbered list whose items show images at the pointer on hover. It's authored as a first row with the heading and its text, then one row per item with two cells: the item's text, then its images.
 
 - The first row's cell holds a heading, body copy and a link. The heading shows at \`heading-2\` size.
-- The cell's last paragraph, when its only element is a link, shows as a label: the link gets an arrow after it, takes the text's color and has no underline. Text around the link stays, so body copy with one link and no link paragraph after it shows this way too. Any other link in body copy is black in the light theme and white in the dark one.
-- A paragraph directly above the heading shows as an eyebrow, in the theme's eyebrow color: black at 64% in the light theme and white at 48% in the dark one.
-- The block numbers the items \`1.\`, \`2.\` and so on, in the eyebrow's type but white. Each item's text shows at \`heading-5\` size.
-- An item's image cell holds one or more images. An item with an empty image cell has no images.
-- Below 768px, the first row's text sits above the list, and each item shows its first image as an 80 × 81px thumbnail at its right
-- From 768px, the first row's text and the list sit side by side in two equal columns, and each item shows its first image as a square thumbnail, 25% of the item's width
-- From 768px to 1279px, the first row's text stays 180px below the top of the window as the list scrolls past, until it reaches the list's last two items
-- From 1280px, each item is 100px tall, with no thumbnail, and the first row's text takes 60% of its column's width. Hovering an item tints it white at 8% opacity and shows all its images as 280 × 320px cards above the pointer, over the rest of the page. Each card sits over the one before it, slightly offset. The cards grow in from 60% of their size, follow the pointer and tilt as it moves sideways. Moving off the list or pressing Escape fades them out.
+- A link alone in the cell's last paragraph shows as a label with an arrow after it
+- A paragraph directly above the heading shows as an eyebrow
+- The block numbers the items \`1.\`, \`2.\` and so on. Each item's text shows at \`heading-5\` size.
+- An item's image cell holds one or more images, or none
+- Below 768px, the first row's text sits above the list. From 768px, they sit side by side in two equal columns.
+- Below 1280px, each item shows its first image as a thumbnail beside its text, square from 768px
+- From 768px to 1279px, the first row's text stays in view as the list scrolls past, until it reaches the list's last two items
+- From 1280px, hovering an item tints it and shows all its images as cards above the pointer, over the rest of the page. Each card sits over the one before it, slightly offset. The cards grow in, follow the pointer and tilt as it moves sideways. Moving off the list or pressing Escape fades them out.
 - With reduced motion, the cards show above the pointer at full size, don't move, and hide at once
-- \`compact-headline\` limits the first row's text to 35% of the window's width from 768px to 1279px. From 1280px the text is already 60% of its column, which is narrower, so it changes nothing.
+- \`compact-headline\` limits the width of the first row's text from 768px to 1279px
 - \`no-animation\` hides the images at every width. From 1280px, the items don't respond to hover.
-- The block's text is white and the lines between its items are white at 32% opacity, in both themes, so its section needs a dark background. The Acrobat page's section has a dark gradient image as its background, and the authored stories use the same image.
-- The block adds \`container\`, which gives it 24px of side padding below 768px and 8.333% of its width from 768px, with its content up to 1920px wide
-- Below 768px, the block has 96px of padding at the bottom. From 768px it has 80px at the top and bottom, and from 1280px 128px.
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content below 768px, from 768px to 1279px and from 1280px. Rows of only one viewport apply at every width. With \`Desktop-viewport\` rows and no \`Tablet-viewport\` rows, \`Mobile-viewport\` rows apply below 1280px. With no \`Desktop-viewport\` rows, the highest viewport's rows apply at every width above it. With both \`Tablet-viewport\` and \`Desktop-viewport\` rows and no \`Mobile-viewport\` rows, the block shows nothing. Classes in parentheses after a row's name, such as \`Tablet-viewport (compact-headline)\`, apply only at that viewport. An empty cell keeps the content of the viewport below it. The Acrobat page gives each item one thumbnail image in \`Mobile-viewport\` rows and several images that show together in \`Desktop-viewport\` rows, and the authored stories do the same when any item has a \`thumbnail\`.
+- The block's text is light in both themes, so its section needs a dark background
+- The block adds \`container\`, which sets its side padding and the width of its content
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content below 768px, from 768px to 1279px and from 1280px. With \`Desktop-viewport\` rows and no \`Tablet-viewport\` rows, \`Mobile-viewport\` rows apply below 1280px. Classes in parentheses after a row's name, such as \`Tablet-viewport (compact-headline)\`, apply only at that viewport. An empty cell keeps the content of the viewport below it.
 `;
 
 const image = (name) => `${MEDIA}/hover-list/${name}.webp`;
@@ -93,7 +92,7 @@ export default {
     ctaHref: { control: 'text', description: 'Link URL. Leave empty to link to the current page.' },
     items: {
       control: 'object',
-      description: 'The list\'s items, in order, each with its `text`, the URLs of the `images` that show on hover from 1280px, and the URL of a `thumbnail` that shows beside the text below 1280px. Leave the list empty for a block with only its first row. Leave `thumbnail` empty to show the first of `images` there, and both empty for an item with no images. An empty `text` leaves the item with only its number. An item with a `thumbnail` and no `images` shows its thumbnail on hover. The images have empty alt text.',
+      description: 'The list\'s items, in order, each with its `text`, the URLs of the `images` that show on hover from 1280px, and the URL of a `thumbnail` that shows beside the text below 1280px. Leave `thumbnail` empty to show the first of `images` there, and both empty for an item with no images.',
     },
   },
 };
