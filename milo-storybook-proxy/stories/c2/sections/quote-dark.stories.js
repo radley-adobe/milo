@@ -54,7 +54,7 @@ export const Default = {
 
 // The Creative Cloud Pro product page's section, as published.
 export const CreativeCloudProProduct = {
-  name: 'adobe.com: Creative Cloud Pro product',
+  name: 'Redesign test: Creative Cloud Pro product',
   render: () => renderPageBlock(`${CC_PRO_TEST_FRAGMENTS}/cpro-product`, 'quote', { metadata: true, foundation: 'c2' }),
   parameters: { controls: { disable: true } },
 };

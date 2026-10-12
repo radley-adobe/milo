@@ -94,7 +94,7 @@ export const PdfAndDocumentEssentials = {
 
 // The block and its `dark` section in the Creative Cloud Pro hub test fragment, as published.
 export const CreativeCloudProHub = {
-  name: 'adobe.com: Creative Cloud Pro hub',
+  name: 'Redesign test: Creative Cloud Pro hub',
   render: () => renderPageBlock(`${CC_PRO_TEST_FRAGMENTS}/cpro-hub`, 'logo-ticker', { metadata: true, foundation: 'c2' }),
   parameters: { controls: { include: ['variants'] } },
 };

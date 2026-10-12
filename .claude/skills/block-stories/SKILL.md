@@ -114,7 +114,9 @@ image for each theme, as `stories/c2/sections/bento.js` does for the Bento secti
 
 **Live stories.** Keep stories that render a live page or fragment, after the authored ones, and
 add one for a section that has a published source. They show the block or section as it's
-published. Name each after its source, such as `adobe.com: Homepage` or `Milo library`. Use
+published. Name each after its source, such as `adobe.com: Homepage` or `Milo library`, and a
+story of a redesign test fragment (`ACROBAT_TEST_FRAGMENTS`, `CC_PRO_TEST_FRAGMENTS`) as
+`Redesign test: <page>`. Use
 `renderPageSections(page, name, { index })` for blocks that a section lays out together, or
 `renderPageBlock(page, name, { metadata: true })` for one block with its section's metadata. In a
 block's file, set `parameters: { controls: { include: ['variants'] } }` on them, and in a

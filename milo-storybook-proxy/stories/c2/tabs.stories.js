@@ -126,7 +126,7 @@ export const AcrobatPlans = {
 };
 
 export const CreativeCloudProProduct = {
-  name: 'adobe.com: Creative Cloud Pro product',
+  name: 'Redesign test: Creative Cloud Pro product',
   render: () => renderPageSections(`${CC_PRO_TEST_FRAGMENTS}/cpro-product`, 'tabs', { count: 4, foundation: 'c2' }),
   parameters: { controls: { include: ['variants'] } },
 };

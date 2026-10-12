@@ -5,11 +5,11 @@ import variants from 'virtual:variants/c2/tour';
 export default { title: 'Blocks/Tour', parameters: { cssprops, liveExamples: [LIVE.pdfEssentials] }, argTypes: { variants } };
 
 export const AcrobatLegal = {
-  name: 'adobe.com: Acrobat legal',
+  name: 'Redesign test: Acrobat legal',
   render: () => renderPageBlock(`${ACROBAT_TEST_FRAGMENTS}/modals/legal`, 'tour', { metadata: true, foundation: 'c2' }),
 };
 
 export const CreativeCloudProDesign = {
-  name: 'adobe.com: Creative Cloud Pro design',
+  name: 'Redesign test: Creative Cloud Pro design',
   render: () => renderPageBlock(`${CC_PRO_TEST_FRAGMENTS}/modals/design`, 'tour', { metadata: true, foundation: 'c2' }),
 };

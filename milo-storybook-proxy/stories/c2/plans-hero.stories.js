@@ -62,7 +62,7 @@ export const Default = {
 
 // The fragment's hero, as published.
 export const AcrobatPlans = {
-  name: 'adobe.com: Acrobat plans',
+  name: 'Redesign test: Acrobat plans',
   render: () => renderPageBlock(`${ACROBAT_TEST_FRAGMENTS}/ace1205-plans`, 'plans-hero', { metadata: true, foundation: 'c2' }),
   parameters: { controls: { include: ['variants'] } },
 };

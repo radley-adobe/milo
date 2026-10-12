@@ -113,7 +113,7 @@ export const BlurBackground = {
 };
 
 export const Acrobat = {
-  name: 'adobe.com: Acrobat',
+  name: 'Redesign test: Acrobat',
   render: () => renderPageBlock(`${ACROBAT_TEST_FRAGMENTS}/ace1205-product`, 'quick-actions', { metadata: true, foundation: 'c2' }),
   parameters: { controls: { include: ['variants'] } },
 };

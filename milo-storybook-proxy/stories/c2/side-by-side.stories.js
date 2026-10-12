@@ -136,13 +136,13 @@ export const PdfAndDocumentEssentials = {
 };
 
 export const CreativeCloudProProductEqual = {
-  name: 'adobe.com: Creative Cloud Pro product, equal',
+  name: 'Redesign test: Creative Cloud Pro product, equal',
   render: () => renderPageBlock(product, 'side-by-side', { index: 1, metadata: true, foundation: 'c2' }),
   parameters: { controls: { include: ['variants'] } },
 };
 
 export const CreativeCloudProProductFeatured = {
-  name: 'adobe.com: Creative Cloud Pro product, featured',
+  name: 'Redesign test: Creative Cloud Pro product, featured',
   render: () => renderPageBlock(product, 'side-by-side', { index: 3, metadata: true, foundation: 'c2' }),
   parameters: { controls: { include: ['variants'] } },
 };

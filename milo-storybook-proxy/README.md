@@ -31,7 +31,7 @@ export const Default = {
 The first part of a title is the story's group in the sidebar:
 
 - Blocks: one C2 block, titled with the block's name
-- Sections: a section and the blocks it lays out, such as Base Card (3 up), Product Grid and the Bento sections, and Slide, a section that shows only in a Carousel C2 block. Each has its own file in `stories/c2/sections/` and a Docs page, as a block does. Its Default story renders the section from its args, with controls for its blocks' content and its section metadata settings, and images from `media/`. A section with a published source also has a story that renders it as published, named after its source, such as `adobe.com: Homepage` or `Milo library`, with its controls disabled.
+- Sections: a section and the blocks it lays out, such as Base Card (3 up), Product Grid and the Bento sections, and Slide, a section that shows only in a Carousel C2 block. Each has its own file in `stories/c2/sections/` and a Docs page, as a block does. Its Default story renders the section from its args, with controls for its blocks' content and its section metadata settings, and images from `media/`. A section with a published source also has a story that renders it as published, named after its source, such as `adobe.com: Homepage`, `Milo library` or `Redesign test: Creative Cloud Pro product`, with its controls disabled.
 - Components: Button, from global classes, and Modal
 - Navigation: Global Navigation, Global Footer and Region Nav
 
@@ -61,7 +61,7 @@ Most C2 blocks have no library page. Their stories use pages from the adobe.com 
 
 - `HOMEPAGE` is the redesigned homepage, and `HOMEPAGE_FRAGMENTS` is the folder of fragments it is built from
 - `ACROBAT` is the redesigned Acrobat pages
-- `ACROBAT_TEST_FRAGMENTS` and `CC_PRO_TEST_FRAGMENTS` are the fragments of the Acrobat and Creative Cloud Pro redesign tests. They hold blocks that no published page uses yet.
+- `ACROBAT_TEST_FRAGMENTS` and `CC_PRO_TEST_FRAGMENTS` are the fragments of the Acrobat and Creative Cloud Pro redesign tests. They hold blocks that no published page uses yet. Stories that render them are named `Redesign test: <page>`, such as `Redesign test: Creative Cloud Pro product`.
 - `NALA` is Milo's Nala test pages, one folder per block
 - `FEDERAL` is Federal, the site that holds the global navigation and footer content shared by every adobe.com site
 

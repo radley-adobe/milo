@@ -210,7 +210,7 @@ export const FloatingInput = {
 // The only example of `c2-dark`, on a black background. It renders the live fragment, so it has
 // only the Variants control.
 export const CreativeCloudProHub = {
-  name: 'adobe.com: Creative Cloud Pro hub',
+  name: 'Redesign test: Creative Cloud Pro hub',
   render: () => renderPageBlock(`${CC_PRO_TEST_FRAGMENTS}/cpro-hub`, 'brand-concierge', { metadata: true, foundation: 'c2' }),
   parameters: { controls: { include: ['variants'] } },
 };

@@ -140,7 +140,7 @@ export const Acrobat = {
 
 // The hover list in the Creative Cloud Pro product test fragment, with its section's metadata.
 export const CreativeCloudProProduct = {
-  name: 'adobe.com: Creative Cloud Pro product',
+  name: 'Redesign test: Creative Cloud Pro product',
   render: () => renderPageBlock(`${CC_PRO_TEST_FRAGMENTS}/cpro-product`, 'hover-list', { metadata: true, foundation: 'c2' }),
   parameters: { controls: { include: ['variants'] } },
 };

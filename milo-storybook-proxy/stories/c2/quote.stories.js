@@ -78,13 +78,13 @@ export const RightFooter = {
 };
 
 export const CreativeCloudProProduct = {
-  name: 'adobe.com: Creative Cloud Pro product',
+  name: 'Redesign test: Creative Cloud Pro product',
   render: () => renderPageBlock(`${CC_PRO_TEST_FRAGMENTS}/cpro-product`, 'quote', { metadata: true, foundation: 'c2' }),
   parameters: { controls: { include: ['variants'] } },
 };
 
 export const CreativeCloudProOffer = {
-  name: 'adobe.com: Creative Cloud Pro offer',
+  name: 'Redesign test: Creative Cloud Pro offer',
   render: () => renderPageBlock(`${CC_PRO_TEST_FRAGMENTS}/cpro-offer`, 'quote', { metadata: true, foundation: 'c2' }),
   parameters: { controls: { include: ['variants'] } },
 };

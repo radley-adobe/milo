@@ -186,7 +186,7 @@ export const Acrobat = {
 };
 
 export const CreativeCloudProProduct = {
-  name: 'adobe.com: Creative Cloud Pro product',
+  name: 'Redesign test: Creative Cloud Pro product',
   render: () => renderPageBlock(`${CC_PRO_TEST_FRAGMENTS}/cpro-product`, 'product-marquee-grid', { metadata: true, foundation: 'c2' }),
   parameters: { controls: { include: ['variants'] } },
 };

@@ -69,7 +69,7 @@ export const Default = {
 
 // The fragment's hero section and the section after it, as published.
 export const AcrobatPlans = {
-  name: 'adobe.com: Acrobat plans',
+  name: 'Redesign test: Acrobat plans',
   render: () => renderPageSections(`${ACROBAT_TEST_FRAGMENTS}/ace1205-plans`, 'plans-hero', { count: 2, foundation: 'c2' }),
   parameters: { controls: { disable: true } },
 };
