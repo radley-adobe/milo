@@ -11,8 +11,8 @@ A customer quote beside an image. It's authored as two rows: the text and a back
 - A curly opening quote mark, such as “, at the start of the quote or heading hangs outside the text's edge
 - The first row's second cell holds a CSS color for the background behind the image and text. Without it, there's no background.
 - Below 768px, the image sits above the text. From 768px, the text sits on the start side and the image on the end side, each taking half the block, with the quote or heading at the top and the caption or the rest of the text at the bottom.
-- As the block scrolls into view, it shrinks from the width of the window to its own size, while the image zooms out and the text moves up into place. Without CSS scroll-driven animations, or with reduced motion, nothing moves.
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content at each viewport, with tablet from 768px and desktop from 1280px. An empty cell keeps the content of the viewport below it. Classes in brackets after the name, such as \`mobile-viewport(fluid)\`, apply to the block at that viewport.
+- As the block scrolls into view, it shrinks from the width of the window to its own size, while the image zooms out and the text moves up into place. From 768px, the text keeps its size as the block shrinks. Without CSS scroll-driven animations, or with reduced motion, nothing moves.
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content at each viewport, with tablet from 768px and desktop from 1280px. An empty cell keeps the content of the viewport below it. Classes in parentheses after the name, such as \`mobile-viewport(fluid)\`, apply to the block at that viewport.
 - \`container\` among the block's classes adds side padding and a maximum content width. \`fluid\` removes the padding and raises the maximum width, and \`fixed\` keeps the padding from 768px the same as below it.
 - The block adds no class to its section. Several Social Proof blocks in one section stack with no space between them.
 `;
