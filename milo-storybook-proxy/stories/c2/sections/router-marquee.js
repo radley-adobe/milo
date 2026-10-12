@@ -49,7 +49,7 @@ export const routerMarquee = ({ variants: classes = [], slides = [] }) => {
 </div>`.trim().replace(/^\s*\n/gm, '');
 };
 
-export const SLIDES_DESCRIPTION = 'One slide each, in order: an `eyebrow`, `heading` and `body`, a primary button from `ctaLabel` and `ctaHref`, the card\'s `icon`, the URL of an SVG, and its `label` linking to `labelHref`, and a background `image` with its `imageAlt`. `mobileImage` replaces `image` below 768px. `secondaryCtaLabel` and `secondaryCtaHref` add a secondary button, which shows from 1280px. `heading` is required: a slide without one stops the block from working. Leave `imageAlt` empty when the image is decorative. Leave another value empty to leave it out, apart from these: an empty `image` keeps `mobileImage` at every width, an empty `label` labels the card with the heading and links it to the current page, and an empty `ctaHref`, `secondaryCtaHref` or `labelHref` links the button or card to the current page. Without an icon, the label shows as body copy and the card shows the heading and links to the current page.';
+export const SLIDES_DESCRIPTION = 'One slide each, in order: an `eyebrow`, `heading` and `body`, a primary button from `ctaLabel` and `ctaHref`, the card\'s `icon`, the URL of an SVG, and its `label` linking to `labelHref`, and a background `image` with its `imageAlt`. `mobileImage` replaces `image` below 768px, and `secondaryCtaLabel` and `secondaryCtaHref` add a secondary button. `heading` is required. Leave `imageAlt` empty when the image is decorative. Leave another value empty to leave it out, apart from `image`, which then keeps `mobileImage` at every width, and `icon` or `label`, which then label the card with the heading.';
 
 const slide = (name, iconName, text) => ({
   ...text,
