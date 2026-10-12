@@ -126,7 +126,7 @@ add a play function to the default export, modeled on Carousel C2 or Modal.
   change to the block or to a function the helpers call. Fix the story or `src/milo.js`. If the
   live page is broken and nothing in this folder can fix it, leave the story alone. The run then
   fails with that finding.
-  If a story can never render in a headless browser, add its title to `NO_RENDER` in
+  If a story can never render in a headless browser, add its id to `NO_RENDER` in
   `scripts/check.js` and its reason to README › Known limits.
 - **Stories whose play function fails.** A play function sits on its file's default export, so
   every story in the file runs it, and it assumes the example has something to interact with. If a

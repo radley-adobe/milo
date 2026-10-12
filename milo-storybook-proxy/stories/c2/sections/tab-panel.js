@@ -15,9 +15,9 @@ export const tabs = ({
   <div>
     <div>
       ${radioLabel ? `<p>${radioLabel}</p>` : ''}
-      <ol>
+      ${items.length ? `<ol>
         ${items.map(({ label }) => `<li>${label}</li>`).join('\n        ')}
-      </ol>
+      </ol>` : ''}
     </div>
   </div>
 ${rows.join('\n')}

@@ -14,7 +14,7 @@ A row of tabs that each show a [Tab Panel](?path=/docs/sections-tab-panel--docs)
 - \`pretext\` is the tab list's accessible name
 - \`remember\` set to \`on\` shows the tab last selected on the page again when the page reloads in the same browser tab. Without an \`id\`, this works only for a tab whose label has no spaces or hyphens.
 - With an \`id\`, \`?tab=<id>-<number>\` in the page's URL selects that tab, and \`?<id>=<value>\` selects the tab whose panel section has a \`deeplink\` row with that value
-- By default, the tabs are 32px high on a rounded track tinted black at 4% opacity, and the selected tab is a black pill that slides to the next tab selected. The block adds \`pill\` for this style.
+- By default, the tabs are 32px high, at the start of a rounded track at least 300px wide and tinted black at 4% opacity, and the selected tab is a black pill that slides to the next tab selected. The block adds \`pill\` for this style.
 - \`quiet\` shows the tabs as text at \`heading-4\` size, 24px apart, with a blue line under the selected tab
 - \`radio\` shows a radio button for each tab, 16px apart, in a rounded light gray bar. A paragraph above the list shows at the start of the bar and names the group. Without one, \`pretext\` names it.
 - \`dark\` gives the block Milo's dark colors, for a black section: a dark gray track or bar, and a white selected pill or radio button
@@ -22,8 +22,8 @@ A row of tabs that each show a [Tab Panel](?path=/docs/sections-tab-panel--docs)
 - Below 768px, the tab list sits in a strip as wide as the viewport, 24px in from each edge, and the block clips the strip at its own edges. With \`quiet\`, the strip is as wide as the block, and the list 24px in from each side.
 - A pill tab list scrolls sideways when its tabs don't fit. \`quiet\` and \`radio\` lists scroll only below 768px. Selecting or focusing a tab scrolls it into view.
 - The block has a white background, apart from \`quiet\`, \`radio\` and \`dark\` pills. \`background-transparent\` removes it.
-- A section with the \`tabs-background-transparent\` style removes the white background and the track of the Tabs blocks in it
-- \`staggered-intro-merch-cards\` fades the merch cards in the shown panel in and moves them up into place, one after another, 0.1s apart, when the page loads and when a tab is selected. With reduced motion, nothing moves.
+- A section with the \`tabs-background-transparent\` style removes the white background of the Tabs blocks in it, and the track of pills without \`dark\`
+- \`staggered-intro-merch-cards\` fades the merch cards in the shown panel in and moves them up into place when the page loads and when a tab is selected: the first eight 0.1s apart, and later ones with the first. With reduced motion, nothing moves.
 - The tab list has the \`tablist\` role, and each panel the \`tabpanel\` role, named by its tab. The left and right arrow keys move focus between the tabs, in reverse on a right-to-left page, and Enter or Space selects one. With \`radio\`, the list is a \`radiogroup\`, its panels have no role, and the arrow keys select the next or previous tab.
 - Selecting a tab sends a \`milo:tab:changed\` event, which the Actions tab logs
 - The block adds \`tablist-<id>-section\` to its section, where \`<id>\` is its \`id\`, or its number among the page's Tabs blocks
