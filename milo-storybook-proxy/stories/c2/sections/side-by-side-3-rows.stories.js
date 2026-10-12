@@ -17,10 +17,10 @@ Three [Side by Side](?path=/docs/blocks-side-by-side--docs) blocks, one below an
 - A link alone in its paragraph shows as a label. A link in italics or bold shows as a button.
 - An icon shows over the top-left corner of a stacked card's image. The icon and the image each need their own paragraph in the card's media cell, and an icon can be a link to an SVG.
 - A card's media cell can hold a video instead of an image. A video starts playing when it scrolls into view and pauses when it leaves the view. A video that doesn't loop plays once, and one the visitor paused stays paused.
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` in a block each start a media row and a text row for one viewport: below 768px, from 768px and from 1280px. Without a \`Tablet-viewport\` row, the \`Mobile-viewport\` rows show below 1280px. An empty cell keeps the content of the viewport below it.
-- A viewport row can name classes in parentheses, such as \`Mobile-viewport (first-card-dark)\`, which the block takes at that viewport
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` in a block each start a media row and a text row for one viewport: below 768px, from 768px and from 1280px. Without a \`Tablet-viewport\` row, the \`Mobile-viewport\` rows show below 1280px. One viewport row alone shows its rows, and its classes, at every width. An empty cell keeps the content of the viewport below it.
+- A viewport row can name classes in parentheses, such as \`Mobile-viewport (first-card-dark)\`, which the block takes at that viewport. \`reverse\`, \`equal\` and \`featured\` go on the block itself, because a viewport row's classes don't change which cards are overlay or stacked.
 - The blocks stack with no space between them. \`spacing-xs-top\` adds space above a block, and \`spacing-3xl-bottom\` and \`spacing-2xs-bottom\` add space below it.
-- \`parallax-stagger-ltr\` on a block moves its cards up into place as the block scrolls into view, from 768px, the second card from further below than the first. With reduced motion, nothing moves.
+- \`parallax-stagger-ltr\` on a block moves its cards up into place as the block scrolls into view, from 768px. The second card starts further below than the first. With reduced motion, nothing moves.
 - \`container, fixed\` gives the section side padding at every width and a maximum content width
 - \`background\` sets the section's background color
 - Style values are separated by a comma and a space

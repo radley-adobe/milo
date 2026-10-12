@@ -24,9 +24,9 @@ Two cards side by side: an overlay card, with its text over its image, and a sta
 - \`small-left\` moves a stacked card's empty space to its right, below 768px
 - \`first-card-<class>\` and \`second-card-<class>\` add a class to the first or second card: \`content-subtle\` for subtle body copy, \`content-solid\` for body copy in the text color in a \`content-subtle\` block, \`dark\` for light text, or \`light\`, which makes the card take its section's colors and gives an overlay card no gradient
 - A \`heading-\`, \`body-\` or \`button-\` class on the block, such as \`heading-5\`, sets the size of every heading, body paragraph or button
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` each start a media row and a text row for one viewport: below 768px, from 768px and from 1280px. Without a \`Tablet-viewport\` row, the \`Mobile-viewport\` rows show below 1280px. An empty cell keeps the content of the viewport below it.
-- A viewport row can name classes in parentheses, such as \`Mobile-viewport (first-card-dark)\`, which the block takes at that viewport
-- \`parallax-stagger-ltr\` on the block moves the cards up into place as the block scrolls into view, from 768px, the second card from further below than the first. With reduced motion, nothing moves.
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` each start a media row and a text row for one viewport: below 768px, from 768px and from 1280px. Without a \`Tablet-viewport\` row, the \`Mobile-viewport\` rows show below 1280px. One viewport row alone shows its rows, and its classes, at every width. An empty cell keeps the content of the viewport below it.
+- A viewport row can name classes in parentheses, such as \`Mobile-viewport (first-card-dark)\`, which the block takes at that viewport. \`reverse\`, \`equal\` and \`featured\` go on the block itself, because a viewport row's classes don't change which cards are overlay or stacked.
+- \`parallax-stagger-ltr\` on the block moves the cards up into place as the block scrolls into view, from 768px. The second card starts further below than the first. With reduced motion, nothing moves.
 - The block adds nothing to its section. Several Side by Side blocks in a section stack one below another, and \`spacing-\` classes on a block add space above or below it. A \`featured\` block followed by an \`equal\` block has the same gap below it as between cards.
 `;
 

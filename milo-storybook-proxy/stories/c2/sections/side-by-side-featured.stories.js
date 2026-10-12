@@ -15,8 +15,8 @@ A featured [Side by Side](?path=/docs/blocks-side-by-side--docs) block above an 
 - A link alone in its paragraph shows as a label. A link in italics or bold shows as a button.
 - An icon shows over the top-left corner of a stacked card's image. The icon and the image each need their own paragraph in the card's media cell, and an icon can be a link to an SVG.
 - A card's media cell can hold a video instead of an image. A video starts playing when it scrolls into view and pauses when it leaves the view. A video that doesn't loop plays once, and one the visitor paused stays paused.
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` in a block each start a media row and a text row for one viewport: below 768px, from 768px and from 1280px. Without a \`Tablet-viewport\` row, the \`Mobile-viewport\` rows show below 1280px. An empty cell keeps the content of the viewport below it.
-- A viewport row can name classes in parentheses, such as \`Mobile-viewport (first-card-dark)\`, which the block takes at that viewport
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` in a block each start a media row and a text row for one viewport: below 768px, from 768px and from 1280px. Without a \`Tablet-viewport\` row, the \`Mobile-viewport\` rows show below 1280px. One viewport row alone shows its rows, and its classes, at every width. An empty cell keeps the content of the viewport below it.
+- A viewport row can name classes in parentheses, such as \`Mobile-viewport (first-card-dark)\`, which the block takes at that viewport. \`reverse\`, \`equal\` and \`featured\` go on the block itself, because a viewport row's classes don't change which cards are overlay or stacked.
 - \`spacing-xs-top\` on the featured block adds space above it
 - \`container, fixed\` gives the section side padding at every width and a maximum content width
 - \`spacing-xl-top\` adds padding above the section's content, and \`spacing-2xl-bottom\` adds padding below it
