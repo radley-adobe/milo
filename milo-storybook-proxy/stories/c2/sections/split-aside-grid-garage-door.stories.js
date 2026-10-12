@@ -65,7 +65,7 @@ export default {
     body: { control: 'text', description: 'Body copy below the heading. Leave empty for none.' },
     items: {
       control: 'object',
-      description: 'One Split Aside Grid row each, in order: `heading`, `body`, a link from `ctaLabel` and `ctaHref`, and an `image` with its `imageAlt`. `mobileImage` replaces `image` below 768px. Leave a value empty to leave it out. An empty `image` leaves an empty frame.',
+      description: 'One Split Aside Grid row each, in order: `heading`, `body`, a link from `ctaLabel` and `ctaHref`, and an `image` with its `imageAlt`. `mobileImage` replaces `image` below 768px. Leave a value empty to leave it out. An empty `image` leaves an empty frame, or shows `mobileImage` from 768px when that\'s set. With no `heading`, the item\'s button reads Slide 1, Slide 2 and so on from 768px.',
     },
     background: { control: 'text', description: 'The section\'s background: an image URL, authored as a link whose text is the URL, or a color. Leave empty for none.' },
     style: { control: 'text', description: 'The section\'s style: classes separated by a comma and a space. Leave empty for none.' },

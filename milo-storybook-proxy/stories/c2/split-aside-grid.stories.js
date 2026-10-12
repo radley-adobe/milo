@@ -6,7 +6,7 @@ import { attr, sectionMetadata, splitAsideGrid } from './authored.js';
 const description = `
 A list of items beside a stack of their images. It's authored as one row per item with two cells: the item's text, then its image or video.
 
-- The text cell holds a heading, body copy and links. The heading shows at \`heading-5\` size.
+- The text cell holds a heading, body copy and links. The heading shows at \`heading-5\` size. With no heading, the item's button reads Slide 1, Slide 2 and so on from 768px.
 - A link alone in its paragraph shows as a bold label with an arrow
 - The block takes each row's second cell as the item's media. An empty cell shows an empty frame.
 - Below 768px, the media form a stack of 245 × 465px cards with the active item's card in front. Each card behind it sits 10px further toward the end edge, 4% shorter and gray, with its image hidden. Previous and next buttons and a dot for each item sit below the stack, then the active item's text.
@@ -18,9 +18,9 @@ A list of items beside a stack of their images. It's authored as one row per ite
 - From 768px, the media area takes the first media's aspect ratio, or 4:3, and is at least 480px high. Each media is cropped to fill it, keeping its start edge, inside a translucent frame with rounded corners.
 - A video plays while its item is active and at least 40% of it is in view, and pauses otherwise
 - \`dark\` gives the block's text light colors and leaves its background transparent, so the section's background shows through
-- The previous and next buttons, the dots and the chevron boxes are white or translucent white in both themes, so the block suits a dark section background. Both adobe.com pages put the block, with \`dark\`, over a dark section background image, and so do the stories.
-- \`container\` gives the block 24px of side padding below 768px, and 8.333% of its width from 768px, where the block removes the padding at its end. Both adobe.com pages author it, and so do the stories.
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different items at each viewport. An empty cell keeps the content of the viewport below it. Classes in parentheses after the name, such as \`Mobile-viewport (spacing-sm)\`, apply to the block at that viewport.
+- The previous and next buttons, the dots and the chevron boxes are white or translucent white in both themes, so the block suits a dark section background.
+- \`container\` gives the block 24px of side padding below 768px, and 8.333% of its width from 768px, where the block removes the padding at its end.
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different items at each viewport. Mobile-viewport applies below 768px, Tablet-viewport from 768px (to 1279px when there's a Desktop-viewport row) and Desktop-viewport from 1280px. With only Mobile and Desktop rows, Mobile applies below 1280px. An empty cell keeps the content of the viewport below it. Classes in parentheses after the name, such as \`Mobile-viewport (spacing-sm)\`, apply to the block at that viewport.
 `;
 
 // Section metadata whose background is the image at `url`, authored as a link whose text is
@@ -50,13 +50,13 @@ export default {
     dark: { control: 'boolean', description: 'Give the block light text (`dark`). Its background stays transparent.' },
     items: {
       control: 'object',
-      description: 'One row each, in order: `heading`, `body`, a link from `ctaLabel` and `ctaHref`, and an `image` with its `imageAlt`. `mobileImage` replaces `image` below 768px, through `Mobile-viewport` and `Tablet-viewport` rows. Leave a value empty to leave it out. An empty `image` leaves an empty frame.',
+      description: 'One row each, in order: `heading`, `body`, a link from `ctaLabel` and `ctaHref`, and an `image` with its `imageAlt`. `mobileImage` replaces `image` below 768px, through `Mobile-viewport` and `Tablet-viewport` rows. Leave a value empty to leave it out. An empty `image` leaves an empty frame, or shows `mobileImage` from 768px when that\'s set. With no `heading`, the item\'s button reads Slide 1, Slide 2 and so on from 768px.',
     },
   },
 };
 
-// The Acrobat page's PDF Spaces items over its section background. The page shows portrait
-// images below 768px and the posters of its videos from 768px.
+// The Acrobat page's PDF Spaces items over its section background. The story shows the page's
+// portrait images below 768px and, from 768px, the posters of its videos.
 export const Default = {
   ...blockStory(background(media('pdf-spaces-background.svg'))),
   args: {
