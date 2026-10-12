@@ -37,10 +37,10 @@ const slide = ({ icon: iconUrl, iconAlt, label, heading, body, href, poster, vid
       <p>${href ? `<a href="${attr(href)}">${href}${name ? ` | ${name}` : ''}</a>` : ''}</p>
     </div>
     <div>
-      <picture>
+      <picture>${poster ? `
         <source type="image/webp" srcset="${attr(poster)}" media="(min-width: 600px)">
-        <source type="image/webp" srcset="${attr(poster)}">
-        <img src="${attr(poster)}" alt="${attr(video ? `${video} | ${videoAlt ?? ''}` : videoAlt)}">
+        <source type="image/webp" srcset="${attr(poster)}">` : ''}
+        <img${poster ? ` src="${attr(poster)}"` : ''} alt="${attr(video ? `${video} | ${videoAlt ?? ''}` : videoAlt)}">
       </picture>
     </div>
   </div>`;
@@ -63,13 +63,13 @@ const poster = (name) => `${MEDIA}/elastic-carousel/${name}.webp`;
 
 export default {
   title: 'Blocks/Elastic Carousel',
-  parameters: { cssprops, liveExamples: [LIVE.home], docs: { description: { component: description } } },
+  parameters: { cssprops, layout: 'fullscreen', liveExamples: [LIVE.home], docs: { description: { component: description } } },
   argTypes: {
     variants,
     name: { control: 'text', description: 'The carousel\'s name, after a `|` in the first slide\'s link text. Leave empty for `Adobe slides`.' },
     slides: {
       control: 'object',
-      description: 'One row each, in order: an `icon` URL with its `iconAlt`, a `label`, `heading` and `body`, the URL the slide links to in `href`, a `poster` image URL, and the `video` URL with its description in `videoAlt`. Every slide needs an `icon`, or the block fails to load, and an `href`, or the slide links to `undefined`. `video` is a `media_*.mp4` URL on adobe.com or an aem.live or aem.page site, or the slide shows a link instead of the video. Leave `iconAlt` empty for a decorative icon, `label`, `heading` or `body` empty for an empty element, `poster` empty for a video with no poster, or `video` empty to show the poster as an image, no wider than the slide and not cropped, with `videoAlt` as its alt text. Milo drops `videoAlt` when `video` is set.',
+      description: 'One row each, in order: an `icon` URL with its `iconAlt`, a `label`, `heading` and `body`, the URL the slide links to in `href`, a `poster` image URL, and the `video` URL with its description in `videoAlt`. Every slide needs an `icon`, or the block fails to load, and an `href`, or the slide links to `undefined`. `video` is a `media_*.mp4` URL on adobe.com or an aem.live or aem.page site, or the slide shows a link instead of the video. Leave `iconAlt` empty for a decorative icon, `label`, `heading` or `body` empty for an empty element, `poster` empty for a video with no poster, or `video` empty to show the poster as an image, no wider than the slide and not cropped, with `videoAlt` as its alt text. With both empty, the slide shows the `videoAlt` text instead of an image. Milo drops `videoAlt` when `video` is set. An empty list leaves an empty block, 576px high from 768px or 594px from 1280px.',
     },
   },
 };
