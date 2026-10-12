@@ -30,9 +30,9 @@ const tile = ({ label, href, image: src, imageAlt }) => `
     <div>${src ? `<picture><img src="${attr(src)}" alt="${attr(imageAlt)}"></picture>` : ''}</div>
   </div>`;
 
-// Authored markup for the block from a story's args, followed by section metadata when `style`
-// sets the section's style. The header row stays out when it has no heading, because the block
-// makes a header only from a first row with a heading. `showHeader` is true unless set.
+// Authored markup for the block from a story's args. The header row stays out when it has no
+// heading, because the block makes a header only from a first row with a heading. `showHeader` is
+// true unless set.
 const block = ({
   variants: classes = [], blurBackground, showHeader = true, heading, body, ctaLabel, ctaHref, tiles = [],
 }) => `
@@ -46,6 +46,8 @@ const block = ({
   </div>` : ''}${tiles.map(tile).join('')}
 </div>`.trim().replace(/^\s*\n/gm, '');
 
+// Authored markup for the block from a story's args, followed by section metadata when `style`
+// sets the section's style.
 const authored = (args, style) => [block(args), sectionMetadata({ style })].filter(Boolean).join('\n');
 
 // A story that renders the block from its args. Show code gives the authored markup.
@@ -67,7 +69,7 @@ export default {
     ctaHref: { control: 'text', description: 'Header link URL' },
     tiles: {
       control: 'object',
-      description: 'One tile row each, in order: a `label` linked to `href`, and an `image` with its `imageAlt`. Leave `label` empty for a tile with no link or label, or `image` empty for a tile with no image.',
+      description: 'One tile row each, in order: a `label` linked to `href`, and an `image` with its `imageAlt`. Leave `label` empty for a tile with no link or label, or `image` empty for a tile with no image. Leave `imageAlt` empty when the image is decorative.',
     },
   },
 };
