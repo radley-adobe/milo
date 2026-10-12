@@ -13,7 +13,7 @@ A [Split Aside Grid](?path=/docs/blocks-split-aside-grid--docs) below a heading,
 - \`spacing-4xl-top\` adds padding above the section
 - Style values are separated by a comma and a space. A space inside a value becomes a hyphen, and capitals don't matter.
 - Each grid item holds a heading at \`heading-5\` size, body copy and a link, and an image or video. A link alone in its paragraph shows as a bold label with an arrow. A video plays while its item is active and in view, and pauses otherwise.
-- Below 768px, the images form a stack of cards with the active item's card in front, then previous and next buttons and a dot for each item, then the active item's text. Dragging the front card, the buttons and the left and right arrow keys move between items, and the items loop.
+- Below 768px, the images form a stack of cards with the active item's card in front and the cards behind it showing no image, then previous and next buttons and a dot for each item, then the active item's text. Dragging the front card, the buttons and, when focus is in the block, the left and right arrow keys move between items, and the items loop.
 - From 768px, the items take the first 4 of 12 columns, or 3 from 1280px, with each heading as a button, dimmed unless its item is open. Clicking an item opens it and shows its image beside the list, at the first image's aspect ratio. Clicking the open item closes it. Below 1600px, the block's end edge cuts off the image.
 - With reduced motion, the grid's cards and the items' text change without animating
 - Each item's portrait image below 768px comes from a \`Mobile-viewport\` row, and its landscape image from 768px from a \`Tablet-viewport\` row. The tablet rows' empty text cells keep the text of the mobile rows.
