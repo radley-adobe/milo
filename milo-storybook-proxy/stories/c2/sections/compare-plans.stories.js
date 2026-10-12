@@ -10,9 +10,10 @@ A [Comparison Table C2](?path=/docs/blocks-comparison-table-c2--docs) on a light
 - \`spacing-md\` adds 24px of padding above and below the section, 48px from 1280px. The block adds 40px of its own above and below, 80px from 900px.
 - \`background\` sets the section's background color, light gray in both themes. The block's cards are white and its text dark in either theme, so it needs a light background.
 - Style values are separated by a comma and a space, and capitals don't matter
-- The block's header row holds a heading, shown at \`heading-4\` size, and one card per plan. Paragraphs holding only \`-\` split a card into parts: a label and the plan's name, a price and its terms, and a button.
+- The block's header row holds a heading, shown at \`heading-4\` size, and one card per plan. Paragraphs holding only \`-\` split a card into parts: a label and the plan's name, a price and its terms, and a button. In the first part, the plan's name shows at \`heading-5\` size and the label in gray at label size.
 - In a card's third part, a bold link shows as a filled blue button and an italic link as an outlined button, each as wide as the card. The first paragraph without a button shows above them in label size.
 - From 900px, the cards sit in a row to the right of the heading and stick 24px below the global navigation as the page scrolls. Scrolling down while they're stuck shrinks each card to its label and name, and scrolling up shows the rest again.
+- From 900px, the block's grid gives the heading and each plan a column at least 100px wide, 16px apart, and the cards fill the plan columns, 8px apart. Each feature row splits the block's full width into equal columns at least 100px wide. The cards have 16px of padding, 24px from 1440px.
 - \`static-header\` on the block turns the sticking and shrinking off, so the cards scroll with the page
 - In browsers with scroll-driven animations, the cards fade out as the end of the block scrolls up the window, unless reduced motion is set
 - Below 900px, the cards sit in two columns and only the first two plans show. With more than two plans, each card's heading opens a menu that chooses the plan its column shows.
