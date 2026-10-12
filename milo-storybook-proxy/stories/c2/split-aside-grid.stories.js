@@ -6,16 +6,15 @@ import { attr, sectionMetadata, splitAsideGrid } from './authored.js';
 const description = `
 A list of items beside a stack of their images. It's authored as one row per item with two cells: the item's text, then its image or video.
 
-- The text cell holds a heading at \`heading-5\` size, body copy and links. A link alone in its paragraph shows as a bold label with an arrow.
-- Below 768px, the media form a stack of cards with the active item's card in front and the cards behind it showing no image, then previous and next buttons and a dot for each item, then the active item's text. Dragging the front card, the buttons and, when focus is in the block, the left and right arrow keys move between items, and the items loop.
-- \`mobile-carousel\` lines the media up side by side below 768px instead of stacking them, each at the first media's aspect ratio and running past the window's edge. Dragging, the buttons and the arrow keys slide the media and the text by one item, and the items loop.
-- From 768px, the items take the first 4 of 12 columns, or 3 from 1280px. Each item's heading is a button with a chevron, dimmed unless its item is open. Clicking an item opens it, showing its body copy and links, and shows its media in columns 6 to 12, or 5 to 12 from 1280px. Clicking the open item closes it.
-- From 768px, the media area takes the first media's aspect ratio, and each media is cropped to fill it, keeping its start edge. Below 1600px, the block's end edge cuts off the media.
-- A video plays while its item is active and in view, and pauses otherwise
-- With reduced motion, the cards, the carousel and the items' text change without animating
-- \`dark\` gives the block's text light colors and leaves its background transparent. The block's buttons, dots and chevron boxes are light in both themes, so it suits a dark section background.
+- The text cell holds a heading at \`heading-5\` size, body copy and links
+- \`dark\` gives the block light text and a transparent background
+- \`mobile-carousel\` lines the media up side by side below 768px instead of stacking them
 - \`container\` gives the block side padding, except at its end from 768px
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different items at each viewport. Mobile-viewport applies below 768px, Tablet-viewport from 768px and Desktop-viewport from 1280px. With only Mobile-viewport and Desktop-viewport rows, Mobile-viewport applies below 1280px. A viewport row on its own applies at every width, and Tablet-viewport and Desktop-viewport rows with no Mobile-viewport row leave the block empty. An empty cell keeps the content of the viewport below it. Classes in parentheses after the name, such as \`Mobile-viewport (spacing-sm)\`, apply to the block at that viewport.
+- Below 768px, the media form a stack of cards above previous and next buttons, a dot for each item and the active item's text
+- Below 768px, dragging the front card or clicking the buttons moves between items, and the items loop. With reduced motion, the cards, the carousel and the text change without animating.
+- From 768px, clicking an item opens it, showing its body copy, links and media, and clicking the open item closes it
+- A video plays while its item is active and in view, and pauses otherwise
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different items at each viewport. An empty cell keeps the content of the viewport below it.
 `;
 
 // Section metadata whose background is the image at `url`, authored as a link whose text is
@@ -44,7 +43,7 @@ export default {
     variants,
     items: {
       control: 'object',
-      description: 'One row each, in order: `heading`, `body`, a link from `ctaLabel` and `ctaHref`, and an `image` with its `imageAlt`. `mobileImage` replaces `image` below 768px, through `Mobile-viewport` and `Tablet-viewport` rows. Leave a value empty to leave it out.',
+      description: 'One row each: `heading`, `body`, a link from `ctaLabel` and `ctaHref`, an `image` with its `imageAlt`, and a `mobileImage` that replaces `image` below 768px',
     },
   },
 };

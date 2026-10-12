@@ -3,20 +3,17 @@ import cssprops from 'virtual:cssprops/c2/split-aside-grid';
 import { attr, section, sectionMetadata, splitAsideGrid } from '../authored.js';
 
 const description = `
-A [Split Aside Grid](?path=/docs/blocks-split-aside-grid--docs) below a heading, over a dark background image. A Rich Content block holds the heading, and the section's metadata sets the background, spacing and motion.
+A [Split Aside Grid](?path=/docs/blocks-split-aside-grid--docs) below a Rich Content block with an eyebrow, an \`h2\` heading and body copy, over a dark background image. The section's metadata sets the background, spacing and motion.
 
-- The Rich Content block holds an eyebrow, an \`h2\` heading and body copy. Its \`dark\` gives it light text, \`container\` gives it side padding, \`narrow\` limits the width of the heading and body copy from 768px, and \`spacing-xs-bottom\` adds padding below it.
-- A \`Tablet-viewport (center)\` row centers the Rich Content block's text from 768px. Its empty cell keeps the text of the \`Mobile-viewport\` row.
-- The Split Aside Grid has \`dark\`, which gives its text light colors and leaves its background transparent, and \`container\`, which gives it side padding, except at its end from 768px
-- \`background\` sets the section's background: a color, or an image that covers the section. A link whose text is the URL of an SVG, as here, shows the SVG. The grid's previous and next buttons, dots and chevron boxes are light in both themes, so it needs a dark background.
-- \`parallax-double-garage-door\` moves the section down into place as it scrolls into view, and down again as it scrolls out. The section before it sits in front of it. Without CSS scroll-driven animations, or with reduced motion, nothing moves.
+- The Rich Content block's \`dark\` gives it light text, \`container\` side padding and \`spacing-xs-bottom\` padding below, and \`narrow\` narrows its heading and body copy from 768px
+- A \`Tablet-viewport (center)\` row centers the Rich Content block's text from 768px, and its empty cell keeps the \`Mobile-viewport\` text
+- The grid's \`dark\` gives it light text, and its \`container\` side padding except at its end from 768px
+- \`background\` sets the section's background color or image
+- \`parallax-double-garage-door\` moves the section down into place as it scrolls into view, and down again as it scrolls out. With reduced motion, nothing moves.
 - \`spacing-4xl-top\` adds padding above the section
-- Style values are separated by a comma and a space. A space inside a value becomes a hyphen, and capitals don't matter.
-- Each grid item holds a heading at \`heading-5\` size, body copy and a link, and an image or video. A link alone in its paragraph shows as a bold label with an arrow. A video plays while its item is active and in view, and pauses otherwise.
-- Below 768px, the images form a stack of cards with the active item's card in front and the cards behind it showing no image, then previous and next buttons and a dot for each item, then the active item's text. Dragging the front card, the buttons and, when focus is in the block, the left and right arrow keys move between items, and the items loop.
-- From 768px, the items take the first 4 of 12 columns, or 3 from 1280px, with each heading as a button, dimmed unless its item is open. Clicking an item opens it and shows its image beside the list, at the first image's aspect ratio. Clicking the open item closes it. Below 1600px, the block's end edge cuts off the image.
-- With reduced motion, the grid's cards and the items' text change without animating
-- Each item's portrait image below 768px comes from a \`Mobile-viewport\` row, and its landscape image from 768px from a \`Tablet-viewport\` row. The tablet rows' empty text cells keep the text of the mobile rows.
+- Below 768px, the images form a stack of cards above the active item's text, and dragging the front card or clicking the previous and next buttons moves between items
+- From 768px, the items form a list beside the images, and clicking an item opens it, showing its image
+- Each item's portrait image below 768px comes from a \`Mobile-viewport\` row, and its landscape image from 768px from a \`Tablet-viewport\` row, whose empty text cell keeps the mobile text
 `;
 
 // The Rich Content block above the grid, centered from 768px.
@@ -64,9 +61,9 @@ export default {
     body: { control: 'text', description: 'Body copy below the heading. Leave empty for none.' },
     items: {
       control: 'object',
-      description: 'One Split Aside Grid row each, in order: `heading`, `body`, a link from `ctaLabel` and `ctaHref`, and an `image` with its `imageAlt`. `mobileImage` replaces `image` below 768px. Leave a value empty to leave it out.',
+      description: 'One Split Aside Grid row each: `heading`, `body`, a link from `ctaLabel` and `ctaHref`, an `image` with its `imageAlt`, and a `mobileImage` that replaces `image` below 768px',
     },
-    background: { control: 'text', description: 'The section\'s background: an SVG\'s URL, authored as a link whose text is the URL, or a color. Leave empty for none.' },
+    background: { control: 'text', description: 'The section\'s background: an SVG\'s URL or a color. Leave empty for none.' },
     style: { control: 'text', description: 'The section\'s style: classes separated by a comma and a space. Leave empty for none.' },
   },
 };
