@@ -67,9 +67,13 @@ examples or content. List the features you add and the ones that don't fit Milo.
 **Description.** Set `parameters.docs.description.component` on the default export: one sentence
 on what the block is and how it's authored, then bullets. State only facts from the block's code:
 what each cell holds, what each variant changes and from which width, viewport rows, what the
-block does to its section, and how its section lays out several of them. A bullet of one sentence
-has no period. Each Docs page holds everything its reader needs: repeat facts from related pages,
-such as a section's blocks, rather than sending the reader to them.
+block does to its section, and how its section lays out several of them, plus how the block
+behaves, such as opening, hovering and scrolling. Leave out measurements, colors, timings,
+accessibility and analytics attributes, what breaks with unusual content, Milo bugs, and notes
+about Storybook or the page the content came from. Keep a block's description to 200 words, or
+250 when it has more than six options, and a section's to 220. FAQ's description is the model.
+A bullet of one sentence has no period. Each Docs page holds everything its reader needs: repeat
+facts from related pages, such as a section's blocks, rather than sending the reader to them.
 
 **Template.** Write `authored(args, style)`, which returns the block's authored markup from a
 story's args, followed by a `section-metadata` block when `style` is set. Follow the structure the
@@ -77,8 +81,8 @@ library page and mocks use. Leave out an element when its arg is empty. Pass att
 through `attr()`.
 
 **Args.** On the default export, set `argTypes` to `variants` from `virtual:variants/c2/<block>`
-and one arg per piece of content, each with a `control` and a `description` that says what an
-empty value does. Add a boolean where the S2A counterpart toggles a part, such as `showIcon`.
+and one arg per piece of content, each with a `control` and a short `description` that says what
+the arg holds and what an empty value does. Add a boolean where the S2A counterpart toggles a part, such as `showIcon`.
 
 **Single-block stories.** Each renders the block from its args with
 `renderBlock(authored(args, style), { foundation: 'c2' })`, and sets
@@ -114,7 +118,9 @@ image for each theme, as `stories/c2/sections/bento.js` does for the Bento secti
 
 **Live stories.** Keep stories that render a live page or fragment, after the authored ones, and
 add one for a section that has a published source. They show the block or section as it's
-published. Name each after its source, such as `adobe.com: Homepage` or `Milo library`. Use
+published. Name each after its source, such as `adobe.com: Homepage` or `Milo library`, and a
+story of a redesign test fragment (`ACROBAT_TEST_FRAGMENTS`, `CC_PRO_TEST_FRAGMENTS`) as
+`Redesign test: <page>`. Use
 `renderPageSections(page, name, { index })` for blocks that a section lays out together, or
 `renderPageBlock(page, name, { metadata: true })` for one block with its section's metadata. In a
 block's file, set `parameters: { controls: { include: ['variants'] } }` on them, and in a

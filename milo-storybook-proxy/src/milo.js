@@ -75,6 +75,12 @@ async function getUtils() {
     // setConfig prefixes contentRoot with this page's origin, so the live Milo site is set
     // afterwards. Placeholders and other site content resolve against it.
     utils.getConfig().locale.contentRoot = 'https://milo.adobe.com';
+    // Milo passes each fragment it loads to decorateArea before decorating it, so a fragment's
+    // sections in a C2 story follow the Theme menu the way the story's own sections do.
+    utils.getConfig().decorateArea = (area) => {
+      const foundation = document.head.querySelector('meta[name="foundation"]')?.content;
+      if (foundation === 'c2') followTheme(area);
+    };
   }
   return utils;
 }

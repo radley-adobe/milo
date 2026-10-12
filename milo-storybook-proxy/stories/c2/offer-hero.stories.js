@@ -10,6 +10,6 @@ export const AcrobatStudio = {
 };
 
 export const CreativeCloudProOffer = {
-  name: 'adobe.com: Creative Cloud Pro offer',
+  name: 'Redesign test: Creative Cloud Pro offer',
   render: () => renderPageBlock(`${CC_PRO_TEST_FRAGMENTS}/cpro-offer`, 'offer-hero', { metadata: true, foundation: 'c2' }),
 };

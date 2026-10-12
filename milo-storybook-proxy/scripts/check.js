@@ -27,9 +27,9 @@ const NO_STORY = ['Section Metadata'];
 const NO_C2_STORY = ['brand-concierge-global', 'card-metadata', 'email-collection-c2', 'firefly-globe',
   'floating-cta', 'martech-metadata', 'modal-metadata', 'pill-group', 'section-metadata', 'visually-hidden'];
 
-// Stories that never finish rendering in a headless browser, so the check skips them. README ›
-// Known limits says why.
-const NO_RENDER = ['Blocks/Tabs'];
+// Stories that never finish rendering in a headless browser, by id, so the check skips them.
+// README › Known limits says why.
+const NO_RENDER = ['blocks-tabs--acrobat-plans', 'blocks-tabs--creative-cloud-pro-product'];
 
 // Folders of stories that show something other than one block: Milo's global styles, such as
 // Button and the Foundations examples, and sections of blocks.
@@ -272,7 +272,7 @@ try {
   const renders = (await Promise.all(Object.entries(BUILDS).map(async ([branch, folder]) => {
     const { entries } = JSON.parse(await readFile(new URL(`${folder}index.json`, DIST), 'utf8'));
     return Object.values(entries)
-      .filter((e) => e.type === 'story' && !NO_RENDER.includes(e.title))
+      .filter((e) => e.type === 'story' && !NO_RENDER.includes(e.id))
       .map((story) => ({ branch, folder, story }));
   }))).flat();
   const errors = await pool(context, renders, WORKERS, (p, r) => renderStory(p, `${base}/${r.folder}`, r.story.id));

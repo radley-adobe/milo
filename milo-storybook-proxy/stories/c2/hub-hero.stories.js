@@ -10,6 +10,6 @@ export const PdfAndDocumentEssentials = {
 };
 
 export const CreativeCloudProHub = {
-  name: 'adobe.com: Creative Cloud Pro hub',
+  name: 'Redesign test: Creative Cloud Pro hub',
   render: () => renderPageBlock(`${CC_PRO_TEST_FRAGMENTS}/cpro-hub`, 'hub-hero', { metadata: true, foundation: 'c2' }),
 };

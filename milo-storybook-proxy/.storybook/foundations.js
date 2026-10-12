@@ -42,7 +42,7 @@ function split(selector) {
 }
 
 // A nested rule's selectors with its parents' put in: `&` replaced, or the parent prepended.
-function fullSelectors(rule) {
+export function fullSelectors(rule) {
   let parent = rule.parent;
   while (parent.type !== 'root' && parent.type !== 'rule') parent = parent.parent;
   const own = split(rule.selector);

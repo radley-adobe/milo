@@ -1,5 +1,6 @@
 import { existsSync } from 'node:fs';
 import { BLOCKS, parse } from './cssprops.js';
+import { fullSelectors } from './foundations.js';
 import LIBS from './libs.js';
 
 // Vite plugin. `import variants from 'virtual:variants/<c1|c2>/<block>'` gives a story the
@@ -8,14 +9,15 @@ import LIBS from './libs.js';
 
 const PREFIX = 'virtual:variants/';
 
-// Every class the block's CSS uses in the same compound selector as the block's class. Some
+// Every class the block's CSS uses in the same compound selector as the block's class, with
+// nesting resolved, so `&.reverse` inside `.side-by-side` counts as `.side-by-side.reverse`. Some
 // blocks add a class of their own, such as `text-block` on the text block, so that one counts as
 // the block's class too.
 function scan(foundation, block) {
   const own = [block, `${block}-block`];
   const classes = new Set();
   parse(`${BLOCKS[foundation]}/${block}/${block}.css`).walkRules((rule) => {
-    for (const [compound] of rule.selector.matchAll(/(?:\.[\w-]+){2,}/g)) {
+    for (const [compound] of fullSelectors(rule).join(', ').matchAll(/(?:\.[\w-]+){2,}/g)) {
       const names = compound.slice(1).split('.');
       if (names.some((name) => own.includes(name))) {
         names.filter((name) => !own.includes(name)).forEach((name) => classes.add(name));

@@ -5,6 +5,6 @@ import variants from 'virtual:variants/c2/roller-carousel';
 export default { title: 'Blocks/Roller Carousel', parameters: { cssprops }, argTypes: { variants } };
 
 export const CreativeCloudProOffer = {
-  name: 'adobe.com: Creative Cloud Pro offer',
+  name: 'Redesign test: Creative Cloud Pro offer',
   render: () => renderPageBlock(`${CC_PRO_TEST_FRAGMENTS}/cpro-offer`, 'roller-carousel', { metadata: true, foundation: 'c2' }),
 };
