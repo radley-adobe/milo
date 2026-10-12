@@ -13,6 +13,7 @@ A featured [Side by Side](?path=/docs/blocks-side-by-side--docs) block above an 
 - \`dark\` gives the \`equal\` block's cards light text. The featured card is light without it, because the block adds \`dark\` to an overlay card in a block without \`dark\`.
 - Cards have 16px rounded corners. Each has a heading at \`heading-6\` size and body copy at \`body-md\`, up to 450px wide.
 - The paragraph right before a card's heading shows as an eyebrow
+- A card's first paragraph with any bold text gets \`title-6\`, a class with no styles, in place of \`body-md\`. When that's the eyebrow, no paragraph gets it.
 - A link alone in its paragraph shows as a label with no underline. A link in italics or bold shows as a button.
 - An icon shows as a 32px image over the top-left corner of a stacked card's image: 16px from its edges, 24px from 768px and 32px from 1280px. The icon and the image each need their own paragraph in the card's media cell, and an icon can be a link to an SVG. On an overlay card, such as the featured card, an icon shows as a second image.
 - A card's media cell can hold a video instead of an image. A video starts playing when 40% of it is in view and pauses when it leaves the view. A video that doesn't loop plays once, and one the visitor paused stays paused. Below 768px, an overlay card's video pause button sits 16px from the top of the card.

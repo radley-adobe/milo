@@ -8,7 +8,7 @@ const description = `
 Two cards side by side: an overlay card, with its text over its image, and a stacked card, with its text below its image. It's authored as two rows: a media row, then a text row, each with one cell per card.
 
 - A media cell holds an image or a video. A text cell holds a heading, body copy and links.
-- Headings show at \`heading-6\` size and body copy at \`body-md\`. The paragraph right before the heading shows as an eyebrow. The first bold paragraph shows at \`title-6\` size, unless it's the eyebrow. The text is up to 450px wide.
+- Headings show at \`heading-6\` size and body copy at \`body-md\`. The paragraph right before the heading shows as an eyebrow. A card's first paragraph with any bold text gets \`title-6\`, a class with no styles, in place of \`body-md\`. When that's the eyebrow, no paragraph gets it. The text is up to 450px wide.
 - A link alone in its paragraph shows as a label with no underline. A link in italics or bold shows as a button.
 - Cards have 16px rounded corners and sit 8px apart. Below 768px they stack in one column. From 768px they sit side by side, aligned to the top: the overlay card first, in a column 1.81 times as wide as the stacked card's.
 - An overlay card's image fills the card, aligned to its top. From 768px the card is 1:1.1, with its text at the top left, 24px from the edges, or 32px from 1280px, over a gradient that darkens the top left corner. Below 768px, the text sits below a 1:1.1 area, 24px from the sides and bottom, over a gradient that darkens the bottom.
