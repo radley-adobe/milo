@@ -21,8 +21,8 @@ A heading beside a numbered list whose items show images at the pointer on hover
 - \`compact-headline\` limits the width of the first row's text from 768px to 1279px
 - \`no-animation\` hides the images at every width. From 1280px, the items don't respond to hover.
 - The block's text is light in both themes, so its section needs a dark background
-- The block adds \`container\`, which sets its side padding and the width of its content
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content below 768px, from 768px to 1279px and from 1280px. With \`Desktop-viewport\` rows and no \`Tablet-viewport\` rows, \`Mobile-viewport\` rows apply below 1280px. Classes in parentheses after a row's name, such as \`Tablet-viewport (compact-headline)\`, apply only at that viewport. An empty cell keeps the content of the viewport below it.
+- The block adds \`container\`, which gives it side padding and a maximum content width
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content below 768px, from 768px to 1279px and from 1280px. Rows of only one viewport apply at every width. With \`Desktop-viewport\` rows and no \`Tablet-viewport\` rows, \`Mobile-viewport\` rows apply below 1280px. With no \`Desktop-viewport\` rows, the highest viewport's rows apply at every width above it. Classes in parentheses after a row's name, such as \`Tablet-viewport (compact-headline)\`, apply only at that viewport. An empty cell keeps the content of the viewport below it.
 `;
 
 const image = (name) => `${MEDIA}/hover-list/${name}.webp`;
