@@ -6,15 +6,15 @@ import { attr } from './authored.js';
 const description = `
 A customer quote beside an image. It's authored as two rows: the text and a background color, then the image.
 
-- The text cell holds a blockquote: the quote, then the name and role of the person quoted, each in its own paragraph. The quote shows at \`heading-3\` size and the name and role as a caption at \`body-lg\` size.
-- Without a blockquote, the text cell's heading shows at \`heading-3\` size and the rest below it at \`body-lg\` size. A paragraph right before the heading shows as an eyebrow, below the heading, and a bold or italic link as a button.
-- A curly opening quote mark, such as “, at the start of the quote or heading hangs outside the text's edge
-- The first row's second cell holds a CSS color for the background behind the image and text. Without it, there's no background.
-- Below 768px, the image sits above the text. From 768px, the text sits on the start side and the image on the end side, each taking half the block, with the quote or heading at the top and the caption or the rest of the text at the bottom.
-- As the block scrolls into view, it shrinks from the width of the window to its own size, while the image zooms out and the text moves up into place. From 768px, the text keeps its size as the block shrinks. Without CSS scroll-driven animations, or with reduced motion, nothing moves.
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content at each viewport, with tablet from 768px and desktop from 1280px. An empty cell keeps the content of the viewport below it. Classes in parentheses after the name, such as \`mobile-viewport(fluid)\`, apply to the block at that viewport.
-- \`container\` among the block's classes adds side padding and a maximum content width. \`fluid\` removes the padding and raises the maximum width, and \`fixed\` keeps the padding from 768px the same as below it.
-- The block adds no class to its section. Several Social Proof blocks in one section stack with no space between them.
+- The text cell holds a blockquote: the quote, at \`heading-3\` size, then the quoted person's name and role, at \`body-lg\` size, each in its own paragraph
+- Without a blockquote, the text cell's heading shows at \`heading-3\` size and the rest below it at \`body-lg\` size
+- The background color is a CSS color shown behind the image and text
+- \`container\` among the block's classes adds side padding and a maximum content width
+- \`fluid\` with \`container\` removes the padding and raises the maximum width
+- \`fixed\` with \`container\` keeps the padding from 768px the same as below it
+- Below 768px, the image sits above the text, and from 768px beside it on the end side
+- As the block scrolls into view, it shrinks from the window's width to its own size while the image zooms out and the text moves up. With reduced motion, nothing moves.
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content at each viewport, and an empty cell keeps the content of the viewport below it
 `;
 
 // Authored markup for the block from a story's args, as the Acrobat pages author it: `container`
@@ -71,13 +71,13 @@ export default {
   parameters: { cssprops, liveExamples: [LIVE.acrobat, LIVE.acrobatStudio], docs: { description: { component: description } } },
   argTypes: {
     variants,
-    blockquote: { control: 'boolean', description: 'Author the text as a blockquote, which shows as a quote with a caption. Off, the quote is an `h3` and the name and role are paragraphs.' },
+    blockquote: { control: 'boolean', description: 'Author the text as a blockquote instead of an `h3` and paragraphs' },
     quote: { control: 'text', description: 'The quote. Leave empty for none.' },
     name: { control: 'text', description: 'Name of the person quoted. Leave empty for none.' },
-    role: { control: 'text', description: 'Role of the person quoted, below the name. Leave empty for none.' },
+    role: { control: 'text', description: 'Role of the person quoted. Leave empty for none.' },
     showAttribution: { control: 'boolean', description: 'Show the name and role' },
     background: { control: 'text', description: 'CSS color of the background behind the image and text. Leave empty for no background.' },
-    image: { control: 'text', description: 'Image URL. Leave empty for an empty image cell.' },
+    image: { control: 'text', description: 'Image URL' },
     imageAlt: { control: 'text', description: 'Image alt text. Leave empty when the image is decorative.' },
   },
 };
