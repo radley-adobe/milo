@@ -4,22 +4,16 @@ import variants from 'virtual:variants/c2/elastic-carousel';
 import { attr, icon } from './authored.js';
 
 const description = `
-A row of linked video slides that widen on hover. It's authored as one row per slide, with two cells: the text, then the video.
+A row of linked video slides that widen on hover, authored as one row per slide with two cells: the text, then the video.
 
-- The text cell holds, in order, a paragraph with an icon, a paragraph with a label, a heading, a paragraph of body copy and a paragraph with a link. The block reads them by position.
-- An icon is a link to an SVG. It shows in the slide's header, beside the label, which is cut to one line.
-- Below the video, the heading shows at eyebrow size, cut to one line, and the body copy cut to two lines
-- The whole slide links to the link's URL
-- The video cell holds an image whose alt text is the URL of an MP4 video, a \`|\` and a description. Milo turns it into a muted video with the image as its poster, and the block crops the video to the slide's width. The cell can hold an image with plain alt text instead, which the block doesn't crop.
-- The block's CSS is written for five slides
-- From 768px, the slides sit side by side in a row centered on the window, and the block clips the row at its sides
-- Between 768px and 1700px, hovering or focusing one of the first three slides moves the row to the block's left edge, and hovering or focusing the fifth moves it to the window's right edge
-- From 768px, hovering or focusing a slide widens it, turns it dark with light text, shows an arrow and plays its video. Moving the pointer off the slide rewinds its video.
-- While the mouse wheel scrolls the page, the block adds \`disable-hover\` to itself, which from 768px stops the slides responding to hover
-- As the block scrolls into view from 768px, the row slides in from the right and fades in, and the gaps between the slides close
-- Below 768px, the slides stack in a column, dark with light text and an arrow. Each sticks near the top of the window as the page scrolls and the next one covers it, while the ones beneath narrow and fade. A slide's video plays when the slide is in view and rewinds when the next slide covers it.
+- The text cell holds, in order, a link to an SVG icon, a label, a heading, body copy and the slide's link. The heading shows at eyebrow size. The video cell holds an image whose alt text is an MP4 URL, a \`|\` and a description. Milo turns the image into a muted video.
+- From 768px, \`disable-hover\` stops the slides responding to hover
+- The block's CSS is written for five slides, which sit in a row from 768px and stack in a column below it
+- From 768px, hovering a slide widens it, shows an arrow and plays its video
+- From 768px, the row slides and fades in as the block scrolls into view
+- Below 768px, each slide sticks near the top of the window as the page scrolls and the next one covers it
+- Below 768px, each video plays when its slide is in view
 - The scroll animations run with reduced motion too, unless the block or an element around it has a \`parallax-\` class
-- In a right-to-left page, the row keeps the slides' left-to-right order, the column below 768px shows them last first, the arrows point left and the hover shift is mirrored
 `;
 
 // Authored markup for one slide. Every element of the text cell stays when it's empty, because
@@ -65,10 +59,10 @@ export default {
   parameters: { cssprops, layout: 'fullscreen', liveExamples: [LIVE.home], docs: { description: { component: description } } },
   argTypes: {
     variants,
-    name: { control: 'text', description: 'The carousel\'s name, after a `|` in the first slide\'s link text. Leave empty for `Adobe slides`.' },
+    name: { control: 'text', description: 'The carousel\'s name, after a `|` in the first slide\'s link text' },
     slides: {
       control: 'object',
-      description: 'One row each, in order: an `icon` URL with its `iconAlt`, a `label`, `heading` and `body`, the URL the slide links to in `href`, a `poster` image URL, and the `video` URL with its description in `videoAlt`. Leave `video` empty to show the poster as an image, with `videoAlt` as its alt text.',
+      description: 'One row each, in order: an `icon` URL with its `iconAlt`, a `label`, `heading` and `body`, the URL the slide links to in `href`, a `poster` image URL, and the `video` URL with its description in `videoAlt`',
     },
   },
 };
