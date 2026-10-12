@@ -6,23 +6,15 @@ import variants from 'virtual:variants/c2/hover-list';
 import { attr, sectionMetadata } from './authored.js';
 
 const description = `
-A heading beside a numbered list whose items show images at the pointer on hover. It's authored as a first row with the heading and its text, then one row per item with two cells: the item's text, then its images.
+A heading beside a numbered list whose items show images on hover. It's authored as a first row with a heading, body copy and a link, then one row per item with two cells: the item's text, then its images.
 
-- The first row's cell holds a heading, body copy and a link. The heading shows at \`heading-2\` size.
-- A link alone in the cell's last paragraph shows as a label with an arrow after it
-- A paragraph directly above the heading shows as an eyebrow
-- The block numbers the items \`1.\`, \`2.\` and so on. Each item's text shows at \`heading-5\` size.
-- An item's image cell holds one or more images, or none
-- Below 768px, the first row's text sits above the list. From 768px, they sit side by side in two equal columns.
-- Below 1280px, each item shows its first image as a thumbnail beside its text, square from 768px
-- From 768px to 1279px, the first row's text stays in view as the list scrolls past, until it reaches the list's last two items
-- From 1280px, hovering an item tints it and shows all its images as cards above the pointer, over the rest of the page. Each card sits over the one before it, slightly offset. The cards grow in, follow the pointer and tilt as it moves sideways. Moving off the list or pressing Escape fades them out.
-- With reduced motion, the cards show above the pointer at full size, don't move, and hide at once
+- The heading shows at \`heading-2\` size and each item's text at \`heading-5\` size
 - \`compact-headline\` limits the width of the first row's text from 768px to 1279px
-- \`no-animation\` hides the images at every width. From 1280px, the items don't respond to hover.
-- The block's text is light in both themes, so its section needs a dark background
-- The block adds \`container\`, which gives it side padding and a maximum content width
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content below 768px, from 768px to 1279px and from 1280px. Rows of only one viewport apply at every width. With \`Desktop-viewport\` rows and no \`Tablet-viewport\` rows, \`Mobile-viewport\` rows apply below 1280px. With no \`Desktop-viewport\` rows, the highest viewport's rows apply at every width above it. Classes in parentheses after a row's name, such as \`Tablet-viewport (compact-headline)\`, apply only at that viewport. An empty cell keeps the content of the viewport below it.
+- \`no-animation\` hides the images, and from 1280px the items don't respond to hover
+- Below 768px, the first row's text sits above the list. From 768px, it sits beside the list. Below 1280px, each item shows its first image as a thumbnail beside its text.
+- From 1280px, hovering an item shows all its images as cards above the pointer. They grow in, follow the pointer and fade out when it leaves the list. With reduced motion, they show at full size, don't move and hide at once.
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content at each viewport. An empty cell keeps the content of the viewport below it.
+- The block's text is light, so its section needs a dark background
 `;
 
 const image = (name) => `${MEDIA}/hover-list/${name}.webp`;
@@ -88,11 +80,11 @@ export default {
     variants,
     heading: { control: 'text', description: 'Heading, authored as an `h2`. Leave empty for none.' },
     body: { control: 'text', description: 'Body copy below the heading. Leave empty for none.' },
-    ctaLabel: { control: 'text', description: 'Text of a link below the heading, which shows as a label. Leave empty for no link.' },
-    ctaHref: { control: 'text', description: 'Link URL. Leave empty to link to the current page.' },
+    ctaLabel: { control: 'text', description: 'Link text. Leave empty for no link.' },
+    ctaHref: { control: 'text', description: 'Link URL' },
     items: {
       control: 'object',
-      description: 'The list\'s items, in order, each with its `text`, the URLs of the `images` that show on hover from 1280px, and the URL of a `thumbnail` that shows beside the text below 1280px. Leave `thumbnail` empty to show the first of `images` there, and both empty for an item with no images.',
+      description: 'The list\'s items, each with its `text`, the URLs of its hover `images`, and the URL of a `thumbnail` that `Mobile-viewport` rows show beside the text below 1280px',
     },
   },
 };
