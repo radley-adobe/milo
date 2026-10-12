@@ -8,7 +8,7 @@ A single panel of a [Tabs](?path=/docs/blocks-tabs--docs) block. A Tab Panel is 
 - The Tabs block finds the sections on the page, or in its fragment, whose \`tab\` row names one of its tabs, and moves each into that tab's panel below the tab list, in page order. Sections with the same \`tab\` row share a panel.
 - When the block has an \`id\`, the \`tab\` row holds the id and the tab's number, such as \`compare-plans, 2\`. Without one, it holds the tab's label. Labels match in lowercase, with spaces as hyphens and other punctuation removed.
 - A section whose \`tab\` row names no tab stays where it is on the page
-- A panel is as wide as the block, and the section's \`style\` and \`background\` apply inside it. \`container\` gives the section 24px of side padding below 768px and 8.333% of the block's width from 768px, with its content up to 1920px wide. \`spacing-xs-top\` puts the panel 24px below the tab list, 32px from 1280px.
+- A panel is as wide as the block, and the section's \`style\` and \`background\` apply inside it. \`container\` gives the section 24px of side padding below 768px and 8.333% of the block's width from 768px, with its content up to 1920px wide. \`spacing-xs-top\` adds 24px of padding above the section's content, 32px from 1280px.
 - \`tab-background\` gives the panel's tab that background color when a reader selects it
 - With the block's \`id\`, \`deeplink\` lets \`?<id>=<value>\` in the page's URL select the panel's tab
 - \`link\` makes the panel's tab open that page instead

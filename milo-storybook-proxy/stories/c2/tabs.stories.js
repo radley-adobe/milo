@@ -12,7 +12,7 @@ A row of tabs that each show a [Tab Panel](?path=/docs/sections-tab-panel--docs)
 - With an \`id\`, a section's \`tab\` row holds the id and the tab's number, such as \`compare-plans, 2\`. A panel can hold another Tabs block with its own \`id\` and panels, as on the Acrobat plans page.
 - \`active tab\` is the tab that shows first: its number with an \`id\`, or its label without one. Otherwise the first tab shows.
 - \`pretext\` is the tab list's accessible name
-- \`remember\` set to \`on\` shows the tab last selected on the page again when the page reloads in the same browser tab
+- \`remember\` set to \`on\` shows the tab last selected on the page again when the page reloads in the same browser tab. Without an \`id\`, this works only for a tab whose label has no spaces or hyphens.
 - With an \`id\`, \`?tab=<id>-<number>\` in the page's URL selects that tab, and \`?<id>=<value>\` selects the tab whose panel section has a \`deeplink\` row with that value
 - By default, the tabs are 32px high on a rounded track tinted black at 4% opacity, and the selected tab is a black pill that slides to the next tab selected. The block adds \`pill\` for this style.
 - \`quiet\` shows the tabs as text at \`heading-4\` size, 24px apart, with a blue line under the selected tab
@@ -46,7 +46,7 @@ const tabsStory = (metadata, panelMetadata) => ({
 
 // The section metadata of the light stories: none for the block's section, which has no container
 // on the Acrobat plans page either, and for each panel a container, as the sections in the Acrobat
-// plans page's panels have, 24px below the tab list, 32px from 1280px.
+// plans page's panels have, with 24px of padding above its content, 32px from 1280px.
 const LIGHT = [{}, { style: 'container, spacing-xs-top' }];
 
 export default {
@@ -59,7 +59,7 @@ export default {
     variants: { ...variants, options: [...new Set([...variants.options, 'background-transparent', 'center', 'dark', 'quiet', 'radio', 'right'])].sort() },
     tabs: {
       control: 'object',
-      description: 'One tab each, in order: its `label`, and the `heading` and `body` of the Rich Content block in its panel section. Leave `heading` and `body` empty for an empty panel. An empty `label` gives a tab with no text, and without an `id` its panel stays below the block.',
+      description: 'One tab each, in order: its `label`, and the `heading` and `body` of the Rich Content block in its panel section. Leave `heading` and `body` empty for an empty panel. An empty `label` gives a tab with no text, and without an `id` its panel stays below the block. An empty list gives an empty tab list and no panels.',
     },
     radioLabel: { control: 'text', description: 'Label before the radio buttons, authored as a paragraph above the list. Only `radio` shows it. Leave empty for none.' },
     id: { control: 'text', description: 'Authored in an `id` row. Each panel section\'s `tab` row then holds the id and the tab\'s number. Leave empty to match each panel to its tab by label.' },
