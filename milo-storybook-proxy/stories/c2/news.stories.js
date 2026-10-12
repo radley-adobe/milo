@@ -6,12 +6,12 @@ import { attr, icon, sectionMetadata } from './authored.js';
 const description = `
 A heading over a row of news items, each with a heading, body copy and a link. It's authored as one row for the block's heading, then one row per item, each with one cell.
 
-- The first row holds an optional icon and a heading or paragraph, which shows at eyebrow size in the body font. Without a heading or paragraph, the block fails to load.
+- The first row holds an optional icon and a heading or paragraph, which shows at eyebrow size in the body font. Anything else in the cell doesn't show. Without a heading or paragraph, the block fails to load.
 - An icon is a link to an SVG, alone in its paragraph, or an image. It shows 24px square, 16px before the heading.
 - Each item's cell holds a heading, body copy and a link. The first heading or paragraph in the cell is the item's headline. The heading shows at \`heading-5\` size.
 - Body copy shows in the subtle text color and is cut to three lines
 - A link alone in its paragraph shows as a label with an arrow, at the bottom of its item, so the links in a row line up
-- \`quiet\` removes the links' underline
+- \`quiet\` removes the underline from each item's link alone in its paragraph
 - From 768px, the heading and each item have 24px of side padding, with 24px between the heading and the items. Two, three, four or six items sit side by side in that many columns, 8px apart.
 - Any other number of items stacks in one column at every width, with no space between them, and doesn't move
 - From 768px, two, three, four or six items move up into place as the block scrolls into view. Each item starts lower than the one before it: 72px, 156px and 264px below its place for three items. With reduced motion, nothing moves.
@@ -56,10 +56,10 @@ export default {
   parameters: { cssprops, liveExamples: [LIVE.home], docs: { description: { component: description } } },
   argTypes: {
     variants,
-    quiet: { control: 'boolean', description: 'Remove the links\' underline (`quiet`)' },
+    quiet: { control: 'boolean', description: 'Remove the underline from each item\'s link (`quiet`)' },
     icon: { control: 'text', description: 'URL of the SVG icon before the heading. Leave empty for no icon.' },
     showIcon: { control: 'boolean', description: 'Show the icon' },
-    heading: { control: 'text', description: 'The block\'s heading, authored as an `h2`. Leave empty and the block fails to load.' },
+    heading: { control: 'text', description: 'The block\'s heading, authored as an `h2`. Leave empty and a block with items fails to load.' },
     items: {
       control: 'object',
       description: 'One row each, in order: a `heading`, `body` copy and a link from `ctaLabel` and `ctaHref`. Text after ` | ` in `ctaLabel` becomes the link\'s accessible name. Leave `heading`, `body` or `ctaLabel` empty to leave it out. The first heading or paragraph is the item\'s headline, so without a heading the body copy, or else the link, shows as the headline. Leave `ctaHref` empty and the link points at the current page. With no items, the block shows its heading row as authored.',
