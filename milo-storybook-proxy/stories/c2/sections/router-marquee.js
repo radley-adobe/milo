@@ -1,7 +1,7 @@
 import { MEDIA } from '../../../src/milo.js';
 import { attr, icon } from '../authored.js';
 
-const picture = (src) => `<picture><img src="${attr(src)}" alt=""></picture>`;
+const picture = (src, alt) => `<picture><img src="${attr(src)}" alt="${attr(alt)}"></picture>`;
 
 // The buttons paragraph: the primary button in bold, then the secondary one.
 const ctas = ({ ctaLabel, ctaHref, secondaryCtaLabel, secondaryCtaHref }) => {
@@ -23,14 +23,14 @@ const slideRow = (slide, image) => `
       ${slide.icon ? `<p><a href="${attr(slide.icon)}">${slide.icon}</a></p>` : ''}
       ${slide.label ? `<p>${slide.labelHref ? `<a href="${attr(slide.labelHref)}">${slide.label}</a>` : slide.label}</p>` : ''}
     </div>
-    <div>${image ? picture(image) : ''}</div>
+    <div>${image ? picture(image, slide.imageAlt) : ''}</div>
   </div>`;
 
 // A tablet row: an empty text cell, which keeps the mobile row's text, and the background.
-const tabletRow = ({ image }) => `
+const tabletRow = ({ image, imageAlt }) => `
   <div>
     <div></div>
-    <div>${image ? picture(image) : ''}</div>
+    <div>${image ? picture(image, imageAlt) : ''}</div>
   </div>`;
 
 // Authored markup for a Router Marquee block from a story's args: a `mobile` row and one row per
@@ -49,18 +49,20 @@ export const routerMarquee = ({ variants: classes = [], slides = [] }) => {
 </div>`.trim().replace(/^\s*\n/gm, '');
 };
 
-export const SLIDES_DESCRIPTION = 'One slide each, in order: an `eyebrow`, `heading` and `body`, a primary button from `ctaLabel` and `ctaHref`, the card\'s `icon` URL and its `label` linking to `labelHref`, and a background `image`. `mobileImage` replaces `image` below 768px. `secondaryCtaLabel` and `secondaryCtaHref` add a secondary button, which shows from 1280px. Leave a value empty to leave it out. Without an icon, the label shows as body copy and the card shows the heading.';
+export const SLIDES_DESCRIPTION = 'One slide each, in order: an `eyebrow`, `heading` and `body`, a primary button from `ctaLabel` and `ctaHref`, the card\'s `icon` URL and its `label` linking to `labelHref`, and a background `image` with its `imageAlt`. `mobileImage` replaces `image` below 768px. `secondaryCtaLabel` and `secondaryCtaHref` add a secondary button, which shows from 1280px. `heading` is required: a slide without one stops the block from working. Leave `imageAlt` empty when the image is decorative. Leave another value empty to leave it out, apart from these: an empty `image` keeps `mobileImage` at every width, and an empty `ctaHref`, `secondaryCtaHref` or `labelHref` links the button or card to the current page. Without an icon, the label shows as body copy and the card shows the heading and links to the current page.';
 
 const slide = (name, iconName, text) => ({
   ...text,
   icon: icon(iconName),
   image: `${MEDIA}/router-marquee/${name}.webp`,
   mobileImage: `${MEDIA}/router-marquee/${name}-mobile.webp`,
+  imageAlt: '',
 });
 
 // The homepage's five slides. The homepage loads their text from Merch at Scale, and its Free
 // trial buttons open checkout, so these link to the card's page instead. The homepage's
-// backgrounds from 768px are videos, and these are their posters.
+// backgrounds from 768px are videos, and these are their posters. Its backgrounds are decorative,
+// with empty alt text.
 export const SLIDES = [
   slide('creative-cloud', 'creative-cloud', {
     eyebrow: 'Creative Cloud',
