@@ -18,11 +18,13 @@ A row of tabs that each show a [Tab Panel](?path=/docs/sections-tab-panel--docs)
 - \`quiet\` shows the tabs as text at \`heading-4\` size, 24px apart, with a blue line under the selected tab
 - \`radio\` shows a radio button for each tab, 16px apart, in a rounded light gray bar. A paragraph above the list shows at the start of the bar and names the group. Without one, \`pretext\` names it.
 - \`dark\` gives the block Milo's dark colors, for a black section: a dark gray track or bar, and a white selected pill or radio button
-- \`center\` centers the tab list from 768px, and \`right\` aligns it to the right. With \`quiet\`, \`center\` centers it below 768px too.
-- The tab list scrolls sideways when its tabs don't fit. Selecting or focusing a tab scrolls it into view.
+- \`center\` centers the tab list and \`right\` aligns it to the right, both from 768px. With \`quiet\`, \`center\` centers it below 768px too.
+- Below 768px, the tab list sits in a strip as wide as the viewport, 24px in from each edge, and the block clips the strip at its own edges. With \`quiet\`, the strip is as wide as the block, and the list 24px in from each side.
+- A pill tab list scrolls sideways when its tabs don't fit. \`quiet\` and \`radio\` lists scroll only below 768px. Selecting or focusing a tab scrolls it into view.
 - The block has a white background, apart from \`quiet\`, \`radio\` and \`dark\` pills. \`background-transparent\` removes it.
+- A section with the \`tabs-background-transparent\` style removes the white background and the track of the Tabs blocks in it
 - \`staggered-intro-merch-cards\` fades the merch cards in the shown panel in and moves them up into place, one after another, 0.1s apart, when the page loads and when a tab is selected. With reduced motion, nothing moves.
-- The tab list has the \`tablist\` role, and each panel the \`tabpanel\` role, named by its tab. The left and right arrow keys move focus between the tabs, in reverse on a right-to-left page, and Enter or Space selects one. With \`radio\`, the list is a \`radiogroup\` and the arrow keys select the next or previous tab.
+- The tab list has the \`tablist\` role, and each panel the \`tabpanel\` role, named by its tab. The left and right arrow keys move focus between the tabs, in reverse on a right-to-left page, and Enter or Space selects one. With \`radio\`, the list is a \`radiogroup\`, its panels have no role, and the arrow keys select the next or previous tab.
 - Selecting a tab sends a \`milo:tab:changed\` event, which the Actions tab logs
 - The block adds \`tablist-<id>-section\` to its section, where \`<id>\` is its \`id\`, or its number among the page's Tabs blocks
 - A panel section's \`tab-background\` row gives its tab that background color when a reader selects it. A \`link\` row makes the tab open that page instead.
@@ -43,8 +45,9 @@ const tabsStory = (metadata, panelMetadata) => ({
 });
 
 // The section metadata of the light stories: none for the block's section, which has no container
-// on the Acrobat plans page either, and each panel 24px below the tab list, 32px from 1280px.
-const LIGHT = [{}, { style: 'spacing-xs-top' }];
+// on the Acrobat plans page either, and for each panel a container, as the sections in the Acrobat
+// plans page's panels have, 24px below the tab list, 32px from 1280px.
+const LIGHT = [{}, { style: 'container, spacing-xs-top' }];
 
 export default {
   title: 'Blocks/Tabs',
@@ -56,7 +59,7 @@ export default {
     variants: { ...variants, options: [...new Set([...variants.options, 'background-transparent', 'center', 'dark', 'quiet', 'radio', 'right'])].sort() },
     tabs: {
       control: 'object',
-      description: 'One tab each, in order: its `label`, and the `heading` and `body` of the Rich Content block in its panel section. Leave `heading` and `body` empty for an empty panel.',
+      description: 'One tab each, in order: its `label`, and the `heading` and `body` of the Rich Content block in its panel section. Leave `heading` and `body` empty for an empty panel. An empty `label` gives a tab with no text, and without an `id` its panel stays below the block.',
     },
     radioLabel: { control: 'text', description: 'Label before the radio buttons, authored as a paragraph above the list. Only `radio` shows it. Leave empty for none.' },
     id: { control: 'text', description: 'Authored in an `id` row. Each panel section\'s `tab` row then holds the id and the tab\'s number. Leave empty to match each panel to its tab by label.' },
@@ -85,11 +88,13 @@ export const Radio = {
   args: { ...Default.args, variants: ['radio'], radioLabel: 'Choose your plan:' },
 };
 
-// The same tabs in a dark section with a black background, as on the Creative Cloud Pro product
-// page. The section's dark colors apply to its panels too. A container keeps the text off the
-// background's edges.
+// The same tabs on a black background, authored as on the Creative Cloud Pro product page: the
+// block's section and each panel section have a black background, and each panel section the
+// `dark` style. `spacing-sm`, which the page's block section doesn't have, holds the tab list and
+// the panels off the background's top and bottom edges. Each panel's container keeps its text off
+// the sides, as in the light stories.
 export const Dark = {
-  ...tabsStory({ style: 'container, dark, spacing-sm', background: '#000' }, { style: 'spacing-xs-top' }),
+  ...tabsStory({ style: 'spacing-sm', background: '#000' }, { style: 'container, spacing-xs-top, dark', background: '#000' }),
   args: { ...Default.args, variants: ['dark'] },
 };
 
@@ -103,6 +108,13 @@ export const Center = {
 export const Right = {
   ...tabsStory(...LIGHT),
   args: { ...Default.args, variants: ['right'] },
+};
+
+// The same tabs in a section with a light gray background, which shows behind the tabs in place of
+// the block's white background.
+export const BackgroundTransparent = {
+  ...tabsStory({ background: '#f8f8f8' }, LIGHT[1]),
+  args: { ...Default.args, variants: ['background-transparent'] },
 };
 
 // The tabs and their panels, which are the sections after them. Each panel of the first tabs
