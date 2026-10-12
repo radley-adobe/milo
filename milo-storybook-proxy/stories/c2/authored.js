@@ -134,11 +134,10 @@ const splitAsideGridRow = ({ heading, body, ctaLabel, ctaHref }, image, imageAlt
 };
 
 // One Split Aside Grid block, with a row per item, authored with `container` as the adobe.com
-// pages do, and with `dark` when `dark` is set. When any item has a `mobileImage`, a
-// `Mobile-viewport` row comes first, then the items with their `mobileImage`, or `image` when they
-// have none, then a `Tablet-viewport` row and the items with an empty text cell, which keeps the
-// text above, and their `image`.
-export const splitAsideGrid = ({ variants: classes = [], dark, items = [] }) => {
+// pages do. When any item has a `mobileImage`, a `Mobile-viewport` row comes first, then the items
+// with their `mobileImage`, or `image` when they have none, then a `Tablet-viewport` row and the
+// items with an empty text cell, which keeps the text above, and their `image`.
+export const splitAsideGrid = ({ variants: classes = [], items = [] }) => {
   const label = (name) => `  <div>\n    <div>${name}</div>\n  </div>`;
   const rows = items.some((item) => item.mobileImage) ? [
     label('Mobile-viewport'),
@@ -146,5 +145,5 @@ export const splitAsideGrid = ({ variants: classes = [], dark, items = [] }) => 
     label('Tablet-viewport'),
     ...items.map((item) => splitAsideGridRow({}, item.image, item.imageAlt)),
   ] : items.map((item) => splitAsideGridRow(item, item.image, item.imageAlt));
-  return `<div class="${['split-aside-grid', 'container', ...(dark ? ['dark'] : []), ...classes].join(' ')}">\n${rows.join('\n')}\n</div>`;
+  return `<div class="${['split-aside-grid', 'container', ...classes].join(' ')}">\n${rows.join('\n')}\n</div>`;
 };

@@ -49,7 +49,7 @@ const backgroundCell = (value) => (/^https?:/.test(value ?? '') ? `<a href="${at
 // The section's authored markup from a story's args.
 const authored = ({ eyebrow, heading, body, items, background, style }) => section(
   richContent({ eyebrow, heading, body }),
-  splitAsideGrid({ dark: true, items }),
+  splitAsideGrid({ variants: ['dark'], items }),
   sectionMetadata({ background: backgroundCell(background), style }),
 );
 

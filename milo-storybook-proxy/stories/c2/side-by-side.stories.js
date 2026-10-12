@@ -46,9 +46,7 @@ export default {
   title: 'Blocks/Side by Side',
   parameters: { cssprops, liveExamples: [LIVE.pdfEssentials], docs: { description: { component: description } } },
   argTypes: {
-    // The scan of side-by-side.css finds only `equal`, because the CSS nests its other classes
-    // under `.side-by-side` with `&`. These are all the classes it styles that way.
-    variants: { ...variants, options: ['content-subtle', 'dark', 'equal', 'featured', 'reverse', 'scrim-off', 'small-left'] },
+    variants,
     cards: {
       control: 'object',
       description: 'One card each, in order: an `image` with its `imageAlt`, an `icon` URL, a `heading`, `body`, and a link from `ctaLabel` and `ctaHref`. Leave a value empty to leave it out. The block shows an icon as a 32px icon on a stacked card; on an overlay card it shows as a second image. The block styles two cards, or one with `featured`; with `featured`, a second card shows unstyled.',

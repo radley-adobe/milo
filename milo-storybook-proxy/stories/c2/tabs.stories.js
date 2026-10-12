@@ -53,10 +53,8 @@ export default {
   title: 'Blocks/Tabs',
   parameters: { cssprops, liveExamples: [LIVE.acrobat, LIVE.acrobatPlans, LIVE.pdfEssentials], docs: { description: { component: description } } },
   argTypes: {
-    // tabs.css nests its variants in `.tabs`, as `&.quiet`, and the Variants control lists only
-    // the classes of selectors such as `.tabs.staggered-intro-merch-cards`, so this adds the
-    // nested ones. `pill` is left out, because the block adds or removes it itself.
-    variants: { ...variants, options: [...new Set([...variants.options, 'background-transparent', 'center', 'dark', 'quiet', 'radio', 'right'])].sort() },
+    // `pill` is left out, because the block adds or removes it itself.
+    variants: { ...variants, options: variants.options.filter((name) => name !== 'pill') },
     tabs: {
       control: 'object',
       description: 'One tab each, in order: its `label`, and the `heading` and `body` of the Rich Content block in its panel section. Leave `heading` and `body` empty for an empty panel. An empty `label` gives a tab with no text, and without an `id` its panel stays below the block. An empty list gives an empty tab list and no panels.',

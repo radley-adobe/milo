@@ -34,9 +34,9 @@ const tile = ({ label, href, image: src, imageAlt }) => `
 // heading, because the block makes a header only from a first row with a heading. `showHeader` is
 // true unless set.
 const block = ({
-  variants: classes = [], blurBackground, showHeader = true, heading, body, ctaLabel, ctaHref, tiles = [],
+  variants: classes = [], showHeader = true, heading, body, ctaLabel, ctaHref, tiles = [],
 }) => `
-<div class="${['quick-actions', ...(blurBackground ? ['blur-background'] : []), ...classes].join(' ')}">
+<div class="${['quick-actions', ...classes].join(' ')}">
   ${showHeader && heading ? `<div>
     <div>
       <h2>${heading}</h2>
@@ -61,7 +61,6 @@ export default {
   parameters: { cssprops, docs: { description: { component: description } } },
   argTypes: {
     variants,
-    blurBackground: { control: 'boolean', description: 'Add `blur-background`: a black background below 768px, and from 768px a blur over what\'s behind the block that darkens toward black at the bottom' },
     showHeader: { control: 'boolean', description: 'Show the header row' },
     heading: { control: 'text', description: 'Heading, authored as an `h2`. Leave empty for no header row.' },
     body: { control: 'text', description: 'Paragraph in the header row, between the heading and the button. Leave empty for none.' },
@@ -81,7 +80,6 @@ export const Default = {
   ...blockStory('container'),
   args: {
     variants: [],
-    blurBackground: false,
     showHeader: true,
     heading: 'Get started with Acrobat tools.',
     body: '',
@@ -105,11 +103,10 @@ export const CenterMobile = {
 };
 
 // The same block with `blur-background`, in a dark section, so its text is light and reads on
-// the black background below 768px. The Variants control doesn't list the class, because the
-// block's CSS nests it inside `.quick-actions`, so the story sets it with `blurBackground`.
+// the black background below 768px.
 export const BlurBackground = {
   ...blockStory('container, dark'),
-  args: { ...Default.args, blurBackground: true },
+  args: { ...Default.args, variants: ['blur-background'] },
 };
 
 export const Acrobat = {

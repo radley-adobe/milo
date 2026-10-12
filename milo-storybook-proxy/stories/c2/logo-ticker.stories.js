@@ -30,10 +30,10 @@ const labels = (...values) => {
 // Authored markup for the block from a story's args, followed by section metadata when `style`
 // sets the section's style. Each logo is an icon, which Milo loads by its name from Federal, or
 // from its own icons.
-const authored = ({ variants: classes = [], dark, logos = [], label, playLabel, pauseLabel }, style) => {
+const authored = ({ variants: classes = [], logos = [], label, playLabel, pauseLabel }, style) => {
   const text = labels(label, playLabel, pauseLabel);
   const block = `
-<div class="${['logo-ticker', ...(dark ? ['dark'] : []), ...classes].join(' ')}">
+<div class="${['logo-ticker', ...classes].join(' ')}">
   <div>
     <div>
       ${logos.map((name) => `<p><span class="icon icon-${attr(name)}"></span></p>`).join('\n      ')}
@@ -57,7 +57,6 @@ export default {
   parameters: { cssprops, liveExamples: [LIVE.pdfEssentials], docs: { description: { component: description } } },
   argTypes: {
     variants,
-    dark: { control: 'boolean', description: 'Add `dark`: white logos and a dark button on a dark background' },
     logos: { control: 'object', description: 'Icon names of the logos, in order, each loaded from Federal\'s `/federal/assets/icons/svgs/<name>.svg`, or from Milo\'s own icons when Federal has none. Leave empty and the block does nothing.' },
     label: { control: 'text', description: 'Accessible name of the logos. Leave empty for none.' },
     playLabel: { control: 'text', description: 'The button\'s name while the logos are paused. Leave empty for `Play logos`. With `pauseLabel` set, an empty value leaves the button with no name while paused.' },
@@ -70,7 +69,6 @@ export const Default = {
   ...blockStory('spacing-lg'),
   args: {
     variants: [],
-    dark: false,
     logos: ['sr-amazon-logo', 'sr-astrazeneca-logo', 'sr-duke-logo', 'sr-epson-logo', 'sr-fanatics-logo', 'sr-hsbc-logo',
       'sr-meta-logo', 'sr-puma-logo', 'sr-regeneron-logo', 'sr-tesla-logo', 'sr-walmart-logo', 'sr-mlb-logo'],
     label: 'Official logos for Amazon, AstraZeneca, Duke University, Epson, Fanatics, HSBC, Meta, Puma, Regeneron, Tesla, Walmart, and MLB',
@@ -82,7 +80,7 @@ export const Default = {
 // The same logos with `dark`.
 export const Dark = {
   ...blockStory('spacing-lg'),
-  args: { ...Default.args, dark: true },
+  args: { ...Default.args, variants: ['dark'] },
 };
 
 // The block and its section on the PDF and document essentials page, as published.

@@ -48,7 +48,6 @@ export default {
   parameters: { cssprops, liveExamples: [LIVE.acrobat], docs: { description: { component: description } } },
   argTypes: {
     variants,
-    dark: { control: 'boolean', description: 'Give the block light text (`dark`). Its background stays transparent.' },
     items: {
       control: 'object',
       description: 'One row each, in order: `heading`, `body`, a link from `ctaLabel` and `ctaHref`, and an `image` with its `imageAlt`. `mobileImage` replaces `image` below 768px, through `Mobile-viewport` and `Tablet-viewport` rows. Leave a value empty to leave it out. An empty `image` leaves an empty frame, or shows `mobileImage` from 768px when that\'s set. With no `heading`, the item\'s button reads Slide 1, Slide 2 and so on from 768px. With no items, the block shows nothing.',
@@ -61,8 +60,7 @@ export default {
 export const Default = {
   ...blockStory(background(media('pdf-spaces-background.svg'))),
   args: {
-    variants: [],
-    dark: true,
+    variants: ['dark'],
     items: [{
       heading: 'Comprehend faster.',
       body: 'Chat with your files, generate summaries, and get insights with precise citations in a click. Ask questions to get actionable answers and next steps.',
@@ -97,8 +95,7 @@ export const MobileCarousel = {
   ...blockStory(background(media('firefly-creative-ai-background.svg'))),
   name: 'Mobile Carousel',
   args: {
-    variants: ['mobile-carousel'],
-    dark: true,
+    variants: ['dark', 'mobile-carousel'],
     items: [{
       heading: 'Edit images with prompts.',
       body: 'Describe your edits to easily add, remove, and adjust content with Generative Fill and realistically extend images in any direction with Generative Expand.',
