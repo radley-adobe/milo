@@ -59,7 +59,8 @@ export default {
 
 // The PDF and document essentials page's block, without its `parallax-stagger-ltr` class, in the
 // width of a container section. The overlay card shows a video on the page, and the story shows
-// the video's poster image.
+// the video's poster image. The stacked card gets the Acrobat Pro icon, which the page's block
+// doesn't have, so the icon control has an icon to show.
 export const Default = {
   ...blockStory('container, fixed'),
   args: {
@@ -75,7 +76,7 @@ export const Default = {
     }, {
       image: `${MEDIA}/side-by-side/acrobat-pdf-spaces.webp`,
       imageAlt: '',
-      icon: '',
+      icon: `${MEDIA}/icons/acrobat-pro.svg`,
       heading: 'Share effortlessly with PDF Spaces.',
       body: 'Share a secure PDF Space with teammates, where everyone can ask AI Assistant to help with research, strategy, planning, or quick learning.',
       ctaLabel: '',
