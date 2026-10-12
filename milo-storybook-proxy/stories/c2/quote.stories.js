@@ -17,8 +17,9 @@ A quote with the name and role of the person quoted, framed by thin lines. It's 
 - Below 768px, the block is at least 600px tall, with the quote at the top and the name and role at the bottom, at least 128px below it. From 768px, the name and role sit 160px below the quote, or 240px from 1280px.
 - \`center-footer\` centers the name and role. \`right-footer\` aligns them to the right, or to the left on a right-to-left page.
 - A \`heading-\` class on the block, such as \`heading-3\`, replaces the quote's \`heading-1\` size, and a \`body-\` class, such as \`body-lg\`, replaces the \`body-md\` size
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the quote different content at each viewport. An empty cell keeps the content of the viewport below it.
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the quote different content at each viewport. A Mobile-viewport row applies from the smallest width, a Tablet-viewport row from 768px and a Desktop-viewport row from 1280px, each up to the next row's width. With only Mobile-viewport and Desktop-viewport rows, the Mobile-viewport row applies below 1280px. An empty cell keeps the content of the viewport below it. Classes in parentheses after a row's name, such as \`Desktop-viewport (right-footer)\`, apply only at that viewport.
 - The block's side margins pull it out over its section's side padding. In a \`container, fixed\` section up to 1968px wide, the block and its lines span the section's full width. In a \`container\` section from 768px, the padding is 8.333% of the section's width and the margins 8.333% of the content's width, so the lines stop short of the section's edges.
+- Milo has no block that holds quotes. Quotes in the same section stack in one column, each in its own frame.
 `;
 
 // Authored markup for one quote from a story's args, followed by section metadata when `style`
@@ -36,7 +37,7 @@ export default {
   parameters: { cssprops, docs: { description: { component: description } } },
   argTypes: {
     variants,
-    quote: { control: 'text', description: 'The quote, authored as an `h2`. Leave empty and the name shows as the quote.' },
+    quote: { control: 'text', description: 'The quote, authored as an `h2`. Leave empty and the name shows as the quote, at `body-md` size, and the role as the name.' },
     name: { control: 'text', description: 'Name of the person quoted. Leave empty and the role shows in its place.' },
     role: { control: 'text', description: 'Role of the person quoted, below the name. Leave empty for none.' },
     showAttribution: { control: 'boolean', description: 'Show the name and role' },
@@ -56,9 +57,10 @@ export const Default = {
   },
 };
 
-// The Creative Cloud Pro product page's quote, which starts with an opening quote mark.
+// The Creative Cloud Pro product page's quote, which starts with an opening quote mark, in the
+// width of the product page's `container, fixed` section.
 export const CenterFooter = {
-  ...quoteStory('container'),
+  ...quoteStory('container, fixed'),
   args: {
     variants: ['center-footer'],
     quote: '“Learning how to use Adobe well has been an essential part of growing as a professional artist and Photoshop is a very essential part of how I make my work happen.”',
