@@ -20,9 +20,9 @@ A [Router Marquee](?path=/docs/blocks-router-marquee--docs) pinned to the top of
 - A paragraph of emphasized links holds the buttons: a bold one is the primary button and the other one the secondary. Below 1280px, only the primary button shows.
 - The icon is a link to an SVG, alone in its paragraph, and the next paragraph holds the label, a link. The block moves both into the slide's card, which links to the label's URL.
 - Other paragraphs are body copy
-- A background video plays muted and looped while its slide shows
-- The slides change on their own and loop. A bar along the active card fills until the next slide.
-- From 1280px, the cards sit side by side. Below 1280px, they sit in one row that moves to bring the active card to the start.
+- A background video plays muted and looped while its slide shows, and stops when the slides stop
+- The slides change on their own and loop, sliding in from the side with their text following. A bar along the active card fills until the next slide.
+- From 1280px, the cards sit side by side, each with its icon above its label, with the pause button after them, or above them when the row doesn't fit the window. Below 1280px, they sit in one row that moves to bring the active card to the start, each with its icon beside its label, with the pause button above them and a button at the end that goes back to the first slide. With a mouse below 1280px, a next button beside the pause button replaces the button at the end.
 - Hovering a card shows its slide, and a swipe shows the next or previous one. Hovering or focusing a link or button in the block, a swipe, or the pause button stops the slides until the play button starts them again. With reduced motion, the slides start stopped and change only by hand, without sliding.
 - A \`promo-placeholder-slide-<n>\` class on the block hides the \`n\`th authored slide and its card until the slide's Merch at Scale field resolves to a promotion
 `;

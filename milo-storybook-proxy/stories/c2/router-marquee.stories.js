@@ -13,10 +13,10 @@ A full-window hero that shows one slide at a time. A card for each slide sits al
 - A paragraph of emphasized links holds the buttons: a bold one is the primary button and the other one the secondary. Below 1280px, only the primary button shows.
 - The icon is a link to an SVG, alone in its paragraph, and the next paragraph holds the label, a link. The block moves both into the slide's card, which links to the label's URL.
 - Other paragraphs are body copy
-- The background cell holds an image or a video, which covers the slide under a dark gradient on the text's side. A video plays muted and looped while its slide shows.
+- The background cell holds an image or a video, which covers the slide under a dark gradient on the text's side. A video plays muted and looped while its slide shows, and stops when the slides stop.
 - The block grows taller than the window when its content needs it
-- The slides change on their own and loop. A bar along the active card fills until the next slide.
-- From 1280px, the cards sit side by side. Below 1280px, they sit in one row that moves to bring the active card to the start.
+- The slides change on their own and loop, sliding in from the side with their text following. A bar along the active card fills until the next slide.
+- From 1280px, the cards sit side by side, each with its icon above its label, with the pause button after them, or above them when the row doesn't fit the window. Below 1280px, they sit in one row that moves to bring the active card to the start, each with its icon beside its label, with the pause button above them and a button at the end that goes back to the first slide. With a mouse below 1280px, a next button beside the pause button replaces the button at the end.
 - Hovering a card shows its slide, and a swipe shows the next or previous one. Hovering or focusing a link or button in the block, a swipe, or the pause button stops the slides until the play button starts them again.
 - The slides stop when the next section scrolls part way up the window and start again when the page scrolls back, unless they were stopped by hand
 - With reduced motion, the slides start stopped and change only by hand, without sliding
