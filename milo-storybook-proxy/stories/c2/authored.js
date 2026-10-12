@@ -91,10 +91,8 @@ export const quote = ({ variants: classes = [], quote: text, name, role, showAtt
 function sideBySideMedia({ icon: iconUrl, image, imageAlt }, showIcon) {
   const img = image ? `<picture><img src="${attr(image)}" alt="${attr(imageAlt)}"></picture>` : '';
   if (!showIcon || !iconUrl) return `<div>${img}</div>`;
-  return `<div>
-      <p><a href="${attr(iconUrl)}">${iconUrl}</a></p>
-      <p>${img}</p>
-    </div>`;
+  const parts = [`<p><a href="${attr(iconUrl)}">${iconUrl}</a></p>`, img && `<p>${img}</p>`].filter(Boolean);
+  return `<div>\n      ${parts.join('\n      ')}\n    </div>`;
 }
 
 // A Side by Side card's text cell.
