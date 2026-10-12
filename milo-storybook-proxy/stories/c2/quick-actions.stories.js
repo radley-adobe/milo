@@ -7,9 +7,9 @@ const description = `
 A heading and a grid of linked tiles, each an image with a label. It's authored as a header row, then one row per tile with two cells: the label, then the image.
 
 - The header row is optional. The block makes the first row the header when its first cell holds a heading. The heading shows at \`heading-4\` size, a paragraph before it as an eyebrow, and a paragraph after it at \`body-md\` size. A link in italics shows as an outline button, and a link in bold as a blue button.
-- The header sets its content in one row, in the authored order. \`center-mobile\` stacks the content and centers it below 768px.
+- The header sets its content in one row, in the authored order: any eyebrow, then the heading, taking the free width, then any paragraph, then the button at the end. \`center-mobile\` stacks the content and centers it below 768px.
 - A tile row's first cell holds a link, whose text is the tile's label, and the whole tile links to it
-- A tile row's second cell holds an image, which fills the tile. The label sits over the tile's bottom, at \`heading-6\` size, with a chevron. Below 768px, a tile with an image and a label is a square with the label below it.
+- A tile row's second cell holds an image, which fills the tile. The label sits over the tile's bottom, at \`heading-6\` size, with a chevron. Below 768px, a tile with an image and a label is a square with the label below it, and the image fills the tile from its top.
 - On hover, a tile darkens slightly, its image grows slightly and its chevron moves to the right
 - The tiles sit in two columns below 768px, three from 768px and six from 1280px
 - The tiles move up into place as the block scrolls into view, and in each row a tile starts lower than the one before it. With reduced motion, they don't move.
