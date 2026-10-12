@@ -15,6 +15,10 @@ A featured [Side by Side](?path=/docs/blocks-side-by-side--docs) block above an 
 - The paragraph right before a card's heading shows as an eyebrow
 - A link alone in its paragraph shows as a label with no underline. A link in italics or bold shows as a button.
 - An icon shows as a 32px image over the top-left corner of a stacked card's image: 16px from its edges, 24px from 768px and 32px from 1280px. The icon and the image each need their own paragraph in the card's media cell, and an icon can be a link to an SVG. On an overlay card, such as the featured card, an icon shows as a second image.
+- A card's media cell can hold a video instead of an image. A video starts playing when 40% of it is in view and pauses when it leaves the view. A video that doesn't loop plays once, and one the visitor paused stays paused. Below 768px, an overlay card's video pause button sits 16px from the top of the card.
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` in a block each start a media row and a text row for one viewport: below 768px, from 768px and from 1280px. Without a \`Tablet-viewport\` row, the \`Mobile-viewport\` rows show below 1280px. An empty cell keeps the content of the viewport below it.
+- A viewport row can name classes in parentheses, such as \`Mobile-viewport (first-card-dark)\`, which the block takes at that viewport. \`reverse\`, \`equal\` and \`featured\` there change only the block's styles, not which cards are overlay or stacked.
+- One viewport row alone shows its rows at every width. A block with \`Tablet-viewport\` and \`Desktop-viewport\` rows and no \`Mobile-viewport\` row shows nothing.
 - \`spacing-xs-top\` on the featured block adds 24px above it, 32px from 1280px
 - \`container, fixed\` gives the section 24px of side padding at every width, with its content up to 1920px wide
 - \`spacing-xl-top\` adds padding above the section's content: 40px, 80px from 1024px and 128px from 1280px. \`spacing-2xl-bottom\` adds padding below it: 24px, 80px from 1024px and 128px from 1280px.
