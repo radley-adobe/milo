@@ -14,7 +14,7 @@ A [Split Aside Grid](?path=/docs/blocks-split-aside-grid--docs) below a heading,
 - \`parallax-double-garage-door\` moves the section down into place from 30% of the window's height above it as it scrolls into view, and down by 20% of the window's height as it scrolls out. The section before it sits in front of it. Without CSS scroll-driven animations, or with reduced motion, nothing moves.
 - \`spacing-4xl-top\` adds padding above the section: 64px, 80px from 1024px and 128px from 1280px
 - Style values are separated by a comma and a space. A space inside a value becomes a hyphen, and capitals don't matter.
-- Each grid item holds a heading at \`heading-5\` size, body copy and a link, and an image. A link alone in its paragraph shows as a bold label with an arrow.
+- Each grid item holds a heading at \`heading-5\` size, body copy and a link, and an image or video. A link alone in its paragraph shows as a bold label with an arrow. A video plays while its item is active and at least 40% of it is in view, and pauses otherwise.
 - Below 768px, the images form a stack of 245 × 465px cards with the active item's card in front, then previous and next buttons and a dot for each item, then the active item's text. Dragging the front card or pressing the buttons moves between items, and so do the left and right arrow keys when focus is in the block. The items loop.
 - From 768px, the items take the first 4 of 12 columns, or 3 from 1280px, with each heading as a button. Clicking an item opens it and shows its image beside the list, at the first image's aspect ratio and at least 480px high. Below 1600px, the block's end edge cuts off the image.
 - Each item's portrait image below 768px comes from a \`Mobile-viewport\` row, and its landscape image from 768px from a \`Tablet-viewport\` row. The tablet rows' empty text cells keep the text of the mobile rows.
@@ -61,11 +61,11 @@ export default {
   parameters: { cssprops, liveExamples: [LIVE.acrobat], docs: { description: { component: description } } },
   argTypes: {
     eyebrow: { control: 'text', description: 'Eyebrow above the heading. Leave empty for none.' },
-    heading: { control: 'text', description: 'Heading, authored as an `h2`. Leave empty for none.' },
+    heading: { control: 'text', description: 'Heading, authored as an `h2`. Leave empty and the first paragraph, the eyebrow or else the body copy, shows at `heading-2` size.' },
     body: { control: 'text', description: 'Body copy below the heading. Leave empty for none.' },
     items: {
       control: 'object',
-      description: 'One Split Aside Grid row each, in order: `heading`, `body`, a link from `ctaLabel` and `ctaHref`, and an `image` with its `imageAlt`. `mobileImage` replaces `image` below 768px. Leave a value empty to leave it out. An empty `image` leaves an empty frame, or shows `mobileImage` from 768px when that\'s set. With no `heading`, the item\'s button reads Slide 1, Slide 2 and so on from 768px.',
+      description: 'One Split Aside Grid row each, in order: `heading`, `body`, a link from `ctaLabel` and `ctaHref`, and an `image` with its `imageAlt`. `mobileImage` replaces `image` below 768px. Leave a value empty to leave it out. An empty `image` leaves an empty frame, or shows `mobileImage` from 768px when that\'s set. With no `heading`, the item\'s button reads Slide 1, Slide 2 and so on from 768px. With no items, the block shows nothing.',
     },
     background: { control: 'text', description: 'The section\'s background: an image URL, authored as a link whose text is the URL, or a color. Leave empty for none.' },
     style: { control: 'text', description: 'The section\'s style: classes separated by a comma and a space. Leave empty for none.' },

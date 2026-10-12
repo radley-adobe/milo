@@ -16,11 +16,12 @@ A list of items beside a stack of their images. It's authored as one row per ite
 - From 768px to 1599px, the media moves toward the block's end edge by the grid's side margin, and the block's end edge cuts it off
 - From 768px, each item's heading is a button with a chevron, and other items' headings show at 48% opacity. Clicking an item opens it, showing its body copy and links, and shows its media. Clicking the open item closes or reopens it.
 - From 768px, the media area takes the first media's aspect ratio, or 4:3, and is at least 480px high. Each media is cropped to fill it, keeping its start edge, inside a translucent frame with rounded corners.
+- With reduced motion, the cards, the carousel and the items' text change without animating
 - A video plays while its item is active and at least 40% of it is in view, and pauses otherwise
 - \`dark\` gives the block's text light colors and leaves its background transparent, so the section's background shows through
-- The previous and next buttons, the dots and the chevron boxes are white or translucent white in both themes, so the block suits a dark section background.
-- \`container\` gives the block 24px of side padding below 768px, and 8.333% of its width from 768px, where the block removes the padding at its end.
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different items at each viewport. Mobile-viewport applies below 768px, Tablet-viewport from 768px (to 1279px when there's a Desktop-viewport row) and Desktop-viewport from 1280px. With only Mobile and Desktop rows, Mobile applies below 1280px. An empty cell keeps the content of the viewport below it. Classes in parentheses after the name, such as \`Mobile-viewport (spacing-sm)\`, apply to the block at that viewport.
+- The previous and next buttons, the dots and the chevron boxes are white or translucent white in both themes, so the block suits a dark section background
+- \`container\` gives the block 24px of side padding below 768px, and 8.333% of its width from 768px, where the block removes the padding at its end
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different items at each viewport. Mobile-viewport applies below 768px, Tablet-viewport from 768px (to 1279px when there's a Desktop-viewport row) and Desktop-viewport from 1280px. With only Mobile and Desktop rows, Mobile applies below 1280px. A block with only one viewport row shows it at every width. Tablet-viewport and Desktop-viewport rows with no Mobile-viewport row leave the block empty. An empty cell keeps the content of the viewport below it. Classes in parentheses after the name, such as \`Mobile-viewport (spacing-sm)\`, apply to the block at that viewport.
 `;
 
 // Section metadata whose background is the image at `url`, authored as a link whose text is
@@ -50,7 +51,7 @@ export default {
     dark: { control: 'boolean', description: 'Give the block light text (`dark`). Its background stays transparent.' },
     items: {
       control: 'object',
-      description: 'One row each, in order: `heading`, `body`, a link from `ctaLabel` and `ctaHref`, and an `image` with its `imageAlt`. `mobileImage` replaces `image` below 768px, through `Mobile-viewport` and `Tablet-viewport` rows. Leave a value empty to leave it out. An empty `image` leaves an empty frame, or shows `mobileImage` from 768px when that\'s set. With no `heading`, the item\'s button reads Slide 1, Slide 2 and so on from 768px.',
+      description: 'One row each, in order: `heading`, `body`, a link from `ctaLabel` and `ctaHref`, and an `image` with its `imageAlt`. `mobileImage` replaces `image` below 768px, through `Mobile-viewport` and `Tablet-viewport` rows. Leave a value empty to leave it out. An empty `image` leaves an empty frame, or shows `mobileImage` from 768px when that\'s set. With no `heading`, the item\'s button reads Slide 1, Slide 2 and so on from 768px. With no items, the block shows nothing.',
     },
   },
 };
