@@ -116,3 +116,35 @@ export const sideBySide = ({ variants: classes = [], cards = [], showIcon = true
     ${cards.map(sideBySideText).join('\n    ')}
   </div>
 </div>`.trim();
+
+// One Split Aside Grid item's row: its text, then `image`. The image cell stays when it's empty,
+// because the block takes each row's second cell as its media.
+const splitAsideGridRow = ({ heading, body, ctaLabel, ctaHref }, image, imageAlt) => {
+  const text = [
+    heading && `      <h3>${heading}</h3>`,
+    body && `      <p>${body}</p>`,
+    ctaLabel && `      <p><a href="${attr(ctaHref)}">${ctaLabel}</a></p>`,
+  ].filter(Boolean);
+  return [
+    '  <div>',
+    text.length ? ['    <div>', ...text, '    </div>'].join('\n') : '    <div></div>',
+    `    <div>${image ? `<picture><img src="${attr(image)}" alt="${attr(imageAlt)}"></picture>` : ''}</div>`,
+    '  </div>',
+  ].join('\n');
+};
+
+// One Split Aside Grid block, with a row per item, authored with `container` as the adobe.com
+// pages do, and with `dark` when `dark` is set. When an item has a `mobileImage`, a
+// `Mobile-viewport` row comes first, then the items with their `mobileImage`, then a
+// `Tablet-viewport` row and the items with an empty text cell, which keeps the text above, and
+// their `image`.
+export const splitAsideGrid = ({ variants: classes = [], dark, items = [] }) => {
+  const label = (name) => `  <div>\n    <div>${name}</div>\n  </div>`;
+  const rows = items.some((item) => item.mobileImage) ? [
+    label('Mobile-viewport'),
+    ...items.map((item) => splitAsideGridRow(item, item.mobileImage || item.image, item.imageAlt)),
+    label('Tablet-viewport'),
+    ...items.map((item) => splitAsideGridRow({}, item.image, item.imageAlt)),
+  ] : items.map((item) => splitAsideGridRow(item, item.image, item.imageAlt));
+  return `<div class="${['split-aside-grid', 'container', ...(dark ? ['dark'] : []), ...classes].join(' ')}">\n${rows.join('\n')}\n</div>`;
+};
