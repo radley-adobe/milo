@@ -51,3 +51,25 @@ export const exploreCard = ({
     <div>${image ? `<picture><img src="${attr(image)}" alt="${attr(imageAlt)}"></picture>` : ''}</div>
   </div>
 </div>`.trim();
+
+// One plans hero. With a `mobileImage`, a Mobile-viewport row shows the text and that image below
+// 768px, and a Tablet-viewport row shows `image` from 768px, with an empty text cell that keeps
+// the text. `focalPoint` follows each image in its cell. `showEyebrow` is true unless set.
+export const plansHero = ({
+  variants: classes = [], dark, eyebrow, showEyebrow = true, heading, body, image, mobileImage, imageAlt, focalPoint,
+}) => {
+  const row = (...cells) => `<div>\n    ${cells.join('\n    ')}\n  </div>`;
+  const media = (src) => `<div>${src ? `<picture><img src="${attr(src)}" alt="${attr(imageAlt)}"></picture>${focalPoint ?? ''}` : ''}</div>`;
+  const text = `<div>
+      ${showEyebrow && eyebrow ? `<p>${eyebrow}</p>` : ''}
+      ${heading ? `<h1>${heading}</h1>` : ''}
+      ${body ? `<p>${body}</p>` : ''}
+    </div>`;
+  const rows = mobileImage
+    ? [row('<div>mobile-viewport</div>'), row(text, media(mobileImage)), row('<div>tablet-viewport</div>'), row('<div></div>', media(image))]
+    : [row(text, media(image))];
+  return `
+<div class="${['plans-hero', ...(dark ? ['dark'] : []), ...classes].join(' ')}">
+  ${rows.join('\n  ')}
+</div>`.trim();
+};
