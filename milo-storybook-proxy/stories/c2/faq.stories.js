@@ -34,16 +34,16 @@ export default {
     questionSize: {
       control: 'select',
       options: ['heading-1', 'heading-2', 'heading-3', 'heading-4', 'heading-5', 'heading-6'],
-      description: 'Size of the questions. A size other than `heading-5` adds its class to the block.',
+      description: 'Size of the questions',
     },
     answerSize: {
       control: 'select',
       options: ['body-sm', 'body-md', 'body-lg'],
-      description: 'Size of the answers. A size other than `body-md` adds its class to the block.',
+      description: 'Size of the answers',
     },
     items: {
       control: 'object',
-      description: 'One row each, in order: a `question`, authored as an `h3`, and its `answer` as HTML, such as paragraphs and lists. Leave `answer` empty to leave it out.',
+      description: 'One row each, in order: a `question`, authored as an `h3`, and its `answer` as HTML',
     },
   },
 };
