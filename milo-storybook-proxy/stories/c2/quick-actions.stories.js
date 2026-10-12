@@ -6,18 +6,18 @@ import { attr, sectionMetadata } from './authored.js';
 const description = `
 A heading and a grid of linked tiles, each an image with a label. It's authored as a header row, then one row per tile with two cells: the label, then the image.
 
-- The header row is optional. The block makes the first row the header when its first cell holds a heading. The heading shows at \`heading-4\` size and a paragraph at \`body-md\` size. A link in italics shows as a large outline button, and a link in bold as a large blue button.
-- The header sets the heading at the start and the button at the end, 24px apart, with 32px below them. \`center-mobile\` stacks the header's content and centers it below 768px.
+- The header row is optional. The block makes the first row the header when its first cell holds a heading. The heading shows at \`heading-4\` size and a paragraph at \`body-md\` size. A link in italics shows as an outline button, and a link in bold as a blue button.
+- The header sets its content in one row, 24px apart, with 32px below it: the heading at the start, taking the free width, then any paragraph, then the button at the end. \`center-mobile\` stacks the content and centers it below 768px.
 - A tile row's first cell holds a link, whose text is the tile's label. The whole tile links to it. A tile with no link has no label.
 - A tile row's second cell holds an image. The image fills the tile, which is at least 180px tall, and the label sits over its bottom, at \`heading-6\` size, with a chevron at the right edge. Below 768px, a tile with an image and a label is a square with the label below it, and the image fills the tile from its top.
 - A row with one cell isn't a tile, and the block leaves it out
 - The tiles have a gray background, light in a light section and dark in a \`dark\` one, and 16px rounded corners, 24px from 2560px. On hover, a tile darkens slightly, its image grows slightly and its chevron moves 4px to the right.
 - The tiles sit in two columns below 768px, three from 768px and six from 1280px, 8px apart
-- As the block scrolls into view, the tiles move up into place. In each row, a tile starts lower than the one before it. With reduced motion, nothing moves.
-- \`blur-background\` gives the block a black background below 768px. From 768px, it blurs what's behind the block and darkens it toward black at the bottom, starting clear at the top and fully shown from 40% of the block's height.
+- In browsers with CSS scroll-driven animations, the tiles move up into place as the block scrolls into view, at every width. In each row, a tile starts lower than the one before it: 72px, 156px, 264px, 372px, 480px and 588px below its place in six columns. Each row starts 48px lower than the one above it. With reduced motion, they don't move.
+- \`blur-background\` gives the block a black background below 768px. From 768px, it blurs what's behind the block and darkens it toward black at the bottom, starting clear at the top and fully shown from 40% of the block's height. It doesn't change the text colors, so below 768px the block needs a \`dark\` section for its header to show.
 - With \`blur-background\`, when the next section has \`rounded-corners\` or \`rounded-corners-top\`, the background extends 22px below the block, or 32px from 768px, behind that section's rounded corners
 - Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content at each viewport. An empty cell keeps the content of the viewport below it.
-- The block lays out its own tiles and adds nothing to its section. Its stories show it in a \`container\` section, which gives it 24px of side padding below 768px and 8.333% of the section's width from 768px, with its content up to 1920px wide.
+- The block lays out its own tiles and adds nothing to its section. Its stories show it in a \`container\` section, and Blur Background in a \`container, dark\` one. \`container\` gives the block 24px of side padding below 768px and 8.333% of the section's width from 768px, with its content up to 1920px wide.
 `;
 
 const image = (name) => `${MEDIA}/quick-actions/${name}.webp`;
@@ -62,7 +62,7 @@ export default {
     blurBackground: { control: 'boolean', description: 'Add `blur-background`: a black background below 768px, and from 768px a blur over what\'s behind the block that darkens toward black at the bottom' },
     showHeader: { control: 'boolean', description: 'Show the header row' },
     heading: { control: 'text', description: 'Heading, authored as an `h2`. Leave empty for no header row.' },
-    body: { control: 'text', description: 'Paragraph after the heading. Leave empty for none.' },
+    body: { control: 'text', description: 'Paragraph in the header row, between the heading and the button. Leave empty for none.' },
     ctaLabel: { control: 'text', description: 'Header link text, authored in italics, so it shows as an outline button. Leave empty for no link.' },
     ctaHref: { control: 'text', description: 'Header link URL' },
     tiles: {
