@@ -4,27 +4,16 @@ import { section, sectionMetadata } from '../authored.js';
 import { routerMarquee, SLIDES, SLIDES_DESCRIPTION } from './router-marquee.js';
 
 const description = `
-A [Router Marquee](?path=/docs/blocks-router-marquee--docs) pinned to the top of a page. The next section scrolls up over it. The section holds the Router Marquee block, and its metadata sets the first slide and the motion.
+A [Router Marquee](?path=/docs/blocks-router-marquee--docs) pinned to the top of a page, with the next section scrolling up over it. The section holds the block, and its metadata sets the first slide and the motion.
 
-- \`parallax-move-up-fast\` pins the section to the top of the window. As the page scrolls, the section moves up and darkens. The next section scrolls up over it.
-- With reduced motion, the section scrolls with the page and doesn't darken
-- Focusing a link or button in a \`parallax-move-up-fast\` section scrolls the page back to the top
-- \`starting-marquee\` gives the number of the slide to show first. The block moves that slide and its card to the front.
-- The slides stop when the next section scrolls part way up the window and start again when the page scrolls back, unless they were stopped by hand
-- Style values are separated by a comma and a space. A space inside a value becomes a hyphen, and capitals don't matter.
-- The block is the height of the window, or taller when its content needs it, and shows one slide at a time with a card for each slide along the bottom
-- A row whose first cell is \`mobile\`, \`tablet\` or \`desktop\` (or \`mobile-viewport\` and so on) starts that viewport's slides, one row per slide with two cells: the text, then the background. Mobile shows below 768px, tablet from 768px and desktop from 1280px. The block needs a \`mobile\` row.
-- A viewport with no row gets a copy of the slides below it. In a slide row, an empty cell keeps that cell of the same slide in the viewport below.
-- Each slide holds an eyebrow, a heading, body copy, buttons, and the card's icon and label, over a background image or video under a dark gradient on the text's side
-- The heading is an \`h1\` or \`h2\`, and the paragraph before it is the eyebrow. Every slide needs a heading.
-- A paragraph of emphasized links holds the buttons: a bold one is the primary button and the other one the secondary. Below 1280px, only the primary button shows.
-- The icon is a link to an SVG, alone in its paragraph, and the next paragraph holds the label, a link. The block moves both into the slide's card, which links to the label's URL.
-- Other paragraphs are body copy
-- A background video plays muted and looped while its slide shows, and stops when the slides stop
-- The slides change on their own and loop, sliding in from the side with their text following. A bar along the active card fills until the next slide.
-- From 1280px, the cards sit side by side, each with its icon above its label, with the pause button after them, or above them when the row doesn't fit the window. Below 1280px, they sit in one row that moves to bring the active card to the start, each with its icon beside its label, with the pause button above them and a button at the end that goes back to the first slide. With a mouse below 1280px, a next button beside the pause button replaces the button at the end.
-- Hovering a card shows its slide, and a swipe shows the next or previous one. Hovering or focusing a link or button in the block, a swipe, or the pause button stops the slides until the play button starts them again. With reduced motion, the slides start stopped and change only by hand, without sliding.
-- A \`promo-placeholder-slide-<n>\` class on the block hides the \`n\`th authored slide and its card until the slide's Merch at Scale field resolves to a promotion
+- \`parallax-move-up-fast\` pins the section to the top of the window, where it moves up and darkens as the page scrolls. With reduced motion, it scrolls with the page and doesn't darken.
+- \`starting-marquee\` moves the slide with that number to the front
+- The block is a full-window hero showing one slide at a time. It's authored as one row per slide with two cells: the text, then a background image or video.
+- Rows named \`mobile\`, \`tablet\` and \`desktop\` start each viewport's slides, and \`mobile\` is required. A missing viewport copies the one below, and an empty cell keeps the same slide's cell from the viewport below.
+- Below 1280px, only the primary button shows
+- The slides change on their own and loop, or only by hand with reduced motion
+- Hovering or focusing a link or button in the block, a swipe, or the pause button stops the slides until the play button starts them
+- The slides stop when the next section scrolls part way up the window, and start again when it scrolls back unless they were stopped by hand
 `;
 
 // The section after the homepage's marquee, which scrolls up over it: a link to the fragment that
@@ -48,7 +37,7 @@ export default {
     slides: { control: 'object', description: SLIDES_DESCRIPTION },
     startingSlide: {
       control: { type: 'number', min: 1 },
-      description: 'Number of the slide to show first, from 1, authored as `starting-marquee`. Leave empty to show the slides in order.',
+      description: 'Number of the slide to show first, from 1, authored as `starting-marquee`',
     },
     style: { control: 'text', description: 'The section\'s style: classes separated by a comma and a space. Leave empty for none.' },
   },

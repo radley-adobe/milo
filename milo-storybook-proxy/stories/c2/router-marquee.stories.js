@@ -5,23 +5,16 @@ import { sectionMetadata } from './authored.js';
 import { routerMarquee, SLIDES, SLIDES_DESCRIPTION } from './sections/router-marquee.js';
 
 const description = `
-A full-window hero that shows one slide at a time. A card for each slide sits along the bottom. It's authored as a row naming a viewport, then one row per slide with two cells: the text, then the background.
+A full-window hero showing one slide at a time, with a card for each along the bottom. It's authored as one row per slide with two cells: the text, then a background image or video.
 
-- A row whose first cell is \`mobile\`, \`tablet\` or \`desktop\` (or \`mobile-viewport\` and so on) starts that viewport's slides. Mobile shows below 768px, tablet from 768px and desktop from 1280px. The block needs a \`mobile\` row.
-- A viewport with no row gets a copy of the slides below it. In a slide row, an empty cell keeps that cell of the same slide in the viewport below.
-- The text cell holds an eyebrow, a heading, body copy, buttons, an icon and the card's label. The heading is an \`h1\` or \`h2\`, and the paragraph before it is the eyebrow. Every slide needs a heading.
-- A paragraph of emphasized links holds the buttons: a bold one is the primary button and the other one the secondary. Below 1280px, only the primary button shows.
-- The icon is a link to an SVG, alone in its paragraph, and the next paragraph holds the label, a link. The block moves both into the slide's card, which links to the label's URL.
-- Other paragraphs are body copy
-- The background cell holds an image or a video, which covers the slide under a dark gradient on the text's side. A video plays muted and looped while its slide shows, and stops when the slides stop.
-- The block grows taller than the window when its content needs it
-- The slides change on their own and loop, sliding in from the side with their text following. A bar along the active card fills until the next slide.
-- From 1280px, the cards sit side by side, each with its icon above its label, with the pause button after them, or above them when the row doesn't fit the window. Below 1280px, they sit in one row that moves to bring the active card to the start, each with its icon beside its label, with the pause button above them and a button at the end that goes back to the first slide. With a mouse below 1280px, a next button beside the pause button replaces the button at the end.
-- Hovering a card shows its slide, and a swipe shows the next or previous one. Hovering or focusing a link or button in the block, a swipe, or the pause button stops the slides until the play button starts them again.
-- The slides stop when the next section scrolls part way up the window and start again when the page scrolls back, unless they were stopped by hand
-- With reduced motion, the slides start stopped and change only by hand, without sliding
-- \`starting-marquee\` in the section's metadata gives the number of the slide to show first. The block moves that slide and its card to the front.
-- A \`promo-placeholder-slide-<n>\` class on the block hides the \`n\`th authored slide and its card until the slide's Merch at Scale field resolves to a promotion
+- The text cell holds an eyebrow before an \`h1\` or \`h2\` heading, body copy, emphasized links for buttons (bold for primary), and an SVG link for the card's icon, then its label link
+- Rows named \`mobile\`, \`tablet\` and \`desktop\` start each viewport's slides, and \`mobile\` is required. A missing viewport copies the one below, and an empty cell keeps the same slide's cell from the viewport below.
+- \`starting-marquee\` in the section's metadata moves the slide with that number to the front
+- Below 1280px, only the primary button shows
+- The slides change on their own and loop, or only by hand with reduced motion
+- Hovering a card shows its slide, and a swipe the next or previous one
+- Hovering or focusing a link or button in the block, a swipe, or the pause button stops the slides until the play button starts them
+- The slides stop when the next section scrolls part way up the window
 `;
 
 // Authored markup for the block from a story's args, followed by section metadata when
@@ -46,7 +39,7 @@ export default {
     slides: { control: 'object', description: SLIDES_DESCRIPTION },
     startingSlide: {
       control: { type: 'number', min: 1 },
-      description: 'Number of the slide to show first, from 1, authored as `starting-marquee` in the section\'s metadata. Leave empty for no section metadata, which shows the slides in order.',
+      description: 'Number of the slide to show first, from 1, authored as `starting-marquee` in the section\'s metadata',
     },
   },
 };
