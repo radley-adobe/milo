@@ -1,40 +1,4 @@
 import { MEDIA } from '../../../src/milo.js';
-import { attr } from '../authored.js';
-
-const picture = (src, alt) => `<picture><img src="${attr(src)}" alt="${attr(alt)}"></picture>`;
-
-// A card's media cell. A shown icon goes in its own paragraph before the image, because the block
-// takes the first of two images in a stacked card's cell as its icon.
-function media({ icon, image, imageAlt }, showIcon) {
-  const img = image ? picture(image, imageAlt) : '';
-  if (!showIcon || !icon) return `<div>${img}</div>`;
-  return `<div>
-      <p><a href="${attr(icon)}">${icon}</a></p>
-      <p>${img}</p>
-    </div>`;
-}
-
-// A card's text cell.
-function text({ heading, body, ctaLabel, ctaHref }) {
-  const parts = [
-    heading && `<h3>${heading}</h3>`,
-    body && `<p>${body}</p>`,
-    ctaLabel && `<p><a href="${attr(ctaHref)}">${ctaLabel}</a></p>`,
-  ].filter(Boolean);
-  return parts.length ? `<div>\n      ${parts.join('\n      ')}\n    </div>` : '<div></div>';
-}
-
-// One Side by Side block: a media row and a text row, with one cell per card. `showIcon` is true
-// unless set.
-export const sideBySide = ({ variants: classes = [], cards = [], showIcon = true }) => `
-<div class="${['side-by-side', ...classes].join(' ')}">
-  <div>
-    ${cards.map((card) => media(card, showIcon)).join('\n    ')}
-  </div>
-  <div>
-    ${cards.map(text).join('\n    ')}
-  </div>
-</div>`.trim();
 
 // A card with its image from media/side-by-side/ and no icon or link.
 const card = (name, heading, body) => ({

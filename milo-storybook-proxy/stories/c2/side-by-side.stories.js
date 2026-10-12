@@ -1,8 +1,8 @@
 import { ACROBAT, CC_PRO_TEST_FRAGMENTS, LIVE, MEDIA, renderBlock, renderPageBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/side-by-side';
 import variants from 'virtual:variants/c2/side-by-side';
-import { icon, sectionMetadata } from './authored.js';
-import { PRODUCT, sideBySide } from './sections/side-by-side.js';
+import { icon, sectionMetadata, sideBySide } from './authored.js';
+import { PRODUCT } from './sections/side-by-side.js';
 
 const description = `
 Two cards side by side: an overlay card, with its text over its image, and a stacked card, with its text below its image. It's authored as two rows: a media row, then a text row, each with one cell per card.

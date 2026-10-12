@@ -85,3 +85,36 @@ export const quote = ({ variants: classes = [], quote: text, name, role, showAtt
     </div>
   </div>
 </div>`.trim();
+
+// A Side by Side card's media cell. A shown icon goes in its own paragraph before the image,
+// because the block takes the first of two images in a stacked card's cell as its icon.
+function sideBySideMedia({ icon: iconUrl, image, imageAlt }, showIcon) {
+  const img = image ? `<picture><img src="${attr(image)}" alt="${attr(imageAlt)}"></picture>` : '';
+  if (!showIcon || !iconUrl) return `<div>${img}</div>`;
+  return `<div>
+      <p><a href="${attr(iconUrl)}">${iconUrl}</a></p>
+      <p>${img}</p>
+    </div>`;
+}
+
+// A Side by Side card's text cell.
+function sideBySideText({ heading, body, ctaLabel, ctaHref }) {
+  const parts = [
+    heading && `<h3>${heading}</h3>`,
+    body && `<p>${body}</p>`,
+    ctaLabel && `<p><a href="${attr(ctaHref)}">${ctaLabel}</a></p>`,
+  ].filter(Boolean);
+  return parts.length ? `<div>\n      ${parts.join('\n      ')}\n    </div>` : '<div></div>';
+}
+
+// One Side by Side block: a media row and a text row, with one cell per card. `showIcon` is true
+// unless set.
+export const sideBySide = ({ variants: classes = [], cards = [], showIcon = true }) => `
+<div class="${['side-by-side', ...classes].join(' ')}">
+  <div>
+    ${cards.map((card) => sideBySideMedia(card, showIcon)).join('\n    ')}
+  </div>
+  <div>
+    ${cards.map(sideBySideText).join('\n    ')}
+  </div>
+</div>`.trim();

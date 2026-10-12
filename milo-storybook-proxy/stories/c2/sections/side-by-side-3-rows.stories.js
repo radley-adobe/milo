@@ -1,7 +1,7 @@
 import { CC_PRO_TEST_FRAGMENTS, renderPageSections, renderSections } from '../../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/side-by-side';
-import { section, sectionMetadata } from '../authored.js';
-import { PRODUCT, sideBySide } from './side-by-side.js';
+import { section, sectionMetadata, sideBySide } from '../authored.js';
+import { PRODUCT } from './side-by-side.js';
 
 const description = `
 Three [Side by Side](?path=/docs/blocks-side-by-side--docs) blocks, one below another: the default layout, \`equal\` and \`reverse\`. Each block's classes set its layout, spacing and motion, and the section's metadata sets its width and background.
