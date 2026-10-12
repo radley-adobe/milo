@@ -1,15 +1,17 @@
-import { ACROBAT, CC_PRO_TEST_FRAGMENTS, LIVE, MEDIA, renderBlock, renderPageBlock } from '../../src/milo.js';
+import {
+  ACROBAT, CC_PRO_TEST_FRAGMENTS, LIVE, MEDIA, renderBlock, renderPageBlock,
+} from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/hover-list';
 import variants from 'virtual:variants/c2/hover-list';
 import { attr, sectionMetadata } from './authored.js';
 
 const description = `
-A heading beside a numbered list whose items show images at the pointer on hover. It's authored as a first row with the heading, then one row per item with two cells: the item's text, then its images.
+A heading beside a numbered list whose items show images at the pointer on hover. It's authored as a first row with the heading and its text, then one row per item with two cells: the item's text, then its images.
 
 - The first row's cell holds a heading, body copy and a link. The heading shows at \`heading-2\` size.
-- The cell's last paragraph, when its only element is a link, shows as a label: the link gets an arrow after it, takes the text's color and has no underline. Text around the link stays, so body copy with one link and no link paragraph after it shows this way too.
-- A paragraph directly above the heading shows as an eyebrow, in the theme's eyebrow color: black at 64% in the light theme and white at 48% in the dark one. Any other link in body copy is black in the light theme and white in the dark one.
-- The block numbers the items \`1.\`, \`2.\` and so on, in eyebrow style. Each item's text shows at \`heading-5\` size.
+- The cell's last paragraph, when its only element is a link, shows as a label: the link gets an arrow after it, takes the text's color and has no underline. Text around the link stays, so body copy with one link and no link paragraph after it shows this way too. Any other link in body copy is black in the light theme and white in the dark one.
+- A paragraph directly above the heading shows as an eyebrow, in the theme's eyebrow color: black at 64% in the light theme and white at 48% in the dark one.
+- The block numbers the items \`1.\`, \`2.\` and so on, in the eyebrow's type but white. Each item's text shows at \`heading-5\` size.
 - An item's image cell holds one or more images. An item with an empty image cell has no images.
 - Below 768px, the first row's text sits above the list, and each item shows its first image as an 80 × 81px thumbnail at its right
 - From 768px, the first row's text and the list sit side by side in two equal columns, and each item shows its first image as a square thumbnail, 25% of the item's width
@@ -42,7 +44,9 @@ const pictures = (srcs) => srcs.filter(Boolean).map((src) => `<picture><img src=
 // its first image, below 1280px, and Desktop-viewport rows give it its images from 1280px. The
 // Desktop-viewport heading cell is empty, so it keeps the Mobile-viewport heading, as on the
 // Acrobat page.
-const authored = ({ variants: classes = [], heading, body, ctaLabel, ctaHref, items = [] }) => {
+const authored = ({
+  variants: classes = [], heading, body, ctaLabel, ctaHref, items = [],
+}) => {
   const text = cell([
     heading ? `<h2>${heading}</h2>` : '',
     body ? `<p>${body}</p>` : '',
@@ -114,7 +118,8 @@ export const Default = {
   },
 };
 
-// The same list with its first row's text limited to 35% of the window's width from 768px to 1279px.
+// The same list with its first row's text limited to 35% of the window's width
+// from 768px to 1279px.
 export const CompactHeadline = {
   ...blockStory,
   args: { ...Default.args, variants: ['compact-headline'] },
