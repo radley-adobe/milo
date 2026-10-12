@@ -6,11 +6,7 @@ import { attr, icon, sectionMetadata } from './authored.js';
 const description = `
 A heading over a row of news items, each with a heading, body copy and a link. It's authored as one row for the block's heading, then one row per item, each with one cell.
 
-- The first row holds an optional icon and a heading or paragraph, which shows as an eyebrow in the body font
-- An icon is a link to an SVG, alone in its paragraph, or an image. It shows before the heading.
-- Each item's cell holds a heading, body copy and a link. The heading shows at \`heading-5\` size.
-- Body copy is cut to three lines
-- A link alone in its paragraph shows as a label with an arrow, at the bottom of its item, so the links in a row line up
+- The first row holds an optional icon and a heading or paragraph, which shows as an eyebrow in the body font. The icon is a link to an SVG, alone in its paragraph, or an image, and shows before the heading. Each item's heading shows at \`heading-5\` size, its body copy is cut to three lines, and a link alone in its paragraph shows as a label with an arrow.
 - \`quiet\` removes the underline from each item's link alone in its paragraph
 - From 768px, two, three, four or six items sit side by side in that many columns. Below 768px, the items stack in one column.
 - From 768px, the items move up into place as the block scrolls into view, each starting lower than the one before it. With reduced motion, nothing moves.
