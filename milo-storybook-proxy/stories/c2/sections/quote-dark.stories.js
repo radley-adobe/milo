@@ -1,4 +1,4 @@
-import { CC_PRO_TEST_FRAGMENTS, renderPageSections, renderSections } from '../../../src/milo.js';
+import { CC_PRO_TEST_FRAGMENTS, renderPageBlock, renderSections } from '../../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/quote';
 import { quote, section, sectionMetadata } from '../authored.js';
 
@@ -11,10 +11,10 @@ One [Quote](?path=/docs/blocks-quote--docs) alone in a dark section. The quote h
 - \`rounded-corners-bottom\` rounds the section's bottom corners by 22px, or 32px from 1280px. The next section's background reaches up the same distance behind them.
 - Style values are separated by a comma and a space. A space inside a value becomes a hyphen, and capitals don't matter.
 - The block reads its cell's headings and paragraphs in order: the first is the quote, the second the name and the third the role. It removes the rest of the block's content.
-- The quote shows at \`heading-1\` size when it's a heading, up to 1312px wide. The name and role show at \`body-md\` size.
+- Each heading in the cell shows at \`heading-1\` size and each paragraph at \`body-md\` size. The quote is up to 1312px wide.
 - An opening quote mark at the start of the quote, such as “, hangs outside the text's left edge, or its right edge on a right-to-left page. The block then keeps only the quote's text, without links or formatting. A straight quote mark (") doesn't hang.
 - \`center-footer\` centers the name and role below the quote
-- Thin lines frame the text: one above and one below it across the block's full width, one at each side from the block's top to its bottom, and a dashed line down the middle. A white dot marks each corner of the text, where the lines cross. The lines are dark gray (#292929).
+- Thin lines frame the text: one above and one below it across the block's full width, one at each side from the block's top to its bottom, and a dashed line down the middle. A dot marks each corner of the text, where the lines cross. The lines are dark gray (#292929) and the dots white with or without \`dark\`, so the dots show only on a dark background.
 - The block has 24px of padding, 48px from 768px and 64px from 1280px
 - Below 768px, the block is at least 600px tall, with the quote at the top and the name and role at the bottom, at least 128px below it. From 768px, the name and role sit 160px below the quote, or 240px from 1280px.
 `;
@@ -34,7 +34,7 @@ export default {
     role: { control: 'text', description: 'Role of the person quoted, below the name. Leave empty for none.' },
     showAttribution: { control: 'boolean', description: 'Show the name and role' },
     style: { control: 'text', description: 'The section\'s style: classes separated by a comma and a space. Leave empty for none.' },
-    background: { control: 'text', description: 'The section\'s background color. Leave empty for none.' },
+    background: { control: 'text', description: 'The section\'s background color. Leave empty for none, or #131313 with `dark`.' },
   },
 };
 
@@ -55,6 +55,6 @@ export const Default = {
 // The Creative Cloud Pro product page's section, as published.
 export const CreativeCloudProProduct = {
   name: 'adobe.com: Creative Cloud Pro product',
-  render: () => renderPageSections(`${CC_PRO_TEST_FRAGMENTS}/cpro-product`, 'quote', { foundation: 'c2' }),
+  render: () => renderPageBlock(`${CC_PRO_TEST_FRAGMENTS}/cpro-product`, 'quote', { metadata: true, foundation: 'c2' }),
   parameters: { controls: { disable: true } },
 };
