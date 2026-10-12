@@ -21,9 +21,10 @@ A full-window hero that shows one slide at a time. A card for each slide sits al
 - Below 1280px, when the next section has \`parallax-move-up-fast\`, the controls move in 24px from each side and the cards sit 160px from the bottom
 - Hovering a card shows its slide. A swipe of more than 100px across the block shows the next or previous slide.
 - Hovering or focusing any link or button in the block, a swipe, or the pause button stops the slides until the play button starts them again
-- The slides stop when the next section is 30% of the way up the window and start again when the page scrolls back above it, unless they were stopped by hand. With reduced motion, they start stopped and the play button doesn't start them. They change only by hand, without sliding.
+- The slides stop when the next section is 30% of the way up the window and start again when the page scrolls back above it, unless they were stopped by hand. With reduced motion, they start stopped and the play button plays only the active slide's video. They change only by hand, without sliding.
 - \`starting-marquee\` in the section's metadata gives the number of the slide to show first. The block moves that slide and its card to the front.
-- \`promo-placeholder-slide-<n>\` hides slide \`n\` and its card until the slide's Merch at Scale field resolves to a promotion. Storybook can't show it, because that content loads from www.adobe.com.
+- A \`promo-placeholder-slide-<n>\` class on the block hides the \`n\`th authored slide and its card until the slide's Merch at Scale field resolves to a promotion. Storybook can't show it, because that content loads from www.adobe.com.
+- The adobe.com: Homepage story loads its slides' text from www.adobe.com, which doesn't allow requests from Storybook, so the text is missing or shows a load error
 - The cards are a tab list, with each card a tab named by the eyebrow and label, and each slide a tab panel with the \`slide\` role description. The hidden slides are inert. While the slides play, a hint for screen readers suggests pausing them.
 - The block builds the slides for each viewport and shows the one that fits the window. Moving between viewports keeps the active slide, and keeps the slides stopped when they were stopped by hand.
 `;
