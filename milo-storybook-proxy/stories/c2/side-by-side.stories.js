@@ -1,7 +1,7 @@
 import { ACROBAT, CC_PRO_TEST_FRAGMENTS, LIVE, MEDIA, renderBlock, renderPageBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/side-by-side';
 import variants from 'virtual:variants/c2/side-by-side';
-import { icon, sectionMetadata, sideBySide } from './authored.js';
+import { sectionMetadata, sideBySide } from './authored.js';
 import { PRODUCT } from './sections/side-by-side.js';
 
 const description = `
@@ -55,27 +55,27 @@ export default {
   },
 };
 
-// The Creative Cloud Pro hub's block, with the images it shows from 1280px, in the width of a
-// container section. The stacked card shows a video on the page, and the story shows the video's
-// poster image.
+// The PDF and document essentials page's block, without its `parallax-stagger-ltr` class, in the
+// width of a container section. The overlay card shows a video on the page, and the story shows
+// the video's poster image.
 export const Default = {
   ...blockStory('container, fixed'),
   args: {
     variants: [],
     cards: [{
-      image: `${MEDIA}/side-by-side/firefly-ideas.webp`,
+      image: `${MEDIA}/side-by-side/acrobat-ai-assistant.webp`,
       imageAlt: '',
       icon: '',
-      heading: 'Explore ideas faster with Adobe Firefly.',
-      body: 'Generate and refine concepts using Firefly creative AI and top partner models, then remix and collaborate on mood boards and storyboards on the infinite canvas of Firefly Boards.',
+      heading: 'Understand quickly with AI Assistant.',
+      body: 'Ask AI Assistant to quickly summarize, create an audio overview, analyze, provide insights, get answers with citations, and more.',
       ctaLabel: '',
       ctaHref: '',
     }, {
-      image: `${MEDIA}/side-by-side/creative-cloud-workflows.webp`,
+      image: `${MEDIA}/side-by-side/acrobat-pdf-spaces.webp`,
       imageAlt: '',
-      icon: icon('creative-cloud'),
-      heading: 'Streamline workflows with apps that work together seamlessly.',
-      body: 'Create across photo, design, and video with compatible apps, automatically synced assets, and integrated AI that speeds up routine tasks.',
+      icon: '',
+      heading: 'Share effortlessly with PDF Spaces.',
+      body: 'Share a secure PDF Space with teammates, where everyone can ask AI Assistant to help with research, strategy, planning, or quick learning.',
       ctaLabel: '',
       ctaHref: '',
     }],
@@ -99,6 +99,30 @@ export const Equal = {
 export const Featured = {
   ...blockStory('container, fixed'),
   args: { variants: ['featured'], cards: [PRODUCT.rotateObject], showIcon: true },
+};
+
+// Default's cards in a dark section.
+export const Dark = {
+  ...blockStory('container, fixed, dark'),
+  args: { ...Default.args, variants: ['dark'] },
+};
+
+// Default's cards without the overlay card's gradient.
+export const ScrimOff = {
+  ...blockStory('container, fixed'),
+  args: { ...Default.args, variants: ['scrim-off'] },
+};
+
+// Default's cards with subtle body copy.
+export const ContentSubtle = {
+  ...blockStory('container, fixed'),
+  args: { ...Default.args, variants: ['content-subtle'] },
+};
+
+// Default's cards with the stacked card's empty space on its right, which shows below 768px.
+export const SmallLeft = {
+  ...blockStory('container, fixed'),
+  args: { ...Default.args, variants: ['small-left'] },
 };
 
 const product = `${CC_PRO_TEST_FRAGMENTS}/cpro-product`;
