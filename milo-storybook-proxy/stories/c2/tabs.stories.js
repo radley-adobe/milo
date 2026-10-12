@@ -4,27 +4,22 @@ import variants from 'virtual:variants/c2/tabs';
 import { panel, PLANS, tabName, tabs } from './sections/tab-panel.js';
 
 const description = `
-A row of tabs that each show a [Tab Panel](?path=/docs/sections-tab-panel--docs). It's authored as a first row with a list of the tab labels, then one row per setting, and each panel is a section whose section metadata names its tab.
+A row of tabs that each show a [Tab Panel](?path=/docs/sections-tab-panel--docs). It's authored as one row with a list of tab labels, then one row per setting with its name and value.
 
-- Each setting's row holds its name and its value: \`id\`, \`active tab\`, \`pretext\` or \`remember\`
-- The block finds the sections on the page, or in its fragment, whose \`tab\` row names one of its tabs, and moves each into that tab's panel, in page order. Sections with the same \`tab\` row share a panel.
-- Without an \`id\`, a section's \`tab\` row holds its tab's label
-- With an \`id\`, a section's \`tab\` row holds the id and the tab's number, such as \`compare-plans, 2\`. A panel can hold another Tabs block with its own \`id\` and panels.
-- A panel section's \`tab-background\` row gives its tab that background color when a reader selects it. A \`link\` row makes the tab open that page instead.
-- \`active tab\` is the tab that shows first: its number with an \`id\`, or its label without one. Otherwise the first tab shows.
-- \`remember\` set to \`on\` shows the tab last selected on the page again when the page reloads in the same browser tab
-- With an \`id\`, \`?tab=<id>-<number>\` in the page's URL selects that tab, and \`?<id>=<value>\` selects the tab whose panel section has a \`deeplink\` row with that value
-- By default, the tabs sit at the start of a rounded track, and the selected tab is a pill that slides to the next tab selected. The block adds \`pill\` for this style.
-- \`quiet\` shows the tabs as text at \`heading-4\` size, with a line under the selected tab
-- \`radio\` shows a radio button for each tab, in a rounded bar. A paragraph above the list shows at the start of the bar.
-- \`dark\` gives the block Milo's dark colors, for a dark section
-- \`center\` centers the tab list and \`right\` aligns it to the right, both from 768px. With \`quiet\`, \`center\` centers it below 768px too.
-- Below 768px, the tab list sits in a strip as wide as the viewport, inset from each edge, and the block clips the strip at its own edges. With \`quiet\`, the strip is as wide as the block.
-- A pill tab list scrolls sideways when its tabs don't fit. \`quiet\` and \`radio\` lists scroll only below 768px. Selecting or focusing a tab scrolls it into view.
-- The block has a background, apart from \`quiet\`, \`radio\` and \`dark\` pills. \`background-transparent\` removes it.
-- \`staggered-intro-merch-cards\` fades the merch cards in the shown panel in and moves them up into place, the first eight one after another, when the page loads and when a tab is selected. With reduced motion, nothing moves.
-- The block adds \`tablist-<id>-section\` to its section, where \`<id>\` is its \`id\`, or its number among the page's Tabs blocks
-- A section with the \`tabs-background-transparent\` style removes the background of the Tabs blocks in it, and the track of pills without \`dark\`
+- Each panel holds the sections whose section metadata has a \`tab\` row naming its tab: the label, or, when the block has an \`id\`, the id and the tab's number, such as \`compare-plans, 2\`
+- With an \`id\`, \`?tab=<id>-<number>\` in the URL selects that tab
+- \`active tab\` sets the tab shown first: its number with an \`id\`, or its label without one
+- \`pretext\` is the tab list's accessible name. With \`radio\`, a paragraph above the list takes its place.
+- \`remember\` set to \`on\` keeps the selected tab across reloads in the same browser tab
+- By default, the selected tab is a pill that slides to the next tab selected
+- \`quiet\` shows the tabs as \`heading-4\` text, underlining the selected tab
+- \`radio\` shows a radio button for each tab, after any paragraph above the list
+- \`dark\` styles the block for a dark section
+- \`center\` centers the tab list from 768px
+- \`right\` aligns the tab list right from 768px
+- \`background-transparent\` removes the block's background
+- \`staggered-intro-merch-cards\` fades in and moves up the merch cards of each panel as it shows, the first eight one after another. With reduced motion, nothing moves.
+- A tab list that doesn't fit scrolls sideways. \`quiet\` and \`radio\` lists scroll only below 768px.
 `;
 
 // Authored markup for the block's section, with the section metadata settings in `metadata`, and
@@ -54,11 +49,11 @@ export default {
     variants: { ...variants, options: variants.options.filter((name) => name !== 'pill') },
     tabs: {
       control: 'object',
-      description: 'One tab each, in order: its `label`, and the `heading` and `body` of the Rich Content block in its panel section. Leave `heading` and `body` empty for an empty panel.',
+      description: 'One tab each, in order: its `label`, and the `heading` and `body` of the Rich Content block in its panel section',
     },
-    radioLabel: { control: 'text', description: 'Label before the radio buttons, authored as a paragraph above the list. Only `radio` shows it. Leave empty for none.' },
-    id: { control: 'text', description: 'Authored in an `id` row. Each panel section\'s `tab` row then holds the id and the tab\'s number. Leave empty to match each panel to its tab by label.' },
-    activeTab: { control: { type: 'number', min: 1 }, description: 'Number of the tab that shows first, authored in an `active tab` row as the number with an `id`, or as the tab\'s label without one. Leave empty for the first tab.' },
+    radioLabel: { control: 'text', description: 'Label before the radio buttons, authored as a paragraph above the list. Leave empty for none.' },
+    id: { control: 'text', description: 'Value of the `id` row. Leave empty for none.' },
+    activeTab: { control: { type: 'number', min: 1 }, description: 'Number of the tab that shows first (`active tab`)' },
     pretext: { control: 'text', description: 'Accessible name of the tab list, authored in a `pretext` row. Leave empty for none.' },
   },
 };
