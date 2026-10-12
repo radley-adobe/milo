@@ -19,7 +19,7 @@ A list of items beside a stack of their images. It's authored as one row per ite
 - A video plays while its item is active and at least 40% of it is in view, and pauses otherwise
 - \`dark\` gives the block's text light colors and leaves its background transparent, so the section's background shows through
 - The previous and next buttons, the dots and the chevron boxes are white or translucent white in both themes, so the block suits a dark section background. Both adobe.com pages put the block, with \`dark\`, over a dark section background image, and so do the stories.
-- \`container\` gives the block 24px of side padding below 768px. From 768px, it gives the block 8.333% of its width as padding at its start, and none at its end. Both adobe.com pages author it, and so do the stories.
+- \`container\` gives the block 24px of side padding below 768px, and 8.333% of its width from 768px, where the block removes the padding at its end. Both adobe.com pages author it, and so do the stories.
 - Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different items at each viewport. An empty cell keeps the content of the viewport below it. Classes in parentheses after the name, such as \`Mobile-viewport (spacing-sm)\`, apply to the block at that viewport.
 `;
 
