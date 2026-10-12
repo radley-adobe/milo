@@ -8,17 +8,17 @@ const description = `
 A table that compares plans feature by feature. It's authored as a header row with a column for each plan, then the features in tables separated by rows holding \`+++\`.
 
 - The header row's first cell holds a heading and an optional paragraph. Each other cell is a plan's card.
-- Paragraphs holding only \`-\` split a plan's cell into parts. The first part holds a label and the plan's name as a heading, the last part the plan's links, and the parts between them details such as a price.
-- In a plan's last part, a bold link shows as a filled button and an italic link as an outlined button
+- Paragraphs holding only \`-\` split a plan's cell into parts. In the first part, a heading is the plan's name, a plain paragraph shows as a label and a bold paragraph shows larger. The last part holds the plan's links, and the parts between them details such as a price.
+- In a plan's last part, a bold link shows as a filled button and an italic link as an outlined button. The first paragraph without a button shows above them. Other italic text in a card shows smaller and not in italics.
 - \`primary\` in a plan's cell of a table's first row gives that plan's card a border
 - Each table's first row is its heading, a button that expands and collapses the table. The first table starts expanded and the others collapsed.
 - Every other row is a feature: its name, then one cell per plan. A cell holds text or an icon, such as a checkmark (\`icon-checkmark\`) or a cross (\`icon-close\`). An empty cell shows a dash. A paragraph after one holding only \`-\` shows below the value.
-- In a feature's name, underlined text authored as \`label | position | text\` shows the label with a tooltip of the text on hover. The position is \`top\`, \`bottom\`, \`left\` or \`right\`.
+- In a feature's name, underlined text authored as \`label | position | text\` shows the label with a tooltip of the text on hover. The position is \`top\`, \`bottom\`, \`left\` or \`right\`. Left empty, the tooltip shows at the right from 900px and below the label under 900px.
 - From 900px, the plan cards sit in a row to the right of the heading, with each plan's values below its card, and stick below the global navigation as the page scrolls. Scrolling down while they're stuck shrinks each card to its first part, and scrolling up shows the rest again.
 - \`static-header\` turns the sticking and shrinking off, so the cards scroll with the page
 - Below 900px, only the first two plans show, in two columns, with each feature's name above its two values. With more than two plans, each card's heading opens a menu that chooses the plan its column shows.
 - The cards fade out as the end of the block scrolls up the window, unless reduced motion is set
-- The cards are white and the text dark in either theme and in a \`dark\` section, so the block needs a light background
+- The cards and text keep their light-theme colors in the dark theme and in a \`dark\` section, so the block needs a light background
 - The block doesn't change its section
 `;
 
