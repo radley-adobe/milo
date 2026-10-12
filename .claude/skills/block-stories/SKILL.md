@@ -67,9 +67,12 @@ examples or content. List the features you add and the ones that don't fit Milo.
 **Description.** Set `parameters.docs.description.component` on the default export: one sentence
 on what the block is and how it's authored, then bullets. State only facts from the block's code:
 what each cell holds, what each variant changes and from which width, viewport rows, what the
-block does to its section, and how its section lays out several of them. A bullet of one sentence
-has no period. Each Docs page holds everything its reader needs: repeat facts from related pages,
-such as a section's blocks, rather than sending the reader to them.
+block does to its section, and how its section lays out several of them, plus how the block
+behaves, such as opening, hovering and scrolling. Leave out measurements, colors, timings,
+accessibility and analytics attributes, what breaks with unusual content, Milo bugs, and notes
+about Storybook or the page the content came from. Base Card's and FAQ's descriptions show the
+length. A bullet of one sentence has no period. Each Docs page holds everything its reader needs:
+repeat facts from related pages, such as a section's blocks, rather than sending the reader to them.
 
 **Template.** Write `authored(args, style)`, which returns the block's authored markup from a
 story's args, followed by a `section-metadata` block when `style` is set. Follow the structure the
@@ -77,8 +80,8 @@ library page and mocks use. Leave out an element when its arg is empty. Pass att
 through `attr()`.
 
 **Args.** On the default export, set `argTypes` to `variants` from `virtual:variants/c2/<block>`
-and one arg per piece of content, each with a `control` and a `description` that says what an
-empty value does. Add a boolean where the S2A counterpart toggles a part, such as `showIcon`.
+and one arg per piece of content, each with a `control` and a short `description` that says what
+the arg holds and what an empty value does. Add a boolean where the S2A counterpart toggles a part, such as `showIcon`.
 
 **Single-block stories.** Each renders the block from its args with
 `renderBlock(authored(args, style), { foundation: 'c2' })`, and sets
