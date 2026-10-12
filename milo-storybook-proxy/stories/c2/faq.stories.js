@@ -7,8 +7,8 @@ import { ACROBAT_QUESTIONS, faq } from './sections/faq.js';
 const description = `
 A list of questions, each of which opens to show its answer. It's authored as one row per question, each with one cell: a heading for the question, then the answer.
 
-- The heading is the question. It keeps the level it's authored with and shows at \`heading-5\` size.
-- The rest of the cell is the answer, such as paragraphs and lists, at \`body-md\` size in the subtle text color. Its paragraphs and lists are 8px apart. From 768px, the answer is up to 548px wide.
+- The heading is the question. It keeps the level it's authored with and shows at \`heading-5\` size. Only its text is kept: links, other markup and the heading's id are dropped.
+- The rest of the cell is the answer, such as paragraphs and lists, at \`body-md\` size in the subtle text color. A paragraph or list after a paragraph sits 8px below it, and one after a list sits 16px below it, because lists keep the browser's 1em margins. From 768px, the answer is up to 548px wide.
 - A row with no heading doesn't show
 - Each question is a \`details\` element whose \`summary\` holds the question and a chevron at its end. The first question is open when the page loads. Clicking a question opens or closes its answer, and several answers can be open at once.
 - An answer opens and closes over 400ms, and its chevron turns over. With reduced motion, the answer opens and closes at once.
@@ -49,7 +49,7 @@ export default {
     },
     items: {
       control: 'object',
-      description: 'One row each, in order: a `question`, authored as an `h3`, and its `answer` as HTML, such as paragraphs and lists. A row with no `question` doesn\'t show.',
+      description: 'One row each, in order: a `question`, authored as an `h3`, and its `answer` as HTML, such as paragraphs and lists. A row with no `question` doesn\'t show. Leave `answer` empty to leave it out.',
     },
   },
 };
