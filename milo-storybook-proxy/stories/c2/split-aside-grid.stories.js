@@ -17,7 +17,7 @@ A list of items beside a stack of their images. It's authored as one row per ite
 - From 768px, each item's heading is a button with a chevron, and other items' headings show at 48% opacity. Clicking an item opens it, showing its body copy and links, and shows its media. Clicking the open item closes or reopens it.
 - From 768px, the media area takes the first media's aspect ratio, or 4:3, and is at least 480px high. Each media is cropped to fill it, keeping its start edge, inside a translucent frame with rounded corners.
 - With reduced motion, the cards, the carousel and the items' text change without animating
-- A video plays while its item is active and at least 40% of it is in view, and pauses otherwise
+- A video plays while its item is active and at least 40% of it is in view, and pauses otherwise. A video that doesn't loop stops at its end, and one authored with \`#autoplay1#viewportplay\` doesn't play again on its own.
 - \`dark\` gives the block's text light colors and leaves its background transparent, so the section's background shows through
 - The previous and next buttons, the dots and the chevron boxes are white or translucent white in both themes, so the block suits a dark section background
 - \`container\` gives the block 24px of side padding below 768px, and 8.333% of its width from 768px, where the block removes the padding at its end
