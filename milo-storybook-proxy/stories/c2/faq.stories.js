@@ -13,7 +13,7 @@ A list of questions, each of which opens to show its answer. It's authored as on
 - Each question is a \`details\` element whose \`summary\` holds the question and a chevron at its end. The first question is open when the page loads. Clicking a question opens or closes its answer, and several answers can be open at once.
 - An answer opens and closes over 400ms, and its chevron turns over. With reduced motion, the answer opens and closes at once.
 - Each question has 32px above it and 8px between it and its answer. A line 32px below the question or its open answer separates it from the next: black at 8% opacity, or white at 8% in a \`dark\` section.
-- While the pointer is over the block or focus is in it, the closed questions other than the hovered or focused one fade to 60% opacity. Keyboard focus shows a 2px ring around the question.
+- While the pointer is over the block, the closed questions other than the one under it fade to 60% opacity. While focus is in the block and the pointer isn't over it, the closed questions other than the focused one fade. Keyboard focus shows a 2px ring around the question.
 - Each question moves up and fades in as it scrolls into view. With reduced motion, or in a browser without CSS scroll-driven animations, nothing moves.
 - \`seo\` adds the questions and answers to the page's head as FAQPage structured data, with each answer as plain text
 - A class on the block that starts with \`heading-\`, such as \`heading-6\`, sets the size of the questions. One that starts with \`body-\`, such as \`body-sm\`, sets the size of the answers.

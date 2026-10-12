@@ -14,14 +14,16 @@ A heading above a [FAQ](?path=/docs/blocks-faq--docs) block. The heading is a Ri
 - \`background\` sets the section's background color. Storybook shows a white background in the theme's default background color, so it follows the Theme menu.
 - Style values are separated by a comma and a space. A space inside a value becomes a hyphen, and capitals don't matter.
 - The FAQ block has one row per question, each with one cell: a heading for the question, then the answer. The question shows at \`heading-5\` size and the answer at \`body-md\` size in the subtle text color. A paragraph or list after a paragraph sits 8px below it, and one after a list sits 16px below it, because lists keep the browser's 1em margins. From 768px, the answer is up to 548px wide.
-- Only the question's text is kept: links, other markup and the heading's id are dropped
+- The question keeps the heading level it's authored with. Only its text is kept: links, other markup and the heading's id are dropped.
 - A row with no heading doesn't show
 - Each question is a \`details\` element whose \`summary\` holds the question and a chevron at its end. The first question is open when the page loads. Clicking a question opens or closes its answer, and several answers can be open at once.
 - An answer opens and closes over 400ms, and its chevron turns over. With reduced motion, the answer opens and closes at once.
 - Each question has 32px above it, which also separates the first one from the heading, and 8px between it and its answer. A line 32px below each question or its open answer separates it from the next: black at 8% opacity, or white at 8% in a \`dark\` section.
-- While the pointer is over the block or focus is in it, the closed questions other than the hovered or focused one fade to 60% opacity. Keyboard focus shows a 2px ring around the question.
+- While the pointer is over the block, the closed questions other than the one under it fade to 60% opacity. While focus is in the block and the pointer isn't over it, the closed questions other than the focused one fade. Keyboard focus shows a 2px ring around the question.
 - Each question moves up and fades in as it scrolls into view. With reduced motion, or in a browser without CSS scroll-driven animations, nothing moves.
-- \`seo\` on the FAQ block adds the questions and answers to the page's head as FAQPage structured data
+- \`seo\` on the FAQ block adds the questions and answers to the page's head as FAQPage structured data, with each answer as plain text
+- A class on the FAQ block that starts with \`heading-\`, such as \`heading-6\`, sets the size of the questions. One that starts with \`body-\`, such as \`body-sm\`, sets the size of the answers.
+- \`aria-expanded\` on each \`summary\` in the FAQ block follows its question's state. Its \`daa-ll\` analytics label is the question's number and text, starting with \`open-\` while the question is closed and \`close-\` while it's open.
 `;
 
 // The section's authored markup from a story's args. The Acrobat page's Rich Content block also
