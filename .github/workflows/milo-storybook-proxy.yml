@@ -17,10 +17,12 @@ jobs:
     permissions:
       contents: write
     steps:
+      # MERGE_TOKEN can push upstream changes to workflow files, which the built-in token can't.
       - uses: actions/checkout@v7
         with:
           ref: dev
           fetch-depth: 0
+          token: ${{ secrets.MERGE_TOKEN || github.token }}
 
       # Scheduled and manual runs pull in the latest Milo before building.
       - name: Merge upstream Milo stage
