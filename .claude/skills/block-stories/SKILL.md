@@ -70,9 +70,10 @@ what each cell holds, what each variant changes and from which width, viewport r
 block does to its section, and how its section lays out several of them, plus how the block
 behaves, such as opening, hovering and scrolling. Leave out measurements, colors, timings,
 accessibility and analytics attributes, what breaks with unusual content, Milo bugs, and notes
-about Storybook or the page the content came from. Base Card's and FAQ's descriptions show the
-length. A bullet of one sentence has no period. Each Docs page holds everything its reader needs:
-repeat facts from related pages, such as a section's blocks, rather than sending the reader to them.
+about Storybook or the page the content came from. Keep a block's description to 200 words, or
+250 when it has more than six options, and a section's to 220. FAQ's description is the model.
+A bullet of one sentence has no period. Each Docs page holds everything its reader needs: repeat
+facts from related pages, such as a section's blocks, rather than sending the reader to them.
 
 **Template.** Write `authored(args, style)`, which returns the block's authored markup from a
 story's args, followed by a `section-metadata` block when `style` is set. Follow the structure the
