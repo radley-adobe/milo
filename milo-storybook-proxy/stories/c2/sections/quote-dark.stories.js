@@ -7,14 +7,14 @@ One [Quote](?path=/docs/blocks-quote--docs) alone in a dark section. The quote h
 
 - \`dark\` gives the section dark colors, and the quote's text takes them. A \`background\` row replaces the section's background color.
 - \`container\` gives the section side padding, wider from 768px, and limits its content's width. \`fixed\` keeps the narrower padding from 768px too.
-- The quote's side margins pull it out over the section's side padding. With \`container, fixed\`, the quote and its lines span the section's full width. Without \`fixed\`, from 768px the lines stop short of the section's edges.
+- The quote's side margins pull it out over the section's side padding. With \`container, fixed\`, the quote and its lines span the full width of a section up to 1968px wide. Without \`fixed\`, from 768px the lines stop short of the section's edges.
 - \`rounded-corners-bottom\` rounds the section's bottom corners, and the next section's background reaches up behind them
 - Style values are separated by a comma and a space. A space inside a value becomes a hyphen, and capitals don't matter.
 - The block reads its cell's headings and paragraphs in order as the quote, the name and the role. Each heading shows at \`heading-1\` size and each paragraph at \`body-md\` size.
 - An opening quote mark at the start of the quote, such as “, hangs outside the text's left edge, or its right edge on a right-to-left page
 - \`center-footer\` centers the name and role below the quote
 - Thin lines frame the text, with a dashed line down the middle and a dot at each corner of the text
-- Below 768px, the block has a minimum height, with the quote at the top and the name and role at the bottom. From 768px, the name and role sit below the quote.
+- Below 768px, the block has a minimum height, with the quote at the top and the name and role at the bottom. From 768px, the block has no minimum height, and the name and role sit a set distance below the quote.
 `;
 
 // The section's authored markup from a story's args.

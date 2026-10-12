@@ -9,11 +9,12 @@ A quote with the name and role of the person quoted, framed by thin lines. It's 
 - The block reads the cell's headings and paragraphs in order as the quote, the name and the role. Each heading shows at \`heading-1\` size and each paragraph at \`body-md\` size.
 - An opening quote mark at the start of the quote, such as “, hangs outside the text's left edge, or its right edge on a right-to-left page
 - The text takes its section's colors, in a light or a \`dark\` section
-- Below 768px, the block has a minimum height, with the quote at the top and the name and role at the bottom. From 768px, the name and role sit below the quote.
+- Thin lines frame the text, with a dashed line down the middle. On a dark background, a dot marks each corner of the text.
+- Below 768px, the block has a minimum height, with the quote at the top and the name and role at the bottom. From 768px, the block has no minimum height, and the name and role sit a set distance below the quote.
 - \`center-footer\` centers the name and role. \`right-footer\` aligns them to the right, or to the left on a right-to-left page.
 - A \`heading-\` class on the block, such as \`heading-3\`, replaces the quote's \`heading-1\` size, and a \`body-\` class, such as \`body-lg\`, replaces the \`body-md\` size
-- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the quote different content at each viewport. A Mobile-viewport row applies from the smallest width, a Tablet-viewport row from 768px and a Desktop-viewport row from 1280px, each up to the next row's width. An empty cell keeps the content of the viewport below it. Classes in parentheses after a row's name, such as \`Desktop-viewport (right-footer)\`, apply only at that viewport.
-- The block's side margins pull it out over its section's side padding. In a \`container, fixed\` section, the block and its lines span the section's full width. In a \`container\` section from 768px, the lines stop short of the section's edges.
+- Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the quote different content at each viewport. A Mobile-viewport row applies from the smallest width, a Tablet-viewport row from 768px and a Desktop-viewport row from 1280px, each up to the next row's width. A Tablet-viewport or Desktop-viewport row on its own applies at every width. An empty cell keeps the content of the viewport below it. Classes in parentheses after a row's name, such as \`Desktop-viewport (right-footer)\`, apply only at that viewport.
+- The block's side margins pull it out over its section's side padding. In a \`container, fixed\` section up to 1968px wide, the block and its lines span the section's full width. In a \`container\` section from 768px, the lines stop short of the section's edges.
 - Milo has no block that holds quotes. Quotes in the same section stack in one column, each in its own frame. With a section style that sets columns, such as \`two-up\`, they sit side by side from 768px and their frames overlap.
 `;
 
