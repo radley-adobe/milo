@@ -24,14 +24,14 @@ A table that compares plans feature by feature. It's authored as a header row wi
 - The block has 40px of padding above and below, 80px from 900px. It doesn't change its section.
 `;
 
-// Authored markup for the block from a story's args, followed by section metadata when `style`
-// sets the section's style.
-const authored = (args, style) => [comparisonTable(args), sectionMetadata({ style })].filter(Boolean).join('\n');
+// Authored markup for the block from a story's args, followed by section metadata when `metadata`
+// sets any.
+const authored = (args, metadata) => [comparisonTable(args), sectionMetadata(metadata)].filter(Boolean).join('\n');
 
 // A story that renders the block from its args. Show code gives the authored markup.
-const blockStory = (style) => ({
-  render: (args) => renderBlock(authored(args, style), { foundation: 'c2' }),
-  parameters: { docs: { source: { language: 'html', transform: (code, { args }) => authored(args, style) } } },
+const blockStory = (metadata) => ({
+  render: (args) => renderBlock(authored(args, metadata), { foundation: 'c2' }),
+  parameters: { docs: { source: { language: 'html', transform: (code, { args }) => authored(args, metadata) } } },
 });
 
 export default {
@@ -59,9 +59,10 @@ export default {
 const [trusted, ai] = ACROBAT_TABLES;
 const TABLES = [{ ...trusted, rows: [trusted.rows[0], trusted.rows[2]] }, ai];
 
-// Plans and features from the Acrobat plans page, in the width of a container section.
+// Plans and features from the Acrobat plans page, in the width of a container section, on the
+// light gray background of the page's section, so the block reads in both themes.
 export const Default = {
-  ...blockStory('container'),
+  ...blockStory({ style: 'container', background: '#f8f8f8' }),
   args: {
     variants: [],
     staticHeader: false,

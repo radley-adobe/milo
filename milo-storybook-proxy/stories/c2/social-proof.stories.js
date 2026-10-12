@@ -88,7 +88,8 @@ export default {
   },
 };
 
-// The Acrobat page's block.
+// The Acrobat page's block, with the subtle background color token in place of the page's
+// #F6F6F6, so the background follows the Theme menu.
 export const Default = {
   ...blockStory,
   args: {
@@ -98,7 +99,7 @@ export const Default = {
     name: 'Katrina Owens',
     role: 'Personal Branding & PR Consultant',
     showAttribution: true,
-    background: '#F6F6F6',
+    background: 'var(--s2a-color-background-subtle)',
     image: `${MEDIA}/social-proof/katrina-owens.webp`,
     imageAlt: '',
   },
