@@ -7,17 +7,16 @@ const description = `
 A heading and a grid of linked tiles, each an image with a label. It's authored as a header row, then one row per tile with two cells: the label, then the image.
 
 - The header row is optional. The block makes the first row the header when its first cell holds a heading. The heading shows at \`heading-4\` size, a paragraph before it as an eyebrow, and a paragraph after it at \`body-md\` size. A link in italics shows as an outline button, and a link in bold as a blue button.
-- The header sets its content in one row, in the authored order, 24px apart, with 32px below it: any eyebrow, then the heading, taking the free width, then any paragraph, then the button at the end. \`center-mobile\` stacks the content and centers it below 768px.
-- A tile row's first cell holds a link, whose text is the tile's label. The whole tile links to it. A tile with no link has no label.
-- A tile row's second cell holds an image. The image fills the tile, which is at least 180px tall, and the label sits over its bottom, at \`heading-6\` size, with a chevron at the right edge. Below 768px, a tile with an image and a label is a square with the label below it, and the image fills the tile from its top.
-- A row with one cell isn't a tile, and the block leaves it out
-- The tiles have a gray background, light in a light section and dark in a \`dark\` one, and 16px rounded corners, 24px from 2560px. On hover, a tile darkens slightly, its image grows slightly and its chevron moves 4px to the right.
-- The tiles sit in two columns below 768px, three from 768px and six from 1280px, 8px apart
-- In browsers with CSS scroll-driven animations, the tiles move up into place as the block scrolls into view, at every width. In each row, a tile starts lower than the one before it: 72px, 156px, 264px, 372px, 480px and 588px below its place in six columns. Each row starts 48px lower than the one above it. With reduced motion, they don't move.
-- \`blur-background\` gives the block a black background below 768px. From 768px, it blurs what's behind the block and darkens it toward black at the bottom, starting clear at the top and fully shown from 40% of the block's height. It doesn't change the text colors, so below 768px the block needs a \`dark\` section for its header to show.
-- With \`blur-background\`, when the next section has \`rounded-corners\` or \`rounded-corners-top\`, the background extends 22px below the block, or 32px from 768px, behind that section's rounded corners
+- The header sets its content in one row, in the authored order. \`center-mobile\` stacks the content and centers it below 768px.
+- A tile row's first cell holds a link, whose text is the tile's label, and the whole tile links to it
+- A tile row's second cell holds an image, which fills the tile. The label sits over the tile's bottom, at \`heading-6\` size, with a chevron. Below 768px, a tile with an image and a label is a square with the label below it.
+- On hover, a tile darkens slightly, its image grows slightly and its chevron moves to the right
+- The tiles sit in two columns below 768px, three from 768px and six from 1280px
+- The tiles move up into place as the block scrolls into view, and in each row a tile starts lower than the one before it. With reduced motion, they don't move.
+- \`blur-background\` gives the block a dark background below 768px, so the block needs a \`dark\` section for its header to show. From 768px, it blurs what's behind the block and darkens it toward the bottom.
+- With \`blur-background\`, when the next section has \`rounded-corners\` or \`rounded-corners-top\`, the background extends behind that section's rounded corners
 - Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content at each viewport. An empty cell keeps the content of the viewport below it.
-- The block lays out its own tiles and adds nothing to its section. Its stories show it in a \`container\` section, and Blur Background in a \`container, dark\` one. \`container\` gives the block 24px of side padding below 768px and 8.333% of the section's width from 768px, with its content up to 1920px wide.
+- The block lays out its own tiles and adds nothing to its section
 `;
 
 const image = (name) => `${MEDIA}/quick-actions/${name}.webp`;
