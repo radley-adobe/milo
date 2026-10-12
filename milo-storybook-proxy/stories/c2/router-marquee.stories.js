@@ -7,13 +7,14 @@ import { routerMarquee, SLIDES, SLIDES_DESCRIPTION } from './sections/router-mar
 const description = `
 A full-window hero showing one slide at a time, with a card for each along the bottom. It's authored as one row per slide with two cells: the text, then a background image or video.
 
-- The text cell holds an eyebrow before an \`h1\` or \`h2\` heading, body copy, emphasized links for buttons (bold for primary), and an SVG link for the card's icon, then its label link
-- Rows named \`mobile\`, \`tablet\` and \`desktop\` start each viewport's slides, and \`mobile\` is required. A missing viewport copies the one below, and an empty cell keeps the same slide's cell from the viewport below.
+- The text cell holds an eyebrow, an \`h1\` or \`h2\` heading, body copy, emphasized links for buttons (bold for primary), and the card's SVG icon link and label link
+- Rows named \`mobile\`, \`tablet\` and \`desktop\` start each viewport's slides, and \`mobile\` is required. A missing viewport, or an empty cell, takes its content from the viewport below.
 - \`starting-marquee\` in the section's metadata moves the slide with that number to the front
+- A \`promo-placeholder-slide-<n>\` class on the block hides slide \`n\` and its card until its promotion loads
 - Below 1280px, only the primary button shows
 - The slides change on their own and loop, or only by hand with reduced motion
 - Hovering a card shows its slide, and a swipe the next or previous one
-- Hovering or focusing a link or button in the block, a swipe, or the pause button stops the slides until the play button starts them
+- Hovering a link or button, a swipe or the pause button stops the slides until the play button starts them
 - The slides stop when the next section scrolls part way up the window
 `;
 

@@ -6,8 +6,8 @@ import { attr, icon } from './authored.js';
 const description = `
 A row of linked video slides that widen on hover, authored as one row per slide with two cells: the text, then the video.
 
-- The text cell holds, in order, a link to an SVG icon, a label, a heading, body copy and the slide's link. The heading shows at eyebrow size. The video cell holds an image whose alt text is an MP4 URL, a \`|\` and a description. Milo turns the image into a muted video.
-- From 768px, \`disable-hover\` stops the slides responding to hover
+- The text cell holds, in order, a link to an SVG icon, a label, a heading, body copy and the slide's link. The video cell holds an image whose alt text is an MP4 URL, a \`|\` and a description. Milo turns the image into a muted video.
+- While the mouse wheel scrolls the page, the block adds \`disable-hover\` to itself, which stops hover from 768px
 - The block's CSS is written for five slides, which sit in a row from 768px and stack in a column below it
 - From 768px, hovering a slide widens it, shows an arrow and plays its video
 - From 768px, the row slides and fades in as the block scrolls into view, with reduced motion too, unless the block or an element around it has a \`parallax-\` class

@@ -7,7 +7,7 @@ const description = `
 A row of tabs that each show a [Tab Panel](?path=/docs/sections-tab-panel--docs). It's authored as one row with a list of tab labels, then one row per setting with its name and value.
 
 - Each panel holds the sections whose section metadata has a \`tab\` row naming its tab: the label, or, when the block has an \`id\`, the id and the tab's number, such as \`compare-plans, 2\`
-- With an \`id\`, \`?tab=<id>-<number>\` in the URL selects that tab
+- \`id\` gives the tabs an id, so \`?tab=<id>-<number>\` in the URL selects a tab
 - \`active tab\` sets the tab shown first: its number with an \`id\`, or its label without one
 - \`pretext\` is the tab list's accessible name
 - \`remember\` set to \`on\` keeps the selected tab across reloads in the same browser tab
