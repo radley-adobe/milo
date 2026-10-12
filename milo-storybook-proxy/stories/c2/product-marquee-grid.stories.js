@@ -6,22 +6,19 @@ import { attr, icon, sectionMetadata } from './authored.js';
 const description = `
 A product page's hero: the product's icon and name, a subheading, and a card with the product's price and buttons. It's authored as one row with two cells: the product, then the card.
 
-- The product cell holds an optional icon, a heading and a subheading. An icon is a link to an SVG, alone in its paragraph. The block sets it beside the heading, 50px square, or 64px from 768px.
-- The first heading is the product's name and keeps its level, such as \`h1\`. The block shows every other heading and paragraph in the product cell as a subheading below it. A heading becomes a paragraph with its level's class, such as \`heading-5\` for an \`h5\`. A subheading is up to 400px wide, or from 768px, up to 467px and 80% of its column.
-- The card cell holds Merch at Scale (MAS) fields, a commitment and links. A block with no card cell, or an empty one, shows only the product. On a page, each field is a link to a card's field in MAS Studio, which Milo replaces with a \`mas-field\` element holding the field's content. MAS content loads from www.adobe.com, which blocks requests from Storybook, so the adobe.com stories show a load error in place of each field. The other stories author each field as a \`mas-field\` element with its content, as Milo's tests do.
-- A \`prices\` field shows at \`heading-5\` size and a \`description\` field as body copy. A paragraph of plain text right after the price, such as "Annual, billed monthly", moves into the price's paragraph as its commitment, at body size, in the card's text color at 64% opacity. Other fields and paragraphs show in their authored order.
+- The product cell holds an optional icon, a heading and a subheading. An icon is a link to an SVG, alone in its paragraph. The block sets it beside the heading.
+- The first heading is the product's name. The block shows every other heading and paragraph in the product cell as a subheading below it. A heading becomes a paragraph with its level's class, such as \`heading-5\` for an \`h5\`.
+- The card cell holds Merch at Scale (MAS) fields, a commitment and links. Each field is a link to a card's field in MAS Studio, which Milo replaces with a \`mas-field\` element holding the field's content. A block with no card cell, or an empty one, shows only the product.
+- A \`prices\` field shows at \`heading-5\` size and a \`description\` field as body copy. A paragraph of plain text right after the price, such as "Annual, billed monthly", moves into the price's paragraph as its commitment. Other fields and paragraphs show in their authored order.
 - A bold link shows as a blue button and an italic link as an outline button. The block moves the buttons, and MAS checkout links, into a row below the card's text.
-- From 768px, the card has a light gray background, 12px rounded corners and 24px of padding. Below 768px, it has no background or padding.
-- Below 900px, the card sits below the subheading. From 900px, the heading sits at the top left, the subheading at the bottom left, and the card at the bottom right, at most 370px and 45% of the block's content width, inside its side padding.
-- The block's content sits in a container, with at least 24px of side padding below 768px and 48px from 768px. The block has 48px of padding at the top, with another 48px above the product, and 24px at the bottom, or 48px from 768px.
-- The block is at least 350px tall plus the global navigation's height, and the breadcrumbs' or local navigation's height when the page has them. With breadcrumbs, the block's top padding is the height of the navigation and breadcrumbs.
-- \`dark\` gives the block a black background and white text. From 768px, the card is dark gray, #131313.
-- \`transparent-bg\` makes the block's background white at 72% opacity and blurs what's behind it by 128px, or 64px from 768px. With \`dark\`, the background is black at 72% opacity and, from 768px, the card is black at 32%. The Transparent Background story shows it over an image set as the section's background.
-- \`cta-pill\` shows the card as a pill from 768px, with its text and buttons in one row, and sets the card at the bottom right of the block, beside the product. Below 768px, the card's text is centered. The card's text other than the price, description and commitment is bold at every width. The pill is as wide as its content, not limited to 370px and 45%.
-- \`special-promo\` gives the card the opposite colors of the block from 768px: dark gray with white text in a light block, and light gray with black text in a \`dark\` block. Below 768px, the card's text keeps the block's colors.
-- Inside an element with the \`firefly\` class, the block's bottom corners are rounded by 32px
+- From 768px, the card has a background, rounded corners and padding. Below 768px, it has no background or padding.
+- Below 900px, the card sits below the subheading. From 900px, the heading sits at the top left, the subheading at the bottom left, and the card at the bottom right.
+- \`dark\` gives the block a dark background and light text. From 768px, the card is dark too.
+- \`transparent-bg\` makes the block's background translucent and blurs what's behind it. With \`dark\`, the background and, from 768px, the card are dark and translucent.
+- \`cta-pill\` shows the card as a pill from 768px, with its text and buttons in one row, and sets the card at the bottom right of the block, beside the product. Below 768px, the card's text is centered. The pill is as wide as its content.
+- \`special-promo\` gives the card the opposite colors of the block from 768px: dark in a light block, and light in a \`dark\` block. Below 768px, the card's text keeps the block's colors.
+- Inside an element with the \`firefly\` class, the block's bottom corners are rounded
 - Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` give the block different content at each viewport. An empty cell keeps the content of the viewport below it. Classes in parentheses after a row's name, such as \`mobile-viewport(dark)\`, apply to the block at that viewport.
-- On the Acrobat page, the block's section has the \`rounded-corners-bottom\` style, which rounds the section's bottom corners by 22px, or 32px from 1280px, and overlaps the section below it by the same amount. The stories use the same style.
 `;
 
 // One MAS field in its own paragraph, or nothing when the field is empty.
@@ -80,7 +77,7 @@ export default {
     specialPromo: { control: 'boolean', description: 'Give the card the opposite colors of the block from 768px (`special-promo`)' },
     icon: { control: 'text', description: 'URL of the SVG icon. Leave empty for no icon.' },
     showIcon: { control: 'boolean', description: 'Show the icon' },
-    heading: { control: 'text', description: 'Product name, authored as an `h1`. Leave empty and the subheading takes its place beside the icon.' },
+    heading: { control: 'text', description: 'Product name, authored as an `h1`' },
     subheading: { control: 'text', description: 'Subheading, authored as an `h5`. Leave empty for none.' },
     planName: { control: 'text', description: 'The card\'s first line, a `subtitle` field. Leave empty for none.' },
     showPrice: { control: 'boolean', description: 'Show the price and commitment' },
@@ -89,9 +86,9 @@ export default {
     description: { control: 'text', description: 'Description, a `description` field, which can hold HTML. Leave empty for none.' },
     legal: { control: 'text', description: 'Legal text, a `shortDescription` field. Leave empty for none.' },
     primaryCtaLabel: { control: 'text', description: 'Text of the blue button, a bold link. Leave empty for none.' },
-    primaryCtaHref: { control: 'text', description: 'URL of the blue button. Leave empty to link to the current page.' },
+    primaryCtaHref: { control: 'text', description: 'URL of the blue button' },
     secondaryCtaLabel: { control: 'text', description: 'Text of the outline button, an italic link. Leave empty for none.' },
-    secondaryCtaHref: { control: 'text', description: 'URL of the outline button. Leave empty to link to the current page.' },
+    secondaryCtaHref: { control: 'text', description: 'URL of the outline button' },
   },
 };
 
