@@ -15,7 +15,7 @@ Two cards side by side: an overlay card, with its text over its image, and a sta
 - The block adds \`dark\` to the overlay card, which gives it light text and the gradient, unless the block has \`dark\` and no viewport rows
 - A stacked card's image is cropped to 4:5, and from 768px it's at least 306px high. The text sits below it, 16px from the edges, or 32px from 1280px. Below 768px the card leaves 15% of the block's width empty on its left.
 - In a stacked card, a media cell with two images or videos, each in its own paragraph, shows the first as a 32px icon over the top-left corner of the second: 16px from its edges, 24px from 768px and 32px from 1280px. An icon can be a link to an SVG.
-- A video starts playing when 40% of it is in view and pauses when it leaves the view. A video that doesn't loop plays once, and one the visitor paused stays paused.
+- A video starts playing when 40% of it is in view and pauses when it leaves the view. A video that doesn't loop plays once, and one the visitor paused stays paused. Below 768px, an overlay card's video pause button sits 16px from the top of the card.
 - \`reverse\` puts the stacked card first. From 768px the wider column is the second.
 - \`equal\` makes both cards stacked. From 768px they take the second and third of three columns of 0.81, 1 and 1 parts, and the first stays empty.
 - \`featured\` makes one overlay card across the block. From 768px it's 16:9, with its text at the bottom left, 24px from the edges, or 40px from 1280px, over a gradient that darkens the bottom. A \`featured\` block followed by an \`equal\` block has 8px below it.
@@ -26,6 +26,8 @@ Two cards side by side: an overlay card, with its text over its image, and a sta
 - \`first-card-<class>\` and \`second-card-<class>\` add a class to the first or second card: \`content-subtle\` for subtle body copy, \`content-solid\` for body copy in the text color in a \`content-subtle\` block, \`dark\` for light text, or \`light\`, which removes the card's \`dark\` class, so the card takes its section's colors and an overlay card has no gradient. With \`dark\` or \`light\`, a \`dark\` block moves its \`dark\` class to every card except a \`light\` one.
 - A \`heading-\`, \`body-\` or \`button-\` class on the block, such as \`heading-5\`, sets the size of every heading, body paragraph or button
 - Rows named \`Mobile-viewport\`, \`Tablet-viewport\` and \`Desktop-viewport\` each start a media row and a text row for one viewport: below 768px, from 768px and from 1280px. Without a \`Tablet-viewport\` row, the \`Mobile-viewport\` rows show below 1280px. An empty cell keeps the content of the viewport below it.
+- A viewport row can name classes in parentheses, such as \`Mobile-viewport (first-card-dark)\`, which the block takes at that viewport. \`reverse\`, \`equal\` and \`featured\` there change only the block's styles, not which cards are overlay or stacked.
+- One viewport row alone shows its rows at every width. A block with \`Tablet-viewport\` and \`Desktop-viewport\` rows and no \`Mobile-viewport\` row shows nothing.
 - \`parallax-stagger-ltr\` on the block moves the cards up into place as the block scrolls into view, from 768px: the first card from 24px below its place and the second from 72px. With reduced motion, or in browsers without CSS scroll-driven animations, nothing moves.
 - The block adds nothing to its section. Several Side by Side blocks in a section stack one below another, and \`spacing-\` classes on a block add space above or below it.
 `;
@@ -49,7 +51,7 @@ export default {
     variants: { ...variants, options: ['content-subtle', 'dark', 'equal', 'featured', 'reverse', 'scrim-off', 'small-left'] },
     cards: {
       control: 'object',
-      description: 'One card each, in order: an `image` with its `imageAlt`, an `icon` URL, which shows only on a stacked card, a `heading`, `body`, and a link from `ctaLabel` and `ctaHref`. Leave a value empty to leave it out. The block shows two cards, or one with `featured`.',
+      description: 'One card each, in order: an `image` with its `imageAlt`, an `icon` URL, a `heading`, `body`, and a link from `ctaLabel` and `ctaHref`. Leave a value empty to leave it out. The block shows an icon as a 32px icon on a stacked card; on an overlay card it shows as a second image. The block styles two cards, or one with `featured`; with `featured`, a second card shows unstyled.',
     },
     showIcon: { control: 'boolean', description: 'Show the icons' },
   },
