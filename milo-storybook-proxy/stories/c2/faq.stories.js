@@ -43,7 +43,7 @@ export default {
     },
     items: {
       control: 'object',
-      description: 'One row each, in order: a `question`, authored as an `h3`, and its `answer` as HTML, such as paragraphs and lists. A row with no `question` doesn\'t show. Leave `answer` empty to leave it out.',
+      description: 'One row each, in order: a `question`, authored as an `h3`, and its `answer` as HTML, such as paragraphs and lists. Leave `answer` empty to leave it out.',
     },
   },
 };
