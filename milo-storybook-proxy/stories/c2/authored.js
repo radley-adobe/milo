@@ -75,9 +75,7 @@ export const plansHero = ({
 };
 
 // One quote: the quote as an `h2`, then the name and role. `showAttribution` is true unless set.
-export const quote = ({
-  variants: classes = [], quote: text, name, role, showAttribution = true,
-}) => `
+export const quote = ({ variants: classes = [], quote: text, name, role, showAttribution = true }) => `
 <div class="${['quote', ...classes].join(' ')}">
   <div>
     <div>
