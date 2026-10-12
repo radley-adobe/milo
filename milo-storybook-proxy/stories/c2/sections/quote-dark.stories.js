@@ -5,16 +5,16 @@ import { quote, section, sectionMetadata } from '../authored.js';
 const description = `
 One [Quote](?path=/docs/blocks-quote--docs) alone in a dark section. The quote has \`center-footer\`, and the section's metadata sets its colors, background, width and corners.
 
-- \`dark\` gives the section dark colors, and the quote's text takes them. A \`background\` row replaces the section's background color.
-- \`container\` gives the section side padding, wider from 768px, and limits its content's width. \`fixed\` keeps the narrower padding from 768px too.
-- The quote's side margins pull it out over the section's side padding. With \`container, fixed\`, the quote and its lines span the full width of a section up to 1968px wide. Without \`fixed\`, from 768px the lines stop short of the section's edges.
-- \`rounded-corners-bottom\` rounds the section's bottom corners, and the next section's background reaches up behind them
-- Style values are separated by a comma and a space. A space inside a value becomes a hyphen, and capitals don't matter.
 - The block reads its cell's headings and paragraphs in order as the quote, the name and the role. Each heading shows at \`heading-1\` size and each paragraph at \`body-md\` size.
 - An opening quote mark at the start of the quote, such as “, hangs outside the text's left edge, or its right edge on a right-to-left page
 - \`center-footer\` centers the name and role below the quote
-- Thin lines frame the text, with a dashed line down the middle and a dot at each corner of the text
-- Below 768px, the block has a minimum height, with the quote at the top and the name and role at the bottom. From 768px, the block has no minimum height, and the name and role sit a set distance below the quote.
+- \`dark\` gives the section dark colors, and the quote's text takes them
+- A \`background\` row replaces the section's background color
+- \`container\` gives the section side padding, wider from 768px, and limits its content's width
+- \`fixed\` keeps the narrower side padding from 768px too
+- \`rounded-corners-bottom\` rounds the section's bottom corners, and the next section's background reaches up behind them
+- Below 768px, the block has a minimum height, with the quote at the top and the name and role at the bottom. From 768px, it has no minimum height.
+- The quote's side margins pull it out over the section's side padding
 `;
 
 // The section's authored markup from a story's args.
@@ -32,7 +32,7 @@ export default {
     role: { control: 'text', description: 'Role of the person quoted, below the name. Leave empty for none.' },
     showAttribution: { control: 'boolean', description: 'Show the name and role' },
     style: { control: 'text', description: 'The section\'s style: classes separated by a comma and a space. Leave empty for none.' },
-    background: { control: 'text', description: 'The section\'s background color. Leave empty for none, or the dark background with `dark`.' },
+    background: { control: 'text', description: 'The section\'s background color' },
   },
 };
 
