@@ -185,5 +185,5 @@ git merge upstream/stage
 - Some C2 blocks have no story:
   - Brand Concierge Global shows only in the navigation, so the Global Navigation's Brand Concierge story shows it
   - Card Metadata, Martech Metadata, Modal Metadata, Section Metadata and Visually Hidden show nothing of their own
-  - Floating CTA shows only once the page scrolls past an earlier section
-  - Email Collection C2, Firefly Globe and Pill Group are on no public page
+  - Email Collection C2 and Firefly Globe are on no public page
+  - Bento and Section Metadata: Rounded Corners are library pages for section styles, not blocks. The Bento and Plans Hero (Rounded Corners) section stories cover them.

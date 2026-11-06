@@ -1,1 +1,14 @@
-{}
+{
+  "Blocks/Floating CTA": [
+    "Icon and label",
+    "section-metadata"
+  ],
+  "Blocks/Pill Group": [
+    "Heading with six pills",
+    "section-metadata",
+    "Pills without a heading",
+    "section-metadata",
+    "Different pills by device",
+    "section-metadata"
+  ]
+}

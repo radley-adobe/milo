@@ -21,11 +21,11 @@ const WORKERS = 6;
 const BUILDS = { stage: '', main: 'main/' };
 
 // C2 library blocks with no story. README › Known limits says why.
-const NO_STORY = ['Section Metadata'];
+const NO_STORY = ['Section Metadata', 'Section Metadata: Rounded Corners', 'Bento'];
 
 // Folders in libs/c2/blocks/ with no story. README › Known limits says why.
 const NO_C2_STORY = ['brand-concierge-global', 'card-metadata', 'email-collection-c2', 'firefly-globe',
-  'floating-cta', 'martech-metadata', 'modal-metadata', 'pill-group', 'section-metadata', 'visually-hidden'];
+  'martech-metadata', 'modal-metadata', 'section-metadata', 'visually-hidden'];
 
 // Stories that never finish rendering in a headless browser, by id, so the check skips them.
 // README › Known limits says why.
