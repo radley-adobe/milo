@@ -3,7 +3,7 @@ import cssprops from 'virtual:cssprops/c2/base-card';
 import { baseCard, icon, section, sectionMetadata } from '../authored.js';
 
 const description = `
-Three [Base Cards](?path=/docs/blocks-base-card--docs) in a row. Each card is its own Base Card block, and the section's metadata sets the columns, width, spacing, background and motion.
+Three [Base Cards](?path=/docs/blocks-base-card-c2-tab--docs) in a row. Each card is its own Base Card block, and the section's metadata sets the columns, width, spacing, background and motion.
 
 - \`three-up\` puts the cards in three columns from 768px, 8px apart. Below 768px they stack in one column, 40px apart, because Base Card adds \`base-card-section\` to its section. \`two-up\`, \`four-up\` and \`six-up\` give 2, 4 or 6 columns.
 - \`container\` gives the section 24px of side padding below 768px and 8.333% of its width from 768px, with its content up to 1920px wide

@@ -3,7 +3,7 @@ import cssprops from 'virtual:cssprops/c2/base-card';
 import { baseCard, icon, section, sectionMetadata } from '../authored.js';
 
 const description = `
-One wide [Base Card](?path=/docs/blocks-base-card--docs) across its section. The card has \`featured\`, and the section's metadata sets its width, background and motion.
+One wide [Base Card](?path=/docs/blocks-base-card-c2-tab--docs) across its section. The card has \`featured\`, and the section's metadata sets its width, background and motion.
 
 - \`featured\` makes a wide card. From 1024px, its image is cropped to 2.2:1, its heading takes the left 5 of 12 columns and its link sits to the right of the heading. Below 1024px, the image is cropped to 4:3.
 - \`container\` gives the section 24px of side padding below 768px and 8.333% of its width from 768px, with its content up to 1920px wide
