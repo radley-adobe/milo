@@ -1,4 +1,4 @@
-import { ACROBAT, CC_PRO_TEST_FRAGMENTS, LIVE, MEDIA, renderBlock, renderPageBlock } from '../../src/milo.js';
+import { CC_PRO_TEST_FRAGMENTS, MEDIA, renderBlock, renderPageBlock } from '../../src/milo.js';
 import cssprops from 'virtual:cssprops/c2/product-marquee-grid';
 import variants from 'virtual:variants/c2/product-marquee-grid';
 import { attr, icon, sectionMetadata } from './authored.js';
@@ -60,12 +60,12 @@ const blockStory = (metadata) => ({
   parameters: { docs: { source: { language: 'html', transform: (code, { args }) => authored(args, metadata) } } },
 });
 
-// The section style of the block on the Acrobat page.
+// The section style the authored stories use.
 const STYLE = 'rounded-corners-bottom';
 
 export default {
   title: 'Blocks/Product Marquee Grid',
-  parameters: { cssprops, liveExamples: [LIVE.acrobat], docs: { description: { component: description } } },
+  parameters: { cssprops, docs: { description: { component: description } } },
   argTypes: {
     variants,
     specialPromo: { control: 'boolean', description: 'Give the card the opposite colors of the block from 768px (`special-promo`)' },
@@ -86,7 +86,7 @@ export default {
   },
 };
 
-// The block on the Acrobat page. The page's fields and Free trial button load from MAS, so the
+// Acrobat's product marquee. On a live page its fields and Free trial button load from MAS, so the
 // story gives their published text and links the button to the Acrobat free trial page.
 export const Default = {
   ...blockStory({ style: STYLE }),
@@ -167,15 +167,8 @@ export const SpecialPromo = {
   args: { ...Default.args, specialPromo: true },
 };
 
-// The live stories render published content, so they have only the Variants control. Their MAS
-// fields load from www.adobe.com, which blocks requests from Storybook, so each field shows a load
-// error.
-export const Acrobat = {
-  name: 'adobe.com: Acrobat',
-  render: () => renderPageBlock(ACROBAT, 'product-marquee-grid', { metadata: true, foundation: 'c2' }),
-  parameters: { controls: { include: ['variants'] } },
-};
-
+// The live story renders published content, so it has only the Variants control. Its MAS fields
+// load from www.adobe.com, which blocks requests from Storybook, so each field shows a load error.
 export const CreativeCloudProProduct = {
   name: 'Redesign test: Creative Cloud Pro product',
   render: () => renderPageBlock(`${CC_PRO_TEST_FRAGMENTS}/cpro-product`, 'product-marquee-grid', { metadata: true, foundation: 'c2' }),

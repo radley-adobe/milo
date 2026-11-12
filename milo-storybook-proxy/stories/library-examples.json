@@ -1,1 +1,37 @@
-{}
+{
+  "Blocks/Bento": [
+    "Default",
+    "explore-card (dark, heading-6)",
+    "explore-card (dark, heading-6)",
+    "explore-card (dark, heading-6, scrim)",
+    "section-metadata",
+    "Mixed width stack mobile",
+    "explore-card (dark, heading-6)",
+    "explore-card (dark, heading-6, scrim)",
+    "section-metadata"
+  ],
+  "Blocks/Floating CTA": [
+    "Icon and label",
+    "section-metadata"
+  ],
+  "Blocks/Pill Group": [
+    "Heading with six pills",
+    "section-metadata",
+    "Pills without a heading",
+    "section-metadata",
+    "Different pills by device",
+    "section-metadata"
+  ],
+  "Blocks/Section Metadata: Rounded Corners": [
+    "All four corners",
+    "section-metadata",
+    "Top corners only",
+    "section-metadata",
+    "Bottom corners only",
+    "section-metadata",
+    "Different edges by device",
+    "section-metadata",
+    "An image-backed section",
+    "section-metadata"
+  ]
+}
