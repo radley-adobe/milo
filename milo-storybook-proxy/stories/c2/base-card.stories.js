@@ -27,7 +27,7 @@ const cardStory = (style) => ({
 });
 
 export default {
-  title: 'Blocks/Base Card',
+  title: 'Blocks/Base Card c2 tab',
   parameters: { cssprops, liveExamples: [LIVE.home, LIVE.acrobat, LIVE.acrobatStudio], docs: { description: { component: description } } },
   argTypes: {
     variants,

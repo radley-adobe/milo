@@ -35,7 +35,7 @@ const blockStory = (style) => ({
 });
 
 export default {
-  title: 'Blocks/Side by Side',
+  title: 'Blocks/Side By Side',
   parameters: { cssprops, liveExamples: [LIVE.pdfEssentials], docs: { description: { component: description } } },
   argTypes: {
     variants,
